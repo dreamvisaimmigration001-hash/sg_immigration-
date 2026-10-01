@@ -1,0 +1,664 @@
+/* REACH (Isomer Next Design System) Styles */
+.reach-page {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #242425;
+  background-color: #ffffff;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Navigation Bar */
+.reach-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+.reach-navbar__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.reach-navbar__left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.reach-navbar__right {
+  display: flex;
+  align-items: center;
+}
+.reach-logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+.reach-logo-img {
+  height: 44px;
+  width: auto;
+  max-width: 130px;
+  object-fit: contain;
+  object-position: left;
+}
+.reach-nav-menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 8px;
+}
+.reach-nav-item {
+  position: relative;
+}
+.reach-nav-btn {
+  background: none;
+  border: none;
+  padding: 22px 12px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #111827;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+  font-family: inherit;
+}
+.reach-nav-btn:hover {
+  color: #005ea6;
+}
+.reach-chevron-icon {
+  color: #111827;
+  transition: transform 0.2s ease;
+}
+.reach-nav-btn:hover .reach-chevron-icon {
+  color: #005ea6;
+}
+.reach-nav-btn[aria-expanded="true"] .reach-chevron-icon {
+  transform: rotate(180deg);
+}
+
+.reach-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #ffffff;
+  min-width: 280px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  padding: 8px 0;
+  z-index: 50;
+  list-style: none;
+}
+.reach-dropdown-item {
+  padding: 10px 18px;
+  font-size: 0.875rem;
+  color: #374151;
+  text-decoration: none;
+  display: block;
+  transition: background 0.15s, color 0.15s;
+}
+.reach-dropdown-item:hover {
+  background-color: #f3f4f6;
+  color: #005ea6;
+}
+.reach-dropdown-item .sub-desc {
+  display: block;
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+.reach-search-btn {
+  background: transparent;
+  border: none;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.reach-search-btn:hover {
+  background: #f3f4f6;
+}
+
+/* Search Dropdown Bar */
+.reach-search-bar-wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+.reach-search-bar-input {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  border: 2px solid #005ea6;
+  border-radius: 6px;
+  font-size: 1rem;
+  outline: none;
+  font-family: inherit;
+}
+
+/* Hero Section */
+.reach-hero {
+  display: flex;
+  min-height: 520px;
+  background-color: #008037;
+}
+@media (max-width: 1023px) {
+  .reach-hero {
+    flex-direction: column;
+  }
+}
+.reach-hero__content {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 64px 40px 64px 24px;
+  background-color: #008037;
+  color: #ffffff;
+}
+@media (min-width: 1024px) {
+  .reach-hero__content {
+    padding: 72px 56px 72px 64px;
+  }
+}
+.reach-hero__inner {
+  max-width: 540px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 32px;
+}
+.reach-hero__title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  margin: 0;
+  color: #ffffff;
+}
+@media (max-width: 768px) {
+  .reach-hero__title {
+    font-size: 2.25rem;
+    line-height: 1.15;
+  }
+}
+.reach-hero__desc {
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.45;
+  color: #ffffff;
+  margin: 20px 0 0 0;
+}
+.reach-hero__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  background-color: #ffffff;
+  color: #0c1e33;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 4px;
+  text-decoration: none;
+  width: fit-content;
+  transition: background-color 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+.reach-hero__btn:hover {
+  background-color: #f8fafc;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.reach-hero__image-wrap {
+  flex: 1;
+  position: relative;
+  min-height: 380px;
+  background: #008037;
+  overflow: hidden;
+}
+.reach-hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Sections Common */
+.reach-section {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 56px 24px;
+}
+@media (min-width: 768px) {
+  .reach-section {
+    padding: 64px 32px;
+  }
+}
+.reach-section__header {
+  margin-bottom: 32px;
+}
+.reach-section__title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0c1e33;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.01em;
+}
+.reach-section__subtitle {
+  font-size: 1.0625rem;
+  color: #475569;
+  margin: 0;
+}
+
+/* Latest Happenings Cards Grid */
+.reach-happenings-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+@media (min-width: 768px) {
+  .reach-happenings-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.reach-happening-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.reach-happening-card__title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0c1e33;
+  margin: 0;
+  line-height: 1.35;
+  transition: color 0.2s;
+  letter-spacing: -0.01em;
+}
+.reach-happening-card:hover .reach-happening-card__title {
+  color: #005ea6;
+}
+.reach-happening-card__arrow {
+  display: inline-block;
+  margin-left: 4px;
+  font-weight: 700;
+  transition: transform 0.2s ease;
+}
+.reach-happening-card:hover .reach-happening-card__arrow {
+  transform: translateX(4px);
+}
+.reach-happening-card__desc {
+  font-size: 0.9375rem;
+  color: #475569;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Public Consultations Grid */
+.reach-consult-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px 32px;
+}
+@media (min-width: 768px) {
+  .reach-consult-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.reach-consult-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  cursor: pointer;
+}
+.reach-consult-card__thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 36px 48px;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.reach-consult-card:hover .reach-consult-card__thumb {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+.reach-consult-card__thumb img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: auto;
+}
+.reach-consult-card__title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0c1e33;
+  margin: 18px 0 6px 0;
+  line-height: 1.4;
+  transition: color 0.2s;
+  letter-spacing: -0.01em;
+}
+.reach-consult-card:hover .reach-consult-card__title {
+  color: #005ea6;
+}
+.reach-consult-card__arrow {
+  display: inline-block;
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-left: 4px;
+  transition: transform 0.2s ease;
+}
+.reach-consult-card:hover .reach-consult-card__arrow {
+  transform: translateX(4px);
+}
+.reach-consult-card__status {
+  font-size: 0.9375rem;
+  font-weight: 400;
+  color: #475569;
+  margin: 0;
+}
+
+/* Promo Split Banner Sections */
+.reach-split-promo {
+  background-color: #f7f9fa;
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 380px;
+}
+@media (min-width: 1024px) {
+  .reach-split-promo {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.reach-split-promo__content {
+  padding: 56px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 580px;
+}
+@media (min-width: 1024px) {
+  .reach-split-promo--telegram .reach-split-promo__content {
+    justify-self: start;
+    padding-left: 64px;
+    padding-right: 32px;
+  }
+  .reach-split-promo--newsletter .reach-split-promo__content {
+    justify-self: end;
+    padding-right: 64px;
+    padding-left: 32px;
+  }
+}
+.reach-split-promo__title {
+  font-size: 2.125rem;
+  font-weight: 700;
+  color: #0c1e33;
+  line-height: 1.25;
+  margin: 0 0 18px 0;
+  letter-spacing: -0.01em;
+}
+.reach-split-promo__desc {
+  font-size: 1.0625rem;
+  color: #334155;
+  line-height: 1.6;
+  margin: 0 0 32px 0;
+}
+.reach-split-promo__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 26px;
+  background-color: #008037;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 4px;
+  text-decoration: none;
+  width: fit-content;
+  transition: background-color 0.15s, transform 0.15s;
+}
+.reach-split-promo__btn:hover {
+  background-color: #00682c;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+.reach-split-promo__image {
+  position: relative;
+  min-height: 360px;
+  background-color: #f1f5f9;
+}
+.reach-split-promo__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Connect With Us / Social Cards */
+.reach-social-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+}
+.reach-social-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-decoration: none;
+}
+.reach-social-card__thumb {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.reach-social-card:hover .reach-social-card__thumb {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+.reach-social-card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.reach-social-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s;
+}
+.reach-social-card:hover h3 {
+  color: #005ea6;
+}
+.reach-social-card h3 svg {
+  transform: rotate(-45deg);
+  transition: transform 0.2s;
+}
+.reach-social-card:hover h3 svg {
+  transform: rotate(-45deg) translate(2px, -2px);
+}
+
+/* REACH Isomer Dark Footer */
+.reach-footer {
+  background-color: #1f2328;
+  color: #e5e7eb;
+  padding: 56px 24px 40px;
+  font-size: 0.875rem;
+}
+@media (min-width: 1024px) {
+  .reach-footer {
+    padding: 64px 40px 48px;
+  }
+}
+.reach-footer__inner {
+  max-width: 1160px;
+  margin: 0 auto;
+}
+.reach-footer__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 40px 0;
+}
+.reach-footer__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  margin-bottom: 48px;
+}
+@media (min-width: 1024px) {
+  .reach-footer__grid {
+    grid-template-columns: 2fr 1fr;
+    gap: 48px;
+  }
+}
+.reach-footer__links-cols {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+@media (min-width: 640px) {
+  .reach-footer__links-cols {
+    flex-direction: row;
+    gap: 48px;
+  }
+}
+.reach-footer__col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 200px;
+}
+.reach-footer__link {
+  color: #e5e7eb;
+  text-decoration: none;
+  transition: text-decoration 0.15s, color 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.reach-footer__link:hover {
+  text-decoration: underline;
+  color: #ffffff;
+}
+
+.reach-footer__social-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.reach-footer__social-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+}
+.reach-footer__social-icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.reach-footer__social-btn {
+  color: #e5e7eb;
+  transition: color 0.15s, transform 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.reach-footer__social-btn:hover {
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+.reach-footer__bottom {
+  border-top: 1px solid #374151;
+  padding-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+@media (min-width: 1024px) {
+  .reach-footer__bottom {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+}
+.reach-footer__copyright {
+  color: #9ca3af;
+  font-size: 0.8125rem;
+  margin: 0 0 12px 0;
+}
+.reach-footer__legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+}
+.reach-footer__legal-link {
+  color: #e5e7eb;
+  text-decoration: none;
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.reach-footer__legal-link:hover {
+  text-decoration: underline;
+  color: #ffffff;
+}
+
+.reach-footer__badges {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+.reach-footer__badge {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #9ca3af;
+  text-decoration: none;
+  font-size: 0.75rem;
+}
+.reach-footer__badge:hover {
+  color: #ffffff;
+}

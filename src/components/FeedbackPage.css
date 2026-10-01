@@ -1,0 +1,414 @@
+/* ==========================================================================
+   ICA Singapore Feedback Page Styles - Exact Pixel Matching
+   ========================================================================== */
+
+.feedback-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #ffffff;
+  color: #202020;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.feedback-page-main {
+  flex: 1 0 auto;
+}
+
+.feedback-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+}
+
+@media (max-width: 768px) {
+  .feedback-container {
+    padding: 0 1rem 3rem;
+  }
+}
+
+/* Page Title */
+.feedback-page-title-wrap {
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.feedback-page-title {
+  font-size: 2.15rem;
+  font-weight: 700;
+  color: #141b4d;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.feedback-divider {
+  border: 0;
+  height: 1px;
+  background-color: #d1d5db;
+  margin: 1.25rem 0 1.5rem;
+}
+
+/* Quicklinks Text Links (matching exact screenshot) */
+.feedback-quicklinks-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin-bottom: 2rem;
+  padding: 4px 0;
+}
+
+.feedback-quicklink-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: #007fa3;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.15s ease, text-decoration 0.15s ease;
+  font-family: inherit;
+}
+
+.feedback-quicklink-btn:hover {
+  color: #0c5dab;
+  text-decoration: underline;
+}
+
+.feedback-quicklink-btn.active {
+  color: #141b4d;
+  font-weight: 700;
+}
+
+/* Intro Text */
+.feedback-intro-text-block {
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  color: #202020;
+}
+
+.feedback-intro-notice {
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.75rem;
+  font-size: 0.975rem;
+}
+
+.feedback-intro-sla {
+  margin-bottom: 0.85rem;
+  color: #202020;
+}
+
+.feedback-choose-prompt {
+  font-weight: 400;
+  color: #202020;
+  margin-top: 1.25rem;
+  font-size: 0.95rem;
+}
+
+/* Accordion Section */
+.feedback-accordion-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.feedback-accordion-item {
+  border: none;
+  background: transparent;
+}
+
+.feedback-accordion-header {
+  width: 100%;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 12px 0 14px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  text-align: left;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #141b4d;
+  transition: opacity 0.2s ease;
+  font-family: inherit;
+}
+
+.feedback-accordion-header:hover {
+  opacity: 0.85;
+}
+
+.feedback-accordion-chevron {
+  color: #64748b;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.feedback-accordion-chevron.collapsed {
+  transform: rotate(180deg);
+}
+
+.feedback-accordion-content {
+  padding: 20px 0 0 0;
+}
+
+.feedback-accordion-desc {
+  font-size: 0.925rem;
+  color: #334155;
+  margin-bottom: 1.25rem;
+  line-height: 1.5;
+}
+
+/* Feedback Cards Grid - exact 3-column row */
+.feedback-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 992px) {
+  .feedback-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .feedback-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Feedback Card Box - exact match to screenshot */
+.feedback-card-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 28px 20px 24px;
+  min-height: 148px;
+  text-decoration: none;
+  color: #202020;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.feedback-card-link:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.feedback-card-icon-wrap {
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feedback-card-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: #202020;
+}
+
+/* Modal */
+.fb-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 16px;
+}
+
+.fb-modal-box {
+  background: #ffffff;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  animation: fbModalIn 0.2s ease-out;
+}
+
+@keyframes fbModalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.fb-modal-header {
+  background: #141b4d;
+  color: #ffffff;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 8px 8px 0 0;
+}
+
+.fb-modal-header h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.fb-modal-close-btn {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px 6px;
+  opacity: 0.85;
+}
+
+.fb-modal-close-btn:hover {
+  opacity: 1;
+}
+
+.fb-modal-body {
+  padding: 20px;
+}
+
+.fb-form-group {
+  margin-bottom: 14px;
+}
+
+.fb-form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 5px;
+}
+
+.fb-form-group input,
+.fb-form-group select,
+.fb-form-group textarea {
+  width: 100%;
+  padding: 9px 12px;
+  font-size: 0.925rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  color: #1e293b;
+  background: #ffffff;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.fb-form-group input:focus,
+.fb-form-group select:focus,
+.fb-form-group textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.fb-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .fb-form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fb-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.fb-btn-cancel {
+  padding: 9px 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #475569;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.fb-btn-cancel:hover {
+  background: #e2e8f0;
+}
+
+.fb-btn-submit {
+  padding: 9px 22px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: #910048;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.fb-btn-submit:hover {
+  background: #5e002f;
+}
+
+/* Success Banner */
+.fb-success-banner {
+  text-align: center;
+  padding: 20px 10px;
+}
+
+.fb-success-icon {
+  font-size: 2.75rem;
+  margin-bottom: 10px;
+}
+
+.fb-success-banner h4 {
+  font-size: 1.25rem;
+  color: #047857;
+  margin: 0 0 8px;
+  font-weight: 700;
+}
+
+.fb-success-banner p {
+  color: #475569;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+}
+
+.fb-ref-badge {
+  display: inline-block;
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  padding: 5px 12px;
+  border-radius: 16px;
+  font-weight: 700;
+  margin: 10px 0 14px;
+}

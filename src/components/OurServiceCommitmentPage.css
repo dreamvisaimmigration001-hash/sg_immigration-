@@ -1,0 +1,308 @@
+/* ==========================================================================
+   Our Service Commitment Page Styles
+   Official Singapore ICA Standards, Tables & Accordions
+   ========================================================================== */
+
+.service-commitment-wrapper {
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.commitment-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 4rem 1rem;
+}
+
+.commitment-header {
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.commitment-main-title {
+  font-size: 30px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 1rem 0;
+  line-height: 1.25;
+  letter-spacing: -0.2px;
+}
+
+.commitment-title-divider {
+  border: none;
+  border-top: 1px solid #d9d9d6;
+  margin: 0 0 1.5rem 0;
+  width: 100%;
+}
+
+/* Quicklinks Clean Text Nav Bar */
+.commitment-quicklinks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+  background: transparent;
+  padding: 8px 0 16px 0;
+  border: none;
+  margin-bottom: 1.75rem;
+  box-shadow: none;
+}
+
+.commitment-quicklink-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: #0076a8;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.15s ease;
+  line-height: 1.45;
+  text-align: left;
+}
+
+.commitment-quicklink-btn:hover {
+  color: #005a82;
+  text-decoration: underline;
+  background: none;
+  border: none;
+}
+
+.commitment-quicklink-btn:focus,
+.commitment-quicklink-btn:active {
+  outline: none;
+  background: none;
+}
+
+/* Introduction Lead Content */
+.commitment-intro {
+  color: #282828;
+  font-size: 15.5px;
+  line-height: 1.7;
+  margin-bottom: 2.25rem;
+}
+
+.commitment-intro p {
+  margin: 0 0 1rem 0;
+}
+
+.commitment-intro ul {
+  padding-left: 1.5rem;
+  margin: 0.75rem 0 1rem 0;
+}
+
+.commitment-intro li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+/* Accordion Component */
+.commitment-accordion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 1.5rem;
+}
+
+.commitment-accordion-item {
+  border: none;
+  border-top: 1px solid #e0e4e5;
+  background-color: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 4px 0;
+}
+
+.commitment-accordion-item:last-child {
+  border-bottom: 1px solid #e0e4e5;
+}
+
+.commitment-accordion-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 18px 0 14px 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 20px;
+  font-weight: 700;
+  color: #141b4d;
+  transition: color 0.2s ease;
+}
+
+.commitment-accordion-header:hover {
+  background-color: transparent;
+  color: #1c76d5;
+}
+
+.commitment-accordion-header.open {
+  background-color: transparent;
+  color: #141b4d;
+}
+
+.commitment-header-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: #141b4d;
+  line-height: 1.35;
+}
+
+.commitment-chevron {
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+
+.commitment-accordion-body {
+  padding: 8px 0 28px 0;
+  border: none;
+  background-color: transparent;
+  color: #282828;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.commitment-charter-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #282828;
+  margin: 0 0 1rem 0;
+}
+
+/* Tables in Accordions */
+.commitment-table-wrapper {
+  overflow-x: auto;
+  margin: 1.25rem 0 1.75rem 0;
+  border-radius: 4px;
+  border: 1px solid #d0d7de;
+}
+
+.commitment-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  min-width: 600px;
+}
+
+.commitment-table th,
+.commitment-table td {
+  padding: 12px 16px;
+  border: 1px solid #e0e4e5;
+  font-size: 14.5px;
+  line-height: 1.55;
+  vertical-align: middle;
+}
+
+.commitment-table thead tr th,
+.commitment-table tr.main-head th,
+.commitment-table tr.main-head td {
+  background-color: #141b4d;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 15px;
+  border-color: #28336d;
+}
+
+.commitment-table tr.sub-head th,
+.commitment-table tr.sub-head td {
+  background-color: #97999b;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  border-color: #838587;
+}
+
+.commitment-table tbody tr:nth-child(even) {
+  background-color: #fbfbfc;
+}
+
+.commitment-table tbody tr:hover {
+  background-color: #f1f5f9;
+}
+
+.commitment-table strong {
+  color: #141b4d;
+}
+
+.commitment-footnote {
+  font-size: 13.5px;
+  color: #686868;
+  font-style: italic;
+  margin-top: -0.75rem;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.commitment-section-subtitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #141b4d;
+  margin: 1.75rem 0 0.5rem 0;
+}
+
+/* Poster Image */
+.commitment-poster-wrapper {
+  margin-top: 1.5rem;
+  text-align: left;
+  max-width: 540px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.commitment-poster-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.commitment-respect-img {
+  margin-top: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .commitment-main-title {
+    font-size: 24px;
+  }
+
+  .commitment-header-text,
+  .commitment-accordion-header {
+    font-size: 17px;
+    padding: 14px 0 10px 0;
+  }
+
+  .commitment-accordion-body {
+    padding: 6px 0 20px 0;
+  }
+
+  .commitment-poster-wrapper {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .commitment-poster-img {
+    width: 100%;
+    max-width: 100%;
+    min-width: unset;
+  }
+
+  .commitment-quicklinks {
+    flex-direction: column;
+    position: static;
+  }
+
+  .commitment-quicklink-btn {
+    width: 100%;
+  }
+}

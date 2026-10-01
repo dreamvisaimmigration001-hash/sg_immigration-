@@ -1,0 +1,311 @@
+/* Statistics Page CSS matching official ICA styles */
+
+.statistics-page {
+  background-color: #f7f9fa;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.statistics-page .main-body {
+  flex: 1;
+  padding-bottom: 60px;
+}
+
+.statistics-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.statistics-page .my-bread-crumbs-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #282828;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.statistics-page hr {
+  border: 0;
+  height: 1px;
+  background-color: #e0e4e5;
+  margin: 1rem 0 1.5rem 0;
+}
+
+/* Quicklinks Sticky Nav */
+.statistics-page .section-nav.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #ffffff;
+  padding: 12px 0;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.statistics-page .quicklinks-item {
+  background-color: #f0f4f8;
+  color: #1c76d5;
+  border: 1px solid #d0dce5;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  display: inline-flex;
+  align-items: center;
+}
+
+.statistics-page .quicklinks-item:hover {
+  background-color: #1c76d5;
+  color: #ffffff;
+  border-color: #1c76d5;
+  box-shadow: 0 2px 6px rgba(28, 118, 213, 0.25);
+}
+
+.statistics-page .quicklinks-item:focus-visible {
+  outline: 2px solid #1c76d5;
+  outline-offset: 2px;
+}
+
+/* Standard Content / Article Notice */
+.statistics-page .standard-content {
+  margin-top: 1rem;
+}
+
+.statistics-page .article-notice {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #424242;
+  margin-bottom: 2rem;
+  padding: 14px 18px;
+  background-color: #ffffff;
+  border-left: 4px solid #1c76d5;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+/* Accordion Collapse Section */
+.statistics-page .collapse-wrapper {
+  margin-bottom: 2rem;
+  background-color: #ffffff;
+  border: 1px solid #e0e4e5;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.statistics-page .collapse-title.accordion {
+  padding: 20px 24px;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #282828;
+  cursor: pointer;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+  border-bottom: 1px solid transparent;
+  transition: background-color 0.2s ease;
+}
+
+.statistics-page .collapse-title.accordion:hover {
+  background-color: #f9fbfd;
+}
+
+.statistics-page .collapse-title.accordion.active {
+  border-bottom-color: #e0e4e5;
+}
+
+.statistics-page .collapse-title .accordion-arrow {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #1c76d5;
+  flex-shrink: 0;
+}
+
+.statistics-page .collapse-title.accordion.active .accordion-arrow {
+  transform: rotate(180deg);
+}
+
+.statistics-page .collapse-content.panel {
+  padding: 24px;
+  background-color: #ffffff;
+}
+
+.statistics-page .collapse-content p {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: #424242;
+  margin-bottom: 1.5rem;
+}
+
+.statistics-page .collapse-content h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #282828;
+  margin-top: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+/* News Cards Grid for Statistics - 2 Column Horizontal Cards */
+.statistics-page .news-cards--stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 1rem;
+}
+
+.statistics-page .news-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #e0e4e5;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #282828;
+  padding: 16px 20px;
+  min-height: 140px;
+  box-sizing: border-box;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.statistics-page .news-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-color: #b0c4de;
+  text-decoration: none;
+}
+
+/* Cards without images (Excel / SDB bulletins) */
+.statistics-page .news-card--noimg {
+  min-height: 96px;
+  padding: 24px 24px;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.statistics-page .news-card-content-noimg {
+  width: 100%;
+  display: block;
+  background: transparent;
+  padding: 0;
+}
+
+.statistics-page .news-card-content-noimg .news-card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #282828;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.statistics-page .news-card:hover .news-card-content-noimg .news-card-title {
+  color: #1c76d5;
+}
+
+/* Cards with image cover thumbnails - Left square image box, right text */
+.statistics-page .news-card-image {
+  width: 135px;
+  min-width: 135px;
+  max-width: 135px;
+  height: 135px;
+  min-height: 135px;
+  max-height: 135px;
+  aspect-ratio: 1 / 1;
+  margin-right: 20px;
+  background-color: #f1f5f9;
+  border: 1px solid #dbe2ea;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.statistics-page .news-thumb {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+  aspect-ratio: 1 / 1 !important;
+  object-fit: cover !important;
+  object-position: top center !important;
+  display: block !important;
+}
+
+.statistics-page .news-card-content {
+  padding: 0;
+  background-color: transparent;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.statistics-page .news-card-content .news-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #282828;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.statistics-page .news-card:hover .news-card-content .news-card-title {
+  color: #1c76d5;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 900px) {
+  .statistics-page .news-cards--stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .statistics-page .my-bread-crumbs-title {
+    font-size: 1.85rem;
+  }
+  
+  .statistics-page .section-nav.sticky {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .statistics-page .quicklinks-item {
+    width: 100%;
+  }
+  
+  .statistics-page .news-card {
+    padding: 12px 16px;
+    min-height: 110px;
+  }
+
+  .statistics-page .news-card-image {
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+    height: 100px;
+    margin-right: 14px;
+  }
+
+  .statistics-page .collapse-title.accordion {
+    font-size: 1.15rem;
+    padding: 16px;
+  }
+  
+  .statistics-page .collapse-content.panel {
+    padding: 16px;
+  }
+}

@@ -1,0 +1,239 @@
+/* ==========================================================================
+   ICA Public Education Page Styles
+   Pixel-perfect match to official ICA website screenshot
+   ========================================================================== */
+
+.public-education-wrapper {
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.public-education-main {
+  flex: 1;
+  background-color: #ffffff;
+  padding-bottom: 4rem;
+}
+
+.public-education-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.public-education-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #000000;
+  margin: 0 0 1.25rem 0;
+  line-height: 1.25;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.public-education-divider {
+  border: 0;
+  border-top: 1px solid #e0e4e5;
+  margin: 0 0 2rem 0;
+  width: 100%;
+}
+
+.public-education-content {
+  padding-top: 0.25rem;
+}
+
+.public-education-link-item {
+  margin: 0 0 1.35rem 0;
+  line-height: 1.5;
+}
+
+.public-education-link {
+  color: #0084a8;
+  font-size: 1.05rem;
+  font-weight: 400;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.15s ease;
+  font-family: inherit;
+  display: inline-block;
+}
+
+.public-education-link:hover,
+.public-education-link:focus {
+  color: #005a75;
+  text-decoration: underline;
+}
+
+/* Modal for viewing topic details upon clicking */
+.pe-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  backdrop-filter: blur(2px);
+  animation: peFadeIn 0.2s ease-out;
+}
+
+@keyframes peFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.pe-modal {
+  background: #ffffff;
+  border-radius: 8px;
+  max-width: 680px;
+  width: 100%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  animation: peSlideUp 0.25s ease-out;
+}
+
+@keyframes peSlideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.pe-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #e0e4e5;
+  background-color: #f8fafc;
+}
+
+.pe-modal-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #0084a8;
+  background: #e6f4f8;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.pe-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.75rem;
+  line-height: 1;
+  color: #686868;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.pe-modal-close:hover {
+  color: #000;
+}
+
+.pe-modal-body {
+  padding: 1.75rem 1.5rem;
+  overflow-y: auto;
+  line-height: 1.65;
+  color: #282828;
+}
+
+.pe-modal-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #282828;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  line-height: 1.35;
+}
+
+.pe-modal-key-points {
+  background: #f6f8ff;
+  border-left: 4px solid #0084a8;
+  padding: 1rem 1.25rem;
+  border-radius: 0 6px 6px 0;
+  margin: 1.25rem 0;
+}
+
+.pe-modal-key-points h4 {
+  margin: 0 0 0.5rem 0;
+  color: #0084a8;
+  font-size: 0.95rem;
+}
+
+.pe-modal-key-points ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  font-size: 0.9rem;
+  color: #424242;
+}
+
+.pe-modal-key-points li {
+  margin-bottom: 0.4rem;
+}
+
+.pe-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #e0e4e5;
+}
+
+.pe-modal-btn-primary {
+  background-color: #0084a8;
+  color: #ffffff;
+  padding: 8px 18px;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.pe-modal-btn-primary:hover {
+  background-color: #005a75;
+}
+
+.pe-modal-btn-secondary {
+  background: none;
+  border: 1px solid #c7d0d9;
+  border-radius: 4px;
+  padding: 8px 18px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #424242;
+  cursor: pointer;
+}
+
+.pe-modal-btn-secondary:hover {
+  background-color: #f1f4f6;
+}
+
+@media (max-width: 768px) {
+  .public-education-container {
+    padding: 1.25rem 1rem 2.5rem 1rem;
+  }
+  .public-education-heading {
+    font-size: 1.65rem;
+  }
+  .public-education-link {
+    font-size: 1rem;
+  }
+  .public-education-link-item {
+    margin-bottom: 1.15rem;
+  }
+}

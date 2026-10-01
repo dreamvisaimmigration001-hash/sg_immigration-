@@ -1,0 +1,307 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1620 830" width="100%" height="auto" style="background:#ffffff; font-family:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <!-- Enhanced Shadow for Cards -->
+    <filter id="shadow" x="-6%" y="-6%" width="112%" height="116%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2.5" stdDeviation="2.5" flood-color="#000000" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <!-- ================= TOP: COMMISSIONER, ICA ================= -->
+  <g transform="translate(660, 20)">
+    <rect width="300" height="88" rx="10" fill="#1b2a6b" filter="url(#shadow)"/>
+    <text x="150" y="52" fill="#ffffff" font-size="21" font-weight="700" text-anchor="middle">Commissioner, ICA</text>
+  </g>
+
+  <!-- Connectors from Commissioner to DCs -->
+  <line x1="810" y1="108" x2="810" y2="146" stroke="#606060" stroke-width="2.5"/>
+  <line x1="330" y1="146" x2="1300" y2="146" stroke="#606060" stroke-width="2.5"/>
+
+  <!-- Vertical drop lines to 3 DC boxes -->
+  <line x1="330" y1="146" x2="330" y2="174" stroke="#606060" stroke-width="2.5"/>
+  <line x1="865" y1="146" x2="865" y2="174" stroke="#606060" stroke-width="2.5"/>
+  <line x1="1300" y1="146" x2="1300" y2="174" stroke="#606060" stroke-width="2.5"/>
+
+  <!-- ================= COLUMN 1: DEPUTY COMMISSIONER (OPERATIONS) ================= -->
+  <g transform="translate(30, 174)">
+    <!-- DC Operations Header Banner -->
+    <rect width="600" height="84" rx="8" fill="#1b2a6b" filter="url(#shadow)"/>
+    <text x="300" y="38" fill="#ffffff" font-size="20" font-weight="700" text-anchor="middle">Deputy Commissioner</text>
+    <text x="300" y="63" fill="#e0e6f8" font-size="17" font-weight="500" text-anchor="middle">(Operations)</text>
+
+    <!-- Connector lines under DC Operations -->
+    <line x1="300" y1="84" x2="300" y2="114" stroke="#606060" stroke-width="2.5"/>
+    <line x1="70" y1="114" x2="520" y2="114" stroke="#606060" stroke-width="2.5"/>
+
+    <!-- Drops to 4 sub-branches -->
+    <line x1="70" y1="114" x2="70" y2="140" stroke="#606060" stroke-width="2.5"/>
+    <line x1="220" y1="114" x2="220" y2="140" stroke="#606060" stroke-width="2.5"/>
+    <line x1="370" y1="114" x2="370" y2="140" stroke="#606060" stroke-width="2.5"/>
+    <line x1="520" y1="114" x2="520" y2="140" stroke="#606060" stroke-width="2.5"/>
+
+    <!-- Branch 1.1: Operations / Intelligence / Enforcement -->
+    <g transform="translate(0, 140)">
+      <!-- Director (Operations) -->
+      <rect width="140" height="98" rx="9" fill="#eef7ee" stroke="#b2d8b5" stroke-width="2" filter="url(#shadow)"/>
+      <text x="70" y="44" fill="#1b2a6b" font-size="17" font-weight="700" text-anchor="middle">Director</text>
+      <text x="70" y="68" fill="#333333" font-size="15.5" font-weight="500" text-anchor="middle">(Operations)</text>
+
+      <line x1="70" y1="98" x2="70" y2="122" stroke="#606060" stroke-width="2.5"/>
+
+      <!-- Director (Intelligence) -->
+      <g transform="translate(0, 122)">
+        <rect width="140" height="98" rx="9" fill="#faeedd" stroke="#e4caa7" stroke-width="2" filter="url(#shadow)"/>
+        <text x="70" y="44" fill="#1b2a6b" font-size="17" font-weight="700" text-anchor="middle">Director</text>
+        <text x="70" y="68" fill="#333333" font-size="15.5" font-weight="500" text-anchor="middle">(Intelligence)</text>
+      </g>
+
+      <line x1="70" y1="220" x2="70" y2="244" stroke="#606060" stroke-width="2.5"/>
+
+      <!-- Director (Enforcement) -->
+      <g transform="translate(0, 244)">
+        <rect width="140" height="98" rx="9" fill="#faeedd" stroke="#e4caa7" stroke-width="2" filter="url(#shadow)"/>
+        <text x="70" y="44" fill="#1b2a6b" font-size="17" font-weight="700" text-anchor="middle">Director</text>
+        <text x="70" y="68" fill="#333333" font-size="15.5" font-weight="500" text-anchor="middle">(Enforcement)</text>
+      </g>
+    </g>
+
+    <!-- Branch 1.2: Land Domain -->
+    <g transform="translate(150, 140)">
+      <!-- Domain Commander (Land) -->
+      <rect width="140" height="98" rx="9" fill="#f4f8fc" stroke="#7b90a8" stroke-width="2" filter="url(#shadow)"/>
+      <text x="70" y="34" fill="#1b2a6b" font-size="16" font-weight="700" text-anchor="middle">Domain</text>
+      <text x="70" y="54" fill="#1b2a6b" font-size="16" font-weight="700" text-anchor="middle">Commander</text>
+      <text x="70" y="77" fill="#333333" font-size="15.5" font-weight="500" text-anchor="middle">(Land)</text>
+
+      <line x1="70" y1="98" x2="70" y2="122" stroke="#606060" stroke-width="2.5"/>
+
+      <!-- Commander (Woodlands) -->
+      <g transform="translate(0, 122)">
+        <rect width="140" height="98" rx="9" fill="#f4f8fc" stroke="#7b90a8" stroke-width="2" filter="url(#shadow)"/>
+        <text x="70" y="44" fill="#1b2a6b" font-size="17" font-weight="700" text-anchor="middle">Commander</text>
+        <text x="70" y="68" fill="#333333" font-size="15.5" font-weight="500" text-anchor="middle">(Woodlands)</text>
+      </g>
+
+      <line x1="70" y1="220" x2="70" y2="244" stroke="#606060" stroke-width="2.5"/>
+
+      <!-- Commander (Tuas) -->
+      <g transform="translate(0, 244)">
+        <rect width="140" height="98" rx="9" fill="#f4f8fc" stroke="#7b90a8" stroke-width="2" filter="url(#shadow)"/>
+        <text x="70" y="44" fill="#1b2a6b" font-size="17" font-weight="700" text-anchor="middle">Commander</text>
+        <text x="70" y="68" fill="#333333" font-size="15.5" font-weight="500" text-anchor="middle">(Tuas)</text>
+      </g>
+    </g>
+
+    <!-- Branch 1.3: Sea Domain -->
+    <g transform="translate(300, 140)">
+      <!-- Domain Commander (Sea) -->
+      <rect width="140" height="98" rx="9" fill="#f4f8fc" stroke="#7b90a8" stroke-width="2" filter="url(#shadow)"/>
+      <text x="70" y="34" fill="#1b2a6b" font-size="16" font-weight="700" text-anchor="middle">Domain</text>
+      <text x="70" y="54" fill="#1b2a6b" font-size="16" font-weight="700" text-anchor="middle">Commander</text>
+      <text x="70" y="77" fill="#333333" font-size="15.5" font-weight="500" text-anchor="middle">(Sea)</text>
+
+      <line x1="70" y1="98" x2="70" y2="122" stroke="#606060" stroke-width="2.5"/>
+
+      <!-- Commander (Coastal) -->
+      <g transform="translate(0, 122)">
+        <rect width="140" height="98" rx="9" fill="#f4f8fc" stroke="#7b90a8" stroke-width="2" filter="url(#shadow)"/>
+        <text x="70" y="44" fill="#1b2a6b" font-size="17" font-weight="700" text-anchor="middle">Commander</text>
+        <text x="70" y="68" fill="#333333" font-size="15.5" font-weight="500" text-anchor="middle">(Coastal)</text>
+      </g>
+
+      <line x1="70" y1="220" x2="70" y2="244" stroke="#606060" stroke-width="2.5"/>
+
+      <!-- Commander (Ports) -->
+      <g transform="translate(0, 244)">
+        <rect width="140" height="98" rx="9" fill="#f4f8fc" stroke="#7b90a8" stroke-width="2" filter="url(#shadow)"/>
+        <text x="70" y="44" fill="#1b2a6b" font-size="17" font-weight="700" text-anchor="middle">Commander</text>
+        <text x="70" y="68" fill="#333333" font-size="15.5" font-weight="500" text-anchor="middle">(Ports)</text>
+      </g>
+    </g>
+
+    <!-- Branch 1.4: Air Domain -->
+    <g transform="translate(450, 140)">
+      <!-- Domain Commander (Air) -->
+      <rect width="140" height="98" rx="9" fill="#f4f8fc" stroke="#7b90a8" stroke-width="2" filter="url(#shadow)"/>
+      <text x="70" y="34" fill="#1b2a6b" font-size="16" font-weight="700" text-anchor="middle">Domain</text>
+      <text x="70" y="54" fill="#1b2a6b" font-size="16" font-weight="700" text-anchor="middle">Commander</text>
+      <text x="70" y="77" fill="#333333" font-size="15.5" font-weight="500" text-anchor="middle">(Air)</text>
+
+      <line x1="70" y1="98" x2="70" y2="122" stroke="#606060" stroke-width="2.5"/>
+
+      <!-- Commander (Airport) -->
+      <g transform="translate(0, 122)">
+        <rect width="140" height="98" rx="9" fill="#f4f8fc" stroke="#7b90a8" stroke-width="2" filter="url(#shadow)"/>
+        <text x="70" y="44" fill="#1b2a6b" font-size="17" font-weight="700" text-anchor="middle">Commander</text>
+        <text x="70" y="68" fill="#333333" font-size="15.5" font-weight="500" text-anchor="middle">(Airport)</text>
+      </g>
+
+      <line x1="70" y1="220" x2="70" y2="244" stroke="#606060" stroke-width="2.5"/>
+
+      <!-- Commander (Air Cargo) -->
+      <g transform="translate(0, 244)">
+        <rect width="140" height="98" rx="9" fill="#f4f8fc" stroke="#7b90a8" stroke-width="2" filter="url(#shadow)"/>
+        <text x="70" y="44" fill="#1b2a6b" font-size="17" font-weight="700" text-anchor="middle">Commander</text>
+        <text x="70" y="68" fill="#333333" font-size="15.5" font-weight="500" text-anchor="middle">(Air Cargo)</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= COLUMN 2: DEPUTY COMMISSIONER (POLICY & TRANSFORMATION) ================= -->
+  <g transform="translate(685, 174)">
+    <!-- DC Policy & Transformation Header Banner -->
+    <rect width="360" height="84" rx="8" fill="#1b2a6b" filter="url(#shadow)"/>
+    <text x="180" y="38" fill="#ffffff" font-size="20" font-weight="700" text-anchor="middle">Deputy Commissioner</text>
+    <text x="180" y="63" fill="#e0e6f8" font-size="16.5" font-weight="500" text-anchor="middle">(Policy &amp; Transformation)</text>
+
+    <!-- Connector lines -->
+    <line x1="180" y1="84" x2="180" y2="114" stroke="#606060" stroke-width="2.5"/>
+    <line x1="75" y1="114" x2="285" y2="114" stroke="#606060" stroke-width="2.5"/>
+
+    <line x1="75" y1="114" x2="75" y2="140" stroke="#606060" stroke-width="2.5"/>
+    <line x1="285" y1="114" x2="285" y2="140" stroke="#606060" stroke-width="2.5"/>
+
+    <!-- Sub-column 2.1 -->
+    <g transform="translate(0, 140)">
+      <!-- Director (Immigration and Registration) -->
+      <rect width="150" height="98" rx="9" fill="#f4f8fc" stroke="#7b90a8" stroke-width="2" filter="url(#shadow)"/>
+      <text x="75" y="32" fill="#1b2a6b" font-size="16.5" font-weight="700" text-anchor="middle">Director</text>
+      <text x="75" y="54" fill="#333333" font-size="14.5" font-weight="500" text-anchor="middle">(Immigration</text>
+      <text x="75" y="74" fill="#333333" font-size="14.5" font-weight="500" text-anchor="middle">and Registration)</text>
+
+      <line x1="75" y1="98" x2="75" y2="122" stroke="#606060" stroke-width="2.5"/>
+
+      <!-- Director (Customer Operations) -->
+      <g transform="translate(0, 122)">
+        <rect width="150" height="98" rx="9" fill="#f4f8fc" stroke="#7b90a8" stroke-width="2" filter="url(#shadow)"/>
+        <text x="75" y="34" fill="#1b2a6b" font-size="16.5" font-weight="700" text-anchor="middle">Director</text>
+        <text x="75" y="57" fill="#333333" font-size="15" font-weight="500" text-anchor="middle">(Customer</text>
+        <text x="75" y="76" fill="#333333" font-size="15" font-weight="500" text-anchor="middle">Operations)</text>
+      </g>
+
+      <line x1="75" y1="220" x2="75" y2="244" stroke="#606060" stroke-width="2.5"/>
+
+      <!-- Director (Services) -->
+      <g transform="translate(0, 244)">
+        <rect width="150" height="98" rx="9" fill="#f4f8fc" stroke="#7b90a8" stroke-width="2" filter="url(#shadow)"/>
+        <text x="75" y="34" fill="#1b2a6b" font-size="16.5" font-weight="700" text-anchor="middle">Director</text>
+        <text x="75" y="57" fill="#333333" font-size="14.5" font-weight="500" text-anchor="middle">(Immigration</text>
+        <text x="75" y="76" fill="#333333" font-size="14.5" font-weight="500" text-anchor="middle">Services)</text>
+      </g>
+    </g>
+
+    <!-- Sub-column 2.2 -->
+    <g transform="translate(210, 140)">
+      <!-- Director (Planning & Review) -->
+      <rect width="150" height="98" rx="9" fill="#f4f8fc" stroke="#7b90a8" stroke-width="2" filter="url(#shadow)"/>
+      <text x="75" y="34" fill="#1b2a6b" font-size="16.5" font-weight="700" text-anchor="middle">Director</text>
+      <text x="75" y="57" fill="#333333" font-size="15" font-weight="500" text-anchor="middle">(Planning &amp;</text>
+      <text x="75" y="76" fill="#333333" font-size="15" font-weight="500" text-anchor="middle">Review)</text>
+
+      <line x1="75" y1="98" x2="75" y2="122" stroke="#606060" stroke-width="2.5"/>
+
+      <!-- Director (Policy & Development) -->
+      <g transform="translate(0, 122)">
+        <rect width="150" height="98" rx="9" fill="#f4f8fc" stroke="#7b90a8" stroke-width="2" filter="url(#shadow)"/>
+        <text x="75" y="34" fill="#1b2a6b" font-size="16.5" font-weight="700" text-anchor="middle">Director</text>
+        <text x="75" y="57" fill="#333333" font-size="15" font-weight="500" text-anchor="middle">(Policy &amp;</text>
+        <text x="75" y="76" fill="#333333" font-size="15" font-weight="500" text-anchor="middle">Development)</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= COLUMN 3: DEPUTY COMMISSIONER (CAPABILITY & TECHNOLOGY DEVELOPMENT) ================= -->
+  <g transform="translate(1085, 174)">
+    <!-- DC Capability & Technology Header Banner -->
+    <rect width="505" height="84" rx="8" fill="#1b2a6b" filter="url(#shadow)"/>
+    <text x="252" y="38" fill="#ffffff" font-size="20" font-weight="700" text-anchor="middle">Deputy Commissioner</text>
+    <text x="252" y="63" fill="#e0e6f8" font-size="16.5" font-weight="500" text-anchor="middle">(Capability &amp; Technology Development)</text>
+
+    <!-- Connector lines -->
+    <line x1="252" y1="84" x2="252" y2="114" stroke="#606060" stroke-width="2.5"/>
+    <line x1="85" y1="114" x2="340" y2="114" stroke="#606060" stroke-width="2.5"/>
+
+    <line x1="85" y1="114" x2="85" y2="140" stroke="#606060" stroke-width="2.5"/>
+    <line x1="340" y1="114" x2="340" y2="140" stroke="#606060" stroke-width="2.5"/>
+
+    <!-- Sub-column 3.1 (Green cards) -->
+    <g transform="translate(0, 140)">
+      <!-- Director (Manpower) -->
+      <rect width="170" height="98" rx="9" fill="#eef7ee" stroke="#b2d8b5" stroke-width="2" filter="url(#shadow)"/>
+      <text x="85" y="44" fill="#1b2a6b" font-size="17" font-weight="700" text-anchor="middle">Director</text>
+      <text x="85" y="68" fill="#333333" font-size="15.5" font-weight="500" text-anchor="middle">(Manpower)</text>
+
+      <line x1="85" y1="98" x2="85" y2="122" stroke="#606060" stroke-width="2.5"/>
+
+      <!-- Director (Data) -->
+      <g transform="translate(0, 122)">
+        <rect width="170" height="98" rx="9" fill="#eef7ee" stroke="#b2d8b5" stroke-width="2" filter="url(#shadow)"/>
+        <text x="85" y="44" fill="#1b2a6b" font-size="17" font-weight="700" text-anchor="middle">Director</text>
+        <text x="85" y="68" fill="#333333" font-size="15.5" font-weight="500" text-anchor="middle">(Data)</text>
+      </g>
+
+      <line x1="85" y1="220" x2="85" y2="244" stroke="#606060" stroke-width="2.5"/>
+
+      <!-- Director (Operations Technology) -->
+      <g transform="translate(0, 244)">
+        <rect width="170" height="98" rx="9" fill="#eef7ee" stroke="#b2d8b5" stroke-width="2" filter="url(#shadow)"/>
+        <text x="85" y="34" fill="#1b2a6b" font-size="17" font-weight="700" text-anchor="middle">Director</text>
+        <text x="85" y="57" fill="#333333" font-size="15" font-weight="500" text-anchor="middle">(Operations</text>
+        <text x="85" y="76" fill="#333333" font-size="15" font-weight="500" text-anchor="middle">Technology)</text>
+      </g>
+    </g>
+
+    <!-- Sub-column 3.2 (Green cards) -->
+    <g transform="translate(255, 140)">
+      <!-- Commander (Training) -->
+      <rect width="170" height="98" rx="9" fill="#eef7ee" stroke="#b2d8b5" stroke-width="2" filter="url(#shadow)"/>
+      <text x="85" y="44" fill="#1b2a6b" font-size="17" font-weight="700" text-anchor="middle">Commander</text>
+      <text x="85" y="68" fill="#333333" font-size="15.5" font-weight="500" text-anchor="middle">(Training)</text>
+
+      <line x1="85" y1="98" x2="85" y2="122" stroke="#606060" stroke-width="2.5"/>
+
+      <!-- Director (Logistics, Infrastructure & Finance) -->
+      <g transform="translate(0, 122)">
+        <rect width="170" height="98" rx="9" fill="#eef7ee" stroke="#b2d8b5" stroke-width="2" filter="url(#shadow)"/>
+        <text x="85" y="30" fill="#1b2a6b" font-size="16" font-weight="700" text-anchor="middle">Director</text>
+        <text x="85" y="50" fill="#333333" font-size="13" font-weight="500" text-anchor="middle">(Logistics,</text>
+        <text x="85" y="66" fill="#333333" font-size="13" font-weight="500" text-anchor="middle">Infrastructure &amp;</text>
+        <text x="85" y="82" fill="#333333" font-size="13" font-weight="500" text-anchor="middle">Finance)</text>
+      </g>
+
+      <line x1="85" y1="220" x2="85" y2="244" stroke="#606060" stroke-width="2.5"/>
+
+      <!-- Director (Corporate Communications & Service) -->
+      <g transform="translate(0, 244)">
+        <rect width="170" height="98" rx="9" fill="#eef7ee" stroke="#b2d8b5" stroke-width="2" filter="url(#shadow)"/>
+        <text x="85" y="30" fill="#1b2a6b" font-size="16" font-weight="700" text-anchor="middle">Director</text>
+        <text x="85" y="50" fill="#333333" font-size="13" font-weight="500" text-anchor="middle">(Corporate</text>
+        <text x="85" y="66" fill="#333333" font-size="13" font-weight="500" text-anchor="middle">Communications</text>
+        <text x="85" y="82" fill="#333333" font-size="13" font-weight="500" text-anchor="middle">&amp; Service)</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= LEGEND SECTION ================= -->
+  <g transform="translate(30, 715)">
+    <!-- Legend Label -->
+    <text x="0" y="24" fill="#3e4756" font-size="19" font-weight="600">Legend:</text>
+
+    <!-- Line Unit Badge -->
+    <g transform="translate(0, 38)">
+      <rect width="145" height="48" rx="8" fill="#f4f8fc" stroke="#7b90a8" stroke-width="1.8" filter="url(#shadow)"/>
+      <text x="72.5" y="30" fill="#1b2a6b" font-size="16" font-weight="500" text-anchor="middle">Line Unit</text>
+    </g>
+
+    <!-- Specialist Staff Unit Badge -->
+    <g transform="translate(165, 38)">
+      <rect width="210" height="48" rx="8" fill="#faeedd" stroke="#e4caa7" stroke-width="1.8" filter="url(#shadow)"/>
+      <text x="105" y="30" fill="#1b2a6b" font-size="16" font-weight="500" text-anchor="middle">Specialist Staff Unit</text>
+    </g>
+
+    <!-- Staff Unit Badge -->
+    <g transform="translate(395, 38)">
+      <rect width="145" height="48" rx="8" fill="#eef7ee" stroke="#b2d8b5" stroke-width="1.8" filter="url(#shadow)"/>
+      <text x="72.5" y="30" fill="#1b2a6b" font-size="16" font-weight="500" text-anchor="middle">Staff Unit</text>
+    </g>
+  </g>
+</svg>

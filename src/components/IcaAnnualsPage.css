@@ -1,0 +1,329 @@
+/* ==========================================================================
+   ICA Annuals Page Styles
+   1:1 Pixel-Perfect replica of official Immigration & Checkpoints Authority Annuals
+   ========================================================================== */
+
+.ica-annuals-page-wrapper {
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: #282828;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.listing-content {
+  padding: 1.5rem 0 3rem 0;
+}
+
+.listing-content h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #282828;
+  margin: 1.5rem 0 1.5rem 0;
+  line-height: 1.4;
+}
+
+/* Back button */
+.back-button {
+  margin-bottom: 1.5rem;
+}
+
+.back-button button {
+  background: none;
+  border: 1px solid #c7d0d9;
+  border-radius: 4px;
+  padding: 6px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #282828;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.back-button button:hover {
+  background-color: #f1f4f6;
+  border-color: #9cb0c1;
+  color: #000000;
+}
+
+/* Annuals search bar row */
+.annuals-search-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  max-width: 500px;
+}
+
+.annuals-search-input {
+  width: 100%;
+  height: 40px;
+  padding: 0 1rem;
+  font-size: 15px;
+  color: #282828;
+  border: 1px solid #767676;
+  border-radius: 4px;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.annuals-search-input:focus {
+  border-color: #1c76d5;
+  box-shadow: 0 0 0 3px rgba(28, 118, 213, 0.15);
+}
+
+.annuals-clear-search-btn {
+  height: 40px;
+  padding: 0 1rem;
+  background-color: #f1f4f6;
+  border: 1px solid #c7d0d9;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #555555;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.annuals-clear-search-btn:hover {
+  background-color: #e2e8f0;
+  color: #111111;
+}
+
+/* Annuals Cards Layout */
+.annuals .news-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+.annuals .news-card {
+  display: flex;
+  flex-direction: row;
+  background: #ffffff;
+  border: 1px solid #e0e4e5;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  min-height: 200px;
+}
+
+.annuals .news-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  border-color: #b0c4de;
+}
+
+.annuals .news-card a {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  text-decoration: none;
+  color: inherit;
+  padding: 1.5rem 1.75rem;
+  justify-content: flex-start;
+}
+
+.annuals .news-card-image {
+  flex-shrink: 0;
+  width: 240px;
+  min-height: 200px;
+  background-color: #0f172a;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.annuals .news-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.annuals .news-card:hover .news-thumb {
+  transform: scale(1.02);
+}
+
+.annuals .news-card-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.annuals .news-card-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1c76d5;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.annuals .news-card:hover .news-card-title {
+  text-decoration: underline;
+  color: #125396;
+}
+
+.annuals .news-card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.annuals .news-card-body h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #282828;
+  margin: 0 0 0.75rem 0;
+  line-height: 1.4;
+}
+
+.annuals .news-card-body p {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #555555;
+  margin: 0;
+  white-space: pre-line;
+}
+
+/* Modal styles for annual preview */
+.annual-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  padding: 1.5rem;
+  animation: fadeInModal 0.2s ease-out;
+}
+
+.annual-modal {
+  background: #ffffff;
+  border-radius: 8px;
+  max-width: 650px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+}
+
+.annual-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #e0e4e5;
+}
+
+.annual-modal-badge {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #1c76d5;
+  text-transform: uppercase;
+}
+
+.annual-modal-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  line-height: 1;
+  color: #666666;
+  cursor: pointer;
+  padding: 0;
+}
+
+.annual-modal-close:hover {
+  color: #000000;
+}
+
+.annual-modal-body {
+  padding: 1.75rem 1.5rem;
+}
+
+.annual-modal-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1c76d5;
+  margin: 0 0 0.5rem 0;
+}
+
+.annual-modal-subtitle {
+  font-size: 17px;
+  font-weight: 600;
+  color: #282828;
+  margin: 0 0 1rem 0;
+}
+
+.annual-modal-desc {
+  font-size: 15px;
+  line-height: 1.65;
+  color: #424242;
+  white-space: pre-line;
+  margin: 0 0 1.75rem 0;
+}
+
+.annual-modal-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.annual-modal-download-btn {
+  display: inline-flex;
+  align-items: center;
+  background-color: #1c76d5;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  transition: background-color 0.2s ease;
+}
+
+.annual-modal-download-btn:hover {
+  background-color: #125396;
+  color: #ffffff;
+}
+
+@keyframes fadeInModal {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .annuals .news-card {
+    flex-direction: column;
+  }
+
+  .annuals .news-card-image {
+    width: 100%;
+    height: 180px;
+  }
+
+  .annuals .news-card a {
+    padding: 1.25rem 1rem;
+  }
+
+  .annuals .news-card-title {
+    font-size: 18px;
+  }
+}

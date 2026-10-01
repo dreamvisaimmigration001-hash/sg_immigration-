@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 350" width="100%" height="100%">
+  <!-- Right Light Grey Background -->
+  <rect width="600" height="350" fill="#c7d0d9" />
+  
+  <!-- Red Accent Diagonal Stripe -->
+  <polygon points="0,0 470,0 420,350 0,350" fill="#db132a" />
+  
+  <!-- Left Deep Navy/Blue Polygon -->
+  <polygon points="0,0 445,0 395,350 0,350" fill="#1b306d" />
+  
+  <defs>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#233d87" />
+      <stop offset="100%" stop-color="#142452" />
+    </linearGradient>
+  </defs>
+  <polygon points="0,0 445,0 395,350 0,350" fill="url(#blueGrad)" opacity="0.6" />
+
+  <!-- "Media Release" Text -->
+  <text x="35" y="275" font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="34" font-weight="700" fill="#ffffff" letter-spacing="-0.5px">Media Release</text>
+</svg>

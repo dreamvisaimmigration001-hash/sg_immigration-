@@ -1,0 +1,147 @@
+/* ==========================================================================
+   Navigate Away Confirmation Modal Styles (Matching Official ICA Design)
+   ========================================================================== */
+
+.navigate-away-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+  backdrop-filter: blur(1.5px);
+  animation: navAwayFadeIn 0.15s ease-out;
+}
+
+.navigate-away-modal {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 780px;
+  margin: 1.5rem;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.22);
+  border-radius: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  animation: navAwayScaleUp 0.15s ease-out;
+}
+
+/* Maroon/Magenta Accent Bar */
+.navigate-away-top-bar {
+  height: 6px;
+  background-color: #720026;
+  width: 100%;
+}
+
+.navigate-away-content {
+  padding: 28px 36px 32px 36px;
+}
+
+/* Modal Title */
+.navigate-away-title {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #212529;
+  margin: 0 0 16px 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.navigate-away-divider {
+  border: 0;
+  border-top: 1px solid #e9ecef;
+  margin: 0 0 20px 0;
+  width: 100%;
+}
+
+/* Body Text */
+.navigate-away-body {
+  text-align: center;
+  color: #495057;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 24px 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.navigate-away-body p {
+  margin: 0 0 6px 0;
+}
+
+.navigate-away-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* Actions Row */
+.navigate-away-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+/* Rounded Pill Action Button */
+.navigate-away-btn {
+  background-color: #2e6095;
+  color: #ffffff;
+  border: none;
+  padding: 9px 30px;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+  box-shadow: 0 2px 6px rgba(46, 96, 149, 0.25);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  user-select: none;
+}
+
+.navigate-away-btn:hover {
+  background-color: #234c76;
+  box-shadow: 0 4px 10px rgba(46, 96, 149, 0.35);
+}
+
+.navigate-away-btn:active {
+  transform: scale(0.98);
+}
+
+/* Keyframe Animations */
+@keyframes navAwayFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes navAwayScaleUp {
+  from {
+    opacity: 0.92;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .navigate-away-content {
+    padding: 20px 20px 24px 20px;
+  }
+  .navigate-away-title {
+    font-size: 1.25rem;
+  }
+  .navigate-away-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .navigate-away-btn {
+    width: 100%;
+  }
+}

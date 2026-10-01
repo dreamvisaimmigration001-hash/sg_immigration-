@@ -1,0 +1,185 @@
+/* ==========================================================================
+   Vision, Mission & Values Page Styles
+   Pixel-perfect match to official ICA Reference & Screenshot
+   ========================================================================== */
+
+.vision-mission-values-page-wrapper {
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.vmv-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2rem 1rem;
+}
+
+/* Page Title & Top Divider */
+.vmv-header {
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.vmv-main-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 1rem 0;
+  line-height: 1.25;
+  letter-spacing: -0.2px;
+}
+
+.vmv-title-divider {
+  border: none;
+  border-top: 1px solid #d9d9d6;
+  margin: 0;
+  width: 100%;
+}
+
+/* Content Body */
+.vmv-content-body {
+  max-width: 100%;
+}
+
+.vmv-section-container {
+  font-size: 16px;
+}
+
+/* Introductory Paragraphs */
+.vmv-intro-section {
+  margin-bottom: 1.5rem;
+}
+
+.vmv-intro-paragraph {
+  font-size: 16px;
+  line-height: 2rem;
+  color: rgba(32, 32, 32, 1);
+  margin: 0;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-weight: 400;
+}
+
+.vmv-link {
+  color: #0077b6;
+  text-decoration: none;
+  transition: color 0.15s ease, text-decoration 0.15s ease;
+}
+
+.vmv-link:hover {
+  color: #005684;
+  text-decoration: underline;
+}
+
+/* Individual Sections */
+.vmv-section {
+  margin-bottom: 0.5rem;
+}
+
+.vmv-section-heading {
+  font-size: 1.8em; /* ~28.8px */
+  font-weight: 400;
+  color: rgba(21, 56, 85, 1);
+  padding-top: 2rem;
+  padding-bottom: 0.75rem;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.vmv-statement-title {
+  font-size: 1em; /* 16px */
+  font-weight: 400;
+  color: rgba(32, 32, 32, 1);
+  line-height: 2rem;
+  margin: 0;
+  padding-top: 0.25rem;
+  padding-bottom: 0.5rem;
+}
+
+/* Pledge Section */
+.vmv-section--pledge {
+  margin-bottom: 1.5rem;
+}
+
+.vmv-pledge-paragraphs {
+  display: flex;
+  flex-direction: column;
+}
+
+.vmv-pledge-paragraphs p {
+  font-size: 1em; /* 16px */
+  font-weight: 400;
+  color: rgba(32, 32, 32, 1);
+  line-height: 2rem;
+  margin: 0;
+  padding-top: 0.25rem;
+  padding-bottom: 0.75rem;
+}
+
+/* Official ICA Banner Image - Expanded Left, Right and Bottom */
+.vmv-banner-wrapper {
+  width: 100%;
+  margin-top: 1.5rem;
+  margin-bottom: 2.5rem;
+  overflow: hidden;
+}
+
+.vmv-banner-img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  min-height: 340px;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  border-bottom: 4px solid #005bad;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Responsive adjustments */
+@media (min-width: 992px) {
+  .vmv-banner-wrapper {
+    width: calc(100% + 3rem);
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    margin-top: 1.75rem;
+    margin-bottom: 2.5rem;
+  }
+  
+  .vmv-banner-img {
+    min-height: 380px;
+  }
+}
+
+@media (max-width: 768px) {
+  .vmv-main-title {
+    font-size: 24px;
+  }
+
+  .vmv-section-heading {
+    font-size: 1.5em;
+    padding-top: 1.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .vmv-intro-paragraph,
+  .vmv-statement-title,
+  .vmv-pledge-paragraphs p {
+    font-size: 15px;
+    line-height: 1.75rem;
+  }
+
+  .vmv-banner-wrapper {
+    width: calc(100% + 2rem);
+    margin-left: -1rem;
+    margin-right: -1rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .vmv-banner-img {
+    min-height: 200px;
+  }
+}

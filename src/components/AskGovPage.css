@@ -1,0 +1,661 @@
+/* ==========================================================================
+   AskGov ICA Official Help & Knowledge Base Page Styles
+   Reference: https://ask.gov.sg/ica
+   ========================================================================== */
+
+.askgov-fullpage {
+  background-color: #fcfcfc;
+  color: #202020;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.askgov-main-container {
+  max-width: 1190px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  width: 100%;
+}
+
+/* Nav Header */
+.askgov-site-nav {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.75rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.askgov-nav-container {
+  max-width: 1190px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.askgov-brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.askgov-text-brand {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.askgov-blue {
+  color: #064cbd;
+}
+
+.askgov-dark {
+  color: #202020;
+}
+
+.askgov-return-link {
+  background-color: transparent;
+  border: 1px solid #064cbd;
+  color: #064cbd;
+  padding: 0.4rem 1rem;
+  border-radius: 9999px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.askgov-return-link:hover {
+  background-color: #064cbd;
+  color: #ffffff;
+}
+
+/* Hero Section */
+.askgov-hero-section {
+  background: linear-gradient(180deg, #eef4ff 0%, #f7faff 60%, #ffffff 100%);
+  padding: 3.5rem 1.25rem 2.5rem 1.25rem;
+  text-align: center;
+}
+
+.askgov-hero-container {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.askgov-agency-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #ffffff;
+  padding: 0.35rem 0.9rem;
+  border-radius: 9999px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e5e7eb;
+  margin-bottom: 1.5rem;
+}
+
+.askgov-agency-logo {
+  height: 20px;
+  width: auto;
+}
+
+.askgov-agency-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.askgov-hero-title {
+  font-size: 38px;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin: 0 0 2rem 0;
+}
+
+.askgov-wave-emoji {
+  display: inline-block;
+  animation: wave 2.2s infinite;
+  transform-origin: 70% 70%;
+}
+
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(14deg); }
+  20% { transform: rotate(-8deg); }
+  30% { transform: rotate(14deg); }
+  40% { transform: rotate(-4deg); }
+  50% { transform: rotate(10deg); }
+  60% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Search Bar */
+.askgov-search-bar-wrapper {
+  width: 100%;
+  max-width: 680px;
+}
+
+.askgov-search-input-box {
+  background-color: #ffffff;
+  border: 2px solid #064cbd;
+  border-radius: 16px;
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 8px 24px rgba(6, 76, 189, 0.12);
+  transition: box-shadow 0.2s ease;
+}
+
+.askgov-search-input-box:focus-within {
+  box-shadow: 0 8px 30px rgba(6, 76, 189, 0.2);
+}
+
+.askgov-search-icon {
+  color: #064cbd;
+  flex-shrink: 0;
+}
+
+.askgov-search-field {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  color: #111827;
+  outline: none;
+}
+
+.askgov-search-field::placeholder {
+  color: #9ca3af;
+  font-size: 15px;
+}
+
+.askgov-clear-search {
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+}
+
+/* Quick Links Section */
+.askgov-quicklinks-section {
+  padding: 2rem 0 3rem 0;
+  background-color: #ffffff;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.askgov-section-heading {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 1.25rem 0;
+}
+
+.askgov-quicklinks-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.askgov-ql-card {
+  background-color: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.25rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  text-align: left;
+  cursor: pointer;
+  min-height: 100px;
+  transition: all 0.2s ease;
+}
+
+.askgov-ql-card:hover {
+  background-color: #ffffff;
+  border-color: #064cbd;
+  box-shadow: 0 4px 14px rgba(6, 76, 189, 0.08);
+  transform: translateY(-2px);
+}
+
+.askgov-ql-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e293b;
+  line-height: 1.35;
+  flex: 1;
+}
+
+.askgov-ql-icon-wrap {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.askgov-ql-icon-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Two Column Content */
+.askgov-content-main {
+  padding: 3rem 0 5rem 0;
+}
+
+.askgov-columns-wrap {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+/* Topics Sidebar */
+.askgov-sidebar-topics {
+  background-color: #ffffff;
+  border: 2px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 1.25rem 0.75rem;
+  position: sticky;
+  top: 80px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+
+.askgov-sidebar-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+  padding: 0 0.75rem 0.75rem 0.75rem;
+  margin: 0;
+}
+
+.askgov-sidebar-hr {
+  border: none;
+  border-top: 1px solid #f3f4f6;
+  margin: 0 0 0.5rem 0;
+}
+
+.askgov-topics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.askgov-topic-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.askgov-topic-btn {
+  background: transparent;
+  border: none;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  transition: all 0.15s ease;
+}
+
+.askgov-topic-btn:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+.askgov-topic-btn.is-selected {
+  background-color: #eef4ff;
+  color: #064cbd;
+  font-weight: 600;
+}
+
+.askgov-chevron {
+  transition: transform 0.2s ease;
+}
+
+.askgov-chevron.open {
+  transform: rotate(180deg);
+}
+
+.askgov-subtopics-list {
+  list-style: none;
+  padding: 0 0 0 1rem;
+  margin: 0.25rem 0 0.5rem 0;
+  border-left: 2px solid #e5e7eb;
+}
+
+.askgov-subtopic-btn {
+  background: transparent;
+  border: none;
+  padding: 0.4rem 0.6rem;
+  font-size: 13px;
+  color: #4b5563;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 4px;
+}
+
+.askgov-subtopic-btn:hover {
+  color: #064cbd;
+  background-color: #f8fafc;
+}
+
+/* Articles Column */
+.askgov-articles-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.askgov-articles-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.askgov-article-count {
+  font-size: 13.5px;
+  color: #6b7280;
+}
+
+.askgov-articles-list {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.askgov-article-item {
+  border-bottom: 1px solid #f3f4f6;
+  transition: background-color 0.15s ease;
+}
+
+.askgov-article-item:last-child {
+  border-bottom: none;
+}
+
+.askgov-article-header-row {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  cursor: pointer;
+}
+
+.askgov-article-header-row:hover {
+  background-color: #fafbfc;
+}
+
+.askgov-article-avatar {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.askgov-article-info {
+  flex: 1;
+}
+
+.askgov-article-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+  line-height: 1.45;
+  margin: 0 0 0.5rem 0;
+}
+
+.askgov-article-header-row:hover .askgov-article-title {
+  color: #064cbd;
+}
+
+.askgov-article-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.askgov-meta-like-btn {
+  background: transparent;
+  border: 1px solid #e5e7eb;
+  border-radius: 9999px;
+  padding: 0.2rem 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 12.5px;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.askgov-meta-like-btn:hover {
+  border-color: #064cbd;
+  color: #064cbd;
+}
+
+.askgov-meta-like-btn.active {
+  background-color: #eef4ff;
+  border-color: #064cbd;
+  color: #064cbd;
+  font-weight: 600;
+}
+
+.askgov-article-arrow {
+  color: #9ca3af;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.askgov-article-body {
+  padding: 0 1.5rem 1.5rem 3.75rem;
+  color: #374151;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.askgov-article-body p {
+  margin: 0;
+}
+
+/* Need Help Card */
+.askgov-need-help-card {
+  background-color: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.5rem 2rem;
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.askgov-need-help-text h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 0.25rem 0;
+}
+
+.askgov-need-help-text p {
+  font-size: 14.5px;
+  color: #4b5563;
+  margin: 0;
+}
+
+.askgov-contact-btn {
+  background-color: #064cbd;
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.75rem;
+  border-radius: 10px;
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease;
+}
+
+.askgov-contact-btn:hover {
+  background-color: #04388e;
+}
+
+/* No Results */
+.askgov-no-results {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.askgov-no-icon {
+  font-size: 32px;
+  margin-bottom: 0.5rem;
+}
+
+.askgov-reset-btn {
+  margin-top: 1rem;
+  background-color: #064cbd;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Footer */
+.askgov-footer-bar {
+  background-color: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  padding: 2.5rem 0;
+  margin-top: auto;
+}
+
+.askgov-footer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.askgov-footer-agency-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: #111827;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.askgov-footer-logo-img {
+  height: 24px;
+  width: auto;
+}
+
+.askgov-footer-links-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.askgov-footer-links-row a {
+  color: #4b5563;
+  text-decoration: none;
+  font-size: 13.5px;
+  transition: color 0.15s ease;
+}
+
+.askgov-footer-links-row a:hover {
+  color: #064cbd;
+}
+
+.askgov-footer-divider {
+  border: none;
+  border-top: 1px solid #f3f4f6;
+  margin: 0 0 1.5rem 0;
+}
+
+.askgov-footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #6b7280;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.askgov-created-by {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .askgov-quicklinks-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .askgov-columns-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .askgov-sidebar-topics {
+    position: static;
+    max-height: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .askgov-hero-title {
+    font-size: 28px;
+  }
+
+  .askgov-quicklinks-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .askgov-need-help-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .askgov-footer-top,
+  .askgov-footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

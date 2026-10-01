@@ -1,0 +1,442 @@
+/* ==========================================================================
+   AskGov Virtual Assistant & Floating Help Widget (Matching Official Design)
+   ========================================================================== */
+
+.askgov-container {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 99999;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Floating Trigger Capsule / Pill */
+.askgov-trigger-btn {
+  background-color: #ffffff;
+  color: #1a1a1a;
+  border: 1.5px solid #d0e1f9;
+  border-radius: 9999px;
+  padding: 8px 18px 8px 12px;
+  box-shadow: 0 4px 18px rgba(0, 50, 150, 0.14), 0 1px 3px rgba(0, 0, 0, 0.08);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  outline: none;
+  user-select: none;
+  overflow: hidden;
+  max-width: 220px;
+  white-space: nowrap;
+}
+
+.askgov-trigger-btn:hover {
+  background-color: #ffffff;
+  border-color: #99c2ff;
+  box-shadow: 0 6px 24px rgba(0, 50, 150, 0.22), 0 2px 6px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.askgov-trigger-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Compact / Small Automatically Shrunk State */
+.askgov-trigger-btn.is-compact {
+  padding: 8px 8px;
+  max-width: 48px;
+  gap: 0;
+  border-radius: 50%;
+  box-shadow: 0 4px 16px rgba(0, 50, 150, 0.16);
+}
+
+.askgov-trigger-btn.is-compact .askgov-trigger-text {
+  max-width: 0;
+  opacity: 0;
+  margin-left: 0;
+  transform: translateX(10px);
+}
+
+/* Trigger Inner Layout */
+.askgov-trigger-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Overlapping Dual Speech Bubble SVG Icon */
+.askgov-bubbles-icon {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  display: block;
+}
+
+/* Trigger Text */
+.askgov-trigger-text {
+  font-size: 15.5px;
+  font-weight: 500;
+  color: #1a1a1a;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  transition: max-width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+              opacity 0.25s ease,
+              transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  max-width: 150px;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ==========================================================================
+   AskGov Modal Dialog Window (Matching Screenshot 1:1)
+   ========================================================================== */
+.askgov-window {
+  position: absolute;
+  bottom: 60px;
+  right: 0;
+  width: 395px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 90px);
+  background-color: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.24), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: askGovPopIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes askGovPopIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Modal Top Bar */
+.askgov-modal-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px 10px 20px;
+  background-color: #ffffff;
+}
+
+.askgov-modal-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.askgov-modal-logo-text {
+  font-size: 20px;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.03em;
+}
+
+.askgov-modal-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: #374151;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.15s ease;
+}
+
+.askgov-modal-close-btn:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+/* Blue Card Container */
+.askgov-blue-card {
+  background-color: #dbe8fc;
+  border-radius: 20px;
+  margin: 0 12px 14px 12px;
+  padding: 24px 18px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow-y: auto;
+  max-height: calc(100vh - 170px);
+}
+
+/* Big Greeting Headline */
+.askgov-greeting-title {
+  margin: 0 0 16px 0;
+  font-size: 34px;
+  font-weight: 800;
+  color: #1e293b;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.askgov-greeting-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Hand Graphic & Motion */
+.askgov-waving-hand-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+}
+
+.askgov-waving-hand-svg {
+  display: inline-block;
+  overflow: visible;
+}
+
+.askgov-hand-palm-anim {
+  transform-origin: 24px 42px;
+  animation: waveHandMotion 1.8s ease-in-out infinite;
+}
+
+@keyframes waveHandMotion {
+  0% {
+    transform: rotate(0deg);
+  }
+  12% {
+    transform: rotate(16deg);
+  }
+  24% {
+    transform: rotate(-10deg);
+  }
+  36% {
+    transform: rotate(14deg);
+  }
+  48% {
+    transform: rotate(-6deg);
+  }
+  60% {
+    transform: rotate(10deg);
+  }
+  72% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* Search / Query White Box Container */
+.askgov-input-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 14px 14px 10px 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  margin-bottom: 12px;
+}
+
+.askgov-input-field-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.askgov-textarea {
+  width: 100%;
+  min-height: 70px;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  color: #1e293b;
+  font-family: inherit;
+  resize: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+.askgov-textarea::placeholder {
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+.askgov-send-btn-wrap {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.askgov-round-send-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #edf2f7;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #475569;
+  transition: all 0.2s ease;
+}
+
+.askgov-round-send-btn:hover {
+  background-color: #0056c6;
+  color: #ffffff;
+}
+
+/* Quick Suggestion List Rows */
+.askgov-suggestions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.askgov-suggestion-item-btn {
+  background-color: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 14px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.askgov-suggestion-item-btn:hover {
+  border-color: #93c5fd;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.08);
+}
+
+.askgov-suggestion-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.askgov-suggestion-icon-badge {
+  width: 36px;
+  height: 36px;
+  background-color: #eff6ff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0056c6;
+  flex-shrink: 0;
+}
+
+.askgov-suggestion-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1e293b;
+  line-height: 1.3;
+}
+
+.askgov-suggestion-chevron {
+  color: #94a3b8;
+  font-size: 18px;
+  font-weight: 300;
+  flex-shrink: 0;
+}
+
+/* Answer View Inside Chat */
+.askgov-answer-view {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.askgov-back-btn {
+  background: transparent;
+  border: none;
+  color: #0056c6;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+}
+
+.askgov-back-btn:hover {
+  text-decoration: underline;
+}
+
+.askgov-answer-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+.askgov-question-badge {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0056c6;
+  margin-bottom: 6px;
+}
+
+.askgov-question-text {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 12px;
+  line-height: 1.35;
+}
+
+.askgov-answer-text {
+  font-size: 14px;
+  line-height: 1.55;
+  color: #334155;
+}
+
+.askgov-answer-actions {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.askgov-ask-another-btn {
+  background-color: #0056c6;
+  color: #ffffff;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.askgov-ask-another-btn:hover {
+  background-color: #00439c;
+}
+
+@media (max-width: 480px) {
+  .askgov-container {
+    bottom: 16px;
+    right: 16px;
+  }
+  .askgov-window {
+    right: 0;
+    bottom: 54px;
+    width: calc(100vw - 32px);
+  }
+}

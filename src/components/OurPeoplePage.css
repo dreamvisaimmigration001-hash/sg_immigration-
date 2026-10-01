@@ -1,0 +1,49 @@
+/* ==========================================================================
+   Our People Page Styles
+   Pixel-perfect match to official ICA Reference & Screenshot
+   ========================================================================== */
+
+.our-people-page-wrapper {
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.our-people-chart-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 24px auto 40px auto;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background-color: #ffffff;
+  padding: 16px 0 28px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.our-people-chart-img {
+  width: 100%;
+  min-width: 1240px;
+  max-width: 1560px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+@media (max-width: 1279px) {
+  .our-people-chart-container {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .our-people-chart-container {
+    overflow-x: scroll;
+    padding: 12px 0 20px 0;
+  }
+  
+  .our-people-chart-img {
+    min-width: 1100px;
+  }
+}

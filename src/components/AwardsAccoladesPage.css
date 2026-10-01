@@ -1,0 +1,186 @@
+/* ==========================================================================
+   Awards & Accolades Page Styles
+   Matches ICA official layout with 3-column deck-group card grid
+   ========================================================================== */
+
+.awards-accolades-page-wrapper {
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.awards-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 4rem 1rem;
+}
+
+/* Page Title & Top Divider */
+.awards-header {
+  margin-top: 0.5rem;
+  margin-bottom: 2.25rem;
+}
+
+.awards-main-title {
+  font-size: 30px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 1rem 0;
+  line-height: 1.25;
+  letter-spacing: -0.2px;
+}
+
+.awards-title-divider {
+  border: none;
+  border-top: 1px solid #d9d9d6;
+  margin: 0;
+  width: 100%;
+}
+
+/* Awards Grid - Exactly 3 columns on desktop as shown in official site */
+.awards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 2.5rem;
+  row-gap: 3.5rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 992px) {
+  .awards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 2rem;
+    row-gap: 3rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .awards-grid {
+    grid-template-columns: 1fr;
+    row-gap: 2.5rem;
+  }
+}
+
+/* Deck Card */
+.deck-group {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  text-align: left;
+  padding: 0;
+}
+
+.deck-img-wrapper {
+  width: 100%;
+  height: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  background-color: #ffffff;
+}
+
+.deck-img {
+  max-width: 220px;
+  max-height: 190px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.25s ease;
+}
+
+.deck-group:hover .deck-img {
+  transform: scale(1.03);
+}
+
+/* Blue Divider under Image */
+.deck-divider {
+  width: 100%;
+  height: 3px;
+  background-color: #2b558c;
+  margin: 0 0 1.25rem 0;
+  border-radius: 1px;
+}
+
+/* Deck Body & Typography */
+.deck-body {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.deck-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #000000;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.35;
+}
+
+.deck-acronym {
+  font-size: 15px;
+  font-weight: 700;
+  color: #000000;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.35;
+}
+
+.deck-awarded-by {
+  font-size: 15px;
+  font-weight: 700;
+  color: #000000;
+  margin-top: 0.25rem;
+  line-height: 1.35;
+}
+
+.deck-year {
+  font-size: 15px;
+  font-weight: 700;
+  color: #000000;
+  margin-top: 0.15rem;
+  margin-bottom: 1rem;
+  line-height: 1.35;
+}
+
+.deck-content {
+  margin-top: 0;
+  text-align: left;
+}
+
+.deck-content p {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: #333333;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .awards-main-title {
+    font-size: 24px;
+  }
+
+  .deck-img-wrapper {
+    height: 180px;
+  }
+
+  .deck-img {
+    max-width: 170px;
+    max-height: 160px;
+  }
+
+  .deck-title {
+    font-size: 15px;
+  }
+
+  .deck-acronym,
+  .deck-awarded-by,
+  .deck-year {
+    font-size: 14px;
+  }
+
+  .deck-content p {
+    font-size: 14px;
+  }
+}

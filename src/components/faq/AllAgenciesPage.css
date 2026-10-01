@@ -1,0 +1,223 @@
+/* ==========================================================================
+   AskGov Government Organisations Page (Matching Screenshot 1:1 Compact Pill Grid)
+   ========================================================================== */
+
+.gov-orgs-page-wrapper {
+  min-height: 100vh;
+  background-color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #0f172a;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header bar with sky-blue gradient background */
+.gov-orgs-header-bar {
+  background: linear-gradient(180deg, #d8e5fa 0%, #edf4fd 60%, rgba(255, 255, 255, 0) 100%);
+  padding: 18px 28px 24px 28px;
+}
+
+.gov-orgs-header-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gov-orgs-brand {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  text-decoration: none;
+}
+
+.gov-orgs-bubble-icon {
+  width: 26px;
+  height: 25px;
+  flex-shrink: 0;
+}
+
+.gov-orgs-brand-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.03em;
+}
+
+.gov-orgs-back-btn {
+  background-color: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 9999px;
+  padding: 6px 18px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #0f172a;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.gov-orgs-back-btn:hover {
+  background-color: #0056c6;
+  color: #ffffff;
+  border-color: #0056c6;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(0, 86, 198, 0.2);
+}
+
+/* Main Content Section */
+.gov-orgs-main-content {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 6px 28px 60px 28px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Title Block */
+.gov-orgs-title-block {
+  margin-bottom: 24px;
+}
+
+.gov-orgs-heading {
+  font-size: 28px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.2;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.025em;
+}
+
+.gov-orgs-subheading {
+  font-size: 15px;
+  color: #475569;
+  line-height: 1.45;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* 3-Column Compact Cards Grid matching screenshot */
+.gov-orgs-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px 16px;
+}
+
+/* Individual Organization Card - Compact Spec */
+.gov-org-card {
+  background-color: #ffffff;
+  border: 1.5px solid #d4e3fb;
+  border-radius: 18px;
+  padding: 10px 18px;
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 2px rgba(0, 50, 150, 0.02);
+  outline: none;
+  font-family: inherit;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.gov-org-card:hover {
+  border-color: #72a4f5;
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 14px rgba(0, 86, 198, 0.08);
+}
+
+.gov-org-card.is-active-ica {
+  border-color: #0056c6;
+  background-color: #f7faff;
+  box-shadow: 0 0 0 1px #0056c6;
+}
+
+/* Left Logo Wrapper */
+.gov-org-card-left {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gov-org-logo-wrap {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  box-sizing: border-box;
+  user-select: none;
+  overflow: hidden;
+}
+
+.gov-org-logo-wrap.crest-round {
+  border-radius: 50%;
+}
+
+.crest-inner-ring {
+  width: 32px;
+  height: 32px;
+  border: 1.2px dashed;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9.5px;
+  font-weight: 800;
+}
+
+/* Right Agency Name */
+.gov-org-card-name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1e293b;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+.gov-org-card:hover .gov-org-card-name {
+  color: #0056c6;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+  .gov-orgs-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  .gov-orgs-header-bar {
+    padding: 14px 16px;
+  }
+  .gov-orgs-main-content {
+    padding: 6px 16px 40px 16px;
+  }
+  .gov-orgs-heading {
+    font-size: 23px;
+  }
+  .gov-orgs-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .gov-org-card {
+    min-height: 62px;
+    padding: 9px 14px;
+    border-radius: 14px;
+  }
+  .gov-org-card-name {
+    font-size: 13.5px;
+  }
+}
