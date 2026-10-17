@@ -1340,23 +1340,22 @@ export default function NewsroomPage({
                   >
                     Close Article
                   </button>
-                  <a
-                    href="https://www.ica.gov.sg/news-and-publications/newsroom"
-                    target="_blank"
-                    rel="noreferrer noopener"
+                  <button
+                    type="button"
                     className="newsroom-filter-btn"
                     style={{
                       backgroundColor: "#f0f4f8",
                       color: "#2e5b88",
                       border: "1px solid #2e5b88",
-                      textDecoration: "none",
-                      display: "inline-flex",
-                      alignItems: "center",
-                      justifyContent: "center",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      setActiveArticleModal(null);
+                      handleGlobalNavigate("newsroom");
                     }}
                   >
-                    View on Official ICA Portal ↗
-                  </a>
+                    Back to Newsroom
+                  </button>
                 </div>
               </div>
             </div>

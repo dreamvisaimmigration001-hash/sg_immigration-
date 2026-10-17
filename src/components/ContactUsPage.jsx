@@ -408,9 +408,12 @@ export default function ContactUsPage({
                                 <div className="ica-notice-box">
                                   <span>Members of the public are strongly encouraged to use ICA's e-Services available at </span>
                                   <a
-                                    href="https://eservices.ica.gov.sg/icsbip"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                                    href="#home"
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      if (onNavigateHome) onNavigateHome();
+                                      else if (onNavigate) onNavigate("home");
+                                    }}
                                   >
                                     MyICA
                                   </a>
@@ -449,7 +452,7 @@ export default function ContactUsPage({
                                 <p style={{ marginTop: "0.75rem" }}>
                                   Please plan your visit to ICA accordingly.
                                   <br />
-                                  <strong>Note:</strong> You can refer to <a href="https://www.ica.gov.sg/visit-ica">Visiting the ICA Services Centre</a> page for more information.
+                                  <strong>Note:</strong> You can refer to <a href="#home" onClick={(e) => { e.preventDefault(); if (onNavigateHome) onNavigateHome(); else if (onNavigate) onNavigate("home"); }}>Visiting the ICA Services Centre</a> page for more information.
                                 </p>
                               </div>
 

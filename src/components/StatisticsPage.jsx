@@ -380,26 +380,32 @@ export default function StatisticsPage({
               <div style={{ paddingBottom: "1rem" }}></div>
               <hr />
 
-              {/* Quicklinks Nav */}
+              {/* Quicklinks Nav (Non-clickable) */}
               <nav className="section-nav sticky" id="quicklinks-section">
                 <button
                   type="button"
-                  className="quicklinks-item"
-                  onClick={() => gotoCollapseElement(0)}
+                  className="quicklinks-item not-clickable"
+                  disabled
+                  tabIndex={-1}
+                  style={{ pointerEvents: "none", cursor: "default" }}
                 >
                   Singapore Demographic Bulletins
                 </button>
                 <button
                   type="button"
-                  className="quicklinks-item"
-                  onClick={() => gotoCollapseElement(1)}
+                  className="quicklinks-item not-clickable"
+                  disabled
+                  tabIndex={-1}
+                  style={{ pointerEvents: "none", cursor: "default" }}
                 >
                   Reports on Registration of Births and Deaths
                 </button>
                 <button
                   type="button"
-                  className="quicklinks-item"
-                  onClick={() => gotoCollapseElement(2)}
+                  className="quicklinks-item not-clickable"
+                  disabled
+                  tabIndex={-1}
+                  style={{ pointerEvents: "none", cursor: "default" }}
                 >
                   ICA Annual Statistics Report
                 </button>

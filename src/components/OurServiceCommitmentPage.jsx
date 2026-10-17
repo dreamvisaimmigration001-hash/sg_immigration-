@@ -150,40 +150,50 @@ export default function OurServiceCommitmentPage({
                 <hr className="commitment-title-divider" />
               </div>
 
-              {/* Quicklinks Nav */}
+              {/* Quicklinks Nav (Non-clickable) */}
               <nav className="commitment-quicklinks" aria-label="Quick links to sections">
                 <button
                   type="button"
-                  className="commitment-quicklink-btn"
-                  onClick={() => scrollToSection("processing")}
+                  className="commitment-quicklink-btn not-clickable"
+                  disabled
+                  tabIndex={-1}
+                  style={{ pointerEvents: "none", cursor: "default" }}
                 >
                   Processing of Application for Immigration / Registration Facilities
                 </button>
                 <button
                   type="button"
-                  className="commitment-quicklink-btn"
-                  onClick={() => scrollToSection("counter")}
+                  className="commitment-quicklink-btn not-clickable"
+                  disabled
+                  tabIndex={-1}
+                  style={{ pointerEvents: "none", cursor: "default" }}
                 >
                   Counter Services
                 </button>
                 <button
                   type="button"
-                  className="commitment-quicklink-btn"
-                  onClick={() => scrollToSection("eservices")}
+                  className="commitment-quicklink-btn not-clickable"
+                  disabled
+                  tabIndex={-1}
+                  style={{ pointerEvents: "none", cursor: "default" }}
                 >
                   e-Services
                 </button>
                 <button
                   type="button"
-                  className="commitment-quicklink-btn"
-                  onClick={() => scrollToSection("feedback")}
+                  className="commitment-quicklink-btn not-clickable"
+                  disabled
+                  tabIndex={-1}
+                  style={{ pointerEvents: "none", cursor: "default" }}
                 >
                   Feedback/Enquiry
                 </button>
                 <button
                   type="button"
-                  className="commitment-quicklink-btn"
-                  onClick={() => scrollToSection("charter")}
+                  className="commitment-quicklink-btn not-clickable"
+                  disabled
+                  tabIndex={-1}
+                  style={{ pointerEvents: "none", cursor: "default" }}
                 >
                   Our Service Charter
                 </button>

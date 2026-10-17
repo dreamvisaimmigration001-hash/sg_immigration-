@@ -28,43 +28,354 @@ import ScholarshipsPage from "./components/ScholarshipsPage";
 import MeetOurOfficersPage from "./components/MeetOurOfficersPage";
 import CareerFaqsPage from "./components/CareerFaqsPage";
 import HomePage from "./components/HomePage";
+import UserResearchPage from "./components/UserResearchPage";
+import SitemapPage from "./components/SitemapPage";
+import TermsOfUsePage from "./components/TermsOfUsePage";
+import PrivacyStatementPage from "./components/PrivacyStatementPage";
 import AllAgenciesPage from "./components/faq/AllAgenciesPage";
 import AskGovWidget from "./components/AskGovWidget";
 import ScrollToTop from "./components/ScrollToTop";
 import SiteFooter from "./components/SiteFooter";
 import { checkpointsData } from "./data/checkpointsData";
 
+// Master mapping from any URL, path, hash, or link text to an internal section.
+// If a link does not have its own section, this returns null so it can default to "home".
+export function mapUrlOrTextToSection(rawHref = "", rawText = "") {
+  const href = (rawHref || "").trim().toLowerCase();
+  const text = (rawText || "").trim().toLowerCase();
+
+  // If empty or explicitly home
+  if (
+    href === "" ||
+    href === "#" ||
+    href === "#home" ||
+    href === "/" ||
+    href === "./" ||
+    href.endsWith("ica.gov.sg") ||
+    href.endsWith("ica.gov.sg/") ||
+    text === "home" ||
+    text === "- home"
+  ) {
+    return "home";
+  }
+
+  // 1. Admin Dashboard / Manage Visa
+  if (
+    href.includes("admin") ||
+    href.includes("dashboard") ||
+    href.includes("manage-visa") ||
+    href.includes("client-record") ||
+    text.includes("admin dashboard") ||
+    text.includes("manage visa")
+  ) {
+    return "admin-dashboard";
+  }
+
+  // 2. Career FAQs
+  if (
+    href.includes("career-faq") ||
+    href.includes("faqs-careers") ||
+    text.includes("career faq")
+  ) {
+    return "career-faqs";
+  }
+
+  // 3. Meet Our Officers
+  if (
+    href.includes("meet-our-officer") ||
+    href.includes("meet-officer") ||
+    text.includes("meet our officer")
+  ) {
+    return "meet-our-officers";
+  }
+
+  // 4. Scholarships, Sponsorships & Internships
+  if (
+    href.includes("scholarship") ||
+    href.includes("sponsorship") ||
+    href.includes("internship") ||
+    text.includes("scholarship") ||
+    text.includes("sponsorship") ||
+    text.includes("internship")
+  ) {
+    return "scholarships";
+  }
+
+  // 5. Newsroom & Media Releases
+  if (
+    href.includes("news-and-publication") ||
+    href.includes("newsroom") ||
+    href.includes("media-release") ||
+    href.includes("media-repl") ||
+    href.includes("advisories") ||
+    href.includes("advisory") ||
+    href === "#news" ||
+    text === "newsroom" ||
+    text.includes("media release") ||
+    text.includes("newsroom")
+  ) {
+    return "newsroom";
+  }
+
+  // 6. Publications / Annual Reports
+  if (
+    href.includes("annual") ||
+    href.includes("publication") ||
+    text.includes("ica annual") ||
+    text.includes("annuals") ||
+    text.includes("publication")
+  ) {
+    return "publications";
+  }
+
+  // 7. Public Education
+  if (
+    href.includes("public-education") ||
+    href.includes("education") ||
+    text.includes("public education")
+  ) {
+    return "public-education";
+  }
+
+  // 8. Statistics
+  if (
+    href.includes("statistic") ||
+    text.includes("statistic")
+  ) {
+    return "statistics";
+  }
+
+  // 9. REACH
+  if (
+    href.includes("reach.gov.sg") ||
+    href.includes("/reach") ||
+    href === "#reach" ||
+    text === "reach" ||
+    text.includes("reach (reaching everyone")
+  ) {
+    return "reach";
+  }
+
+  // 10. Feedback
+  if (
+    href.includes("feedback") ||
+    text.includes("feedback")
+  ) {
+    return "feedback";
+  }
+
+  // 11. Contact Us
+  if (
+    href.includes("contact") ||
+    text.includes("contact us") ||
+    text.includes("contact details")
+  ) {
+    return "contactus";
+  }
+
+  // 12. Check Status / Appointment / Visa Enquiry
+  if (
+    href.includes("checkstatus") ||
+    href.includes("status") ||
+    href.includes("ipsave") ||
+    href.includes("appointment") ||
+    href.includes("enquire") ||
+    text.includes("check status") ||
+    text.includes("make appointment") ||
+    text.includes("enquire for application")
+  ) {
+    return "checkstatus";
+  }
+
+  // 13. FAQs / AskGov Knowledge Base (Removed -> route to home)
+  if (
+    href.includes("askgov") ||
+    href.includes("faq") ||
+    href.includes("help") ||
+    text.includes("faqs") ||
+    text.includes("askgov")
+  ) {
+    return "home";
+  }
+
+  // 14. All Agencies
+  if (
+    href.includes("all-agencies") ||
+    href.includes("agencies") ||
+    text.includes("all agencies")
+  ) {
+    return "agencies";
+  }
+
+  // 15. User Research
+  if (
+    href.includes("user-research") ||
+    text.includes("user research")
+  ) {
+    return "user-research";
+  }
+
+  // 16. Terms of Use
+  if (
+    href.includes("terms-of-use") ||
+    href.includes("terms") ||
+    text.includes("terms of use")
+  ) {
+    return "terms-of-use";
+  }
+
+  // 17. Sitemap
+  if (
+    href.includes("sitemap") ||
+    text.includes("sitemap")
+  ) {
+    return "sitemap";
+  }
+
+  // 17b. Privacy Statement
+  if (
+    href.includes("privacy-statement") ||
+    href.includes("privacy") ||
+    text.includes("privacy statement") ||
+    text === "privacy"
+  ) {
+    return "privacy-statement";
+  }
+
+  // 18. Checkpoints
+  if (
+    href.includes("checkpoint") ||
+    href.includes("who-we-are/our-checkpoints") ||
+    text.includes("checkpoint") ||
+    text.includes("our checkpoints")
+  ) {
+    return "checkpoints";
+  }
+
+  // 19. Documents (Identity cards, passport, certificates, birth/death)
+  if (
+    href.includes("document") ||
+    href.includes("identity") ||
+    href.includes("passport") ||
+    href.includes("certificate") ||
+    text.includes("identity card") ||
+    text.includes("singapore passport") ||
+    text.includes("certificate") ||
+    text.includes("documents")
+  ) {
+    return "documents";
+  }
+
+  // 20. Enter, Transit, Depart
+  if (
+    href.includes("enter") ||
+    href.includes("transit") ||
+    href.includes("depart") ||
+    href.includes("sgac") ||
+    text.includes("entering") ||
+    text.includes("transiting") ||
+    text.includes("departing") ||
+    text.includes("arrival card")
+  ) {
+    return "enter-transit-depart";
+  }
+
+  // 21. Reside, Study and Work
+  if (
+    href.includes("reside") ||
+    href.includes("citizenship") ||
+    href.includes("permanent-residen") ||
+    href.includes("ltvp") ||
+    href.includes("study") ||
+    text.includes("reside") ||
+    text.includes("citizenship") ||
+    text.includes("permanent residence")
+  ) {
+    return "reside";
+  }
+
+  // 22. e-Services and Forms
+  if (
+    !href.includes("icsbip") &&
+    !href.includes("myica") &&
+    !text.includes("myica") &&
+    !href.includes("form.gov.sg") &&
+    (
+      href.includes("eservicesandforms") ||
+      href.includes("/eservices") ||
+      href === "#eservicesandforms" ||
+      text.includes("e-services and forms") ||
+      text === "e-services" ||
+      text === "eservices"
+    )
+  ) {
+    return "eservicesandforms";
+  }
+
+  // 23. Join Us / Careers
+  if (
+    href.includes("join-us") ||
+    href.includes("career") ||
+    href.includes("careers") ||
+    href.includes("jobs.careers.gov.sg") ||
+    text.includes("join us") ||
+    text.includes("careers") ||
+    text.includes("career")
+  ) {
+    return "join-us";
+  }
+
+  // 24. Our People
+  if (
+    href.includes("our-people") ||
+    href.includes("people") ||
+    text.includes("our people")
+  ) {
+    return "our-people";
+  }
+
+  // 25. Vision, Mission & Values
+  if (
+    href.includes("vision") ||
+    href.includes("mission") ||
+    href.includes("values") ||
+    text.includes("vision") ||
+    text.includes("mission") ||
+    text.includes("values")
+  ) {
+    return "vision-mission-values";
+  }
+
+  // 26. Awards & Accolades
+  if (
+    href.includes("award") ||
+    href.includes("accolade") ||
+    text.includes("award") ||
+    text.includes("accolade")
+  ) {
+    return "awards-accolades";
+  }
+
+  // 27. Our Service Commitment
+  if (
+    href.includes("commitment") ||
+    href.includes("service-commitment") ||
+    text.includes("our service commitment") ||
+    text.includes("service commitment")
+  ) {
+    return "our-service-commitment";
+  }
+
+  return null;
+}
+
 export default function App() {
   const getInitialView = () => {
     if (typeof window !== "undefined") {
       const hash = window.location.hash.toLowerCase();
       const path = window.location.pathname.toLowerCase();
-      if (hash.includes("admin") || hash.includes("dashboard") || hash.includes("manage-visa") || hash.includes("client-record") || path.includes("admin") || path.includes("manage-visa")) return "admin-dashboard";
-      if (hash.includes("career-faq") || path.includes("career-faq") || hash === "#faqs-careers") return "career-faqs";
-      if (hash.includes("meet-our-officer") || hash.includes("meet-officer") || path.includes("meet-our-officer")) return "meet-our-officers";
-      if (hash.includes("scholarship") || hash.includes("sponsorship") || hash.includes("internship") || path.includes("scholarship") || path.includes("internship")) return "scholarships";
-      if (hash.includes("news-and-publication") || hash.includes("news-and-publications") || path.includes("news-and-publication") || hash.includes("newsroom") || path.includes("newsroom") || hash.includes("media-release") || hash === "#news") return "newsroom";
-      if (hash.includes("annual") || path.includes("annual")) return "publications";
-      if (hash.includes("publication") || path.includes("publication")) return "publications";
-      if (hash.includes("education") || path.includes("education") || hash.includes("public-education")) return "public-education";
-      if (hash.includes("statistic") || path.includes("statistic")) return "statistics";
-      if (hash.includes("reach") || path.includes("reach")) return "reach";
-      if (hash.includes("eservice") || hash.includes("form") || path.includes("eservices")) return "eservicesandforms";
-      if (hash.includes("reside") || hash.includes("citizenship") || hash.includes("permanent-residen") || hash.includes("ltvp") || hash.includes("study") || path.includes("reside")) return "reside";
-      if (hash.includes("enter") || hash.includes("transit") || hash.includes("depart") || path.includes("enter-transit-depart")) return "enter-transit-depart";
-      if (hash.includes("document") || hash.includes("identity") || hash.includes("passport") || path.includes("documents")) return "documents";
-      if (hash.includes("contact") || path.includes("contact-us")) return "contactus";
-      if (hash.includes("join-us") || hash.includes("career") || path.includes("join-us") || hash.includes("careers")) return "join-us";
-      if (hash.includes("people") || hash.includes("our-people") || path.includes("our-people")) return "our-people";
-      if (hash.includes("vision") || hash.includes("mission") || hash.includes("values") || path.includes("vision-mission-values")) return "vision-mission-values";
-      if (hash.includes("commitment") || hash.includes("service-commitment") || path.includes("service-commitment")) return "our-service-commitment";
-      if (hash.includes("agencies") || hash.includes("all-agencies") || path.includes("agencies")) return "agencies";
-      if (hash.includes("askgov") || hash.includes("faqs") || hash.includes("help") || hash.includes("faq") || path.includes("faqs")) return "askgov";
-      if (hash.includes("feedback") || path.includes("feedback")) return "feedback";
-      if (hash.includes("awards") || hash.includes("accolades") || path.includes("awards")) return "awards-accolades";
-      if (hash.includes("who-we-are") || hash.includes("our-checkpoints") || hash === "#checkpoints" || path.includes("checkpoints")) return "checkpoints";
-      if (hash.includes("status") || hash.includes("ipsave") || hash.includes("appointment") || path.includes("status")) return "checkstatus";
-      if (hash === "" || hash === "#" || hash === "#home" || path === "/") return "home";
+      const matched = mapUrlOrTextToSection(hash) || mapUrlOrTextToSection(path);
+      return matched || "home";
     }
     return "home";
   };
@@ -82,57 +393,8 @@ export default function App() {
   useEffect(() => {
     const handleHash = () => {
       const hash = window.location.hash.toLowerCase();
-      if (hash.includes("admin") || hash.includes("dashboard") || hash.includes("manage-visa") || hash.includes("client-record")) {
-        setActiveView("admin-dashboard");
-      } else if (hash.includes("career-faq") || hash === "#faqs-careers") {
-        setActiveView("career-faqs");
-      } else if (hash.includes("meet-our-officer") || hash.includes("meet-officer")) {
-        setActiveView("meet-our-officers");
-      } else if (hash.includes("scholarship") || hash.includes("sponsorship") || hash.includes("internship")) {
-        setActiveView("scholarships");
-      } else if (hash.includes("news-and-publication") || hash.includes("news-and-publications") || hash.includes("newsroom") || hash.includes("media-release") || hash === "#news") {
-        setActiveView("newsroom");
-      } else if (hash.includes("annual") || hash.includes("publication")) {
-        setActiveView("publications");
-      } else if (hash.includes("education") || hash.includes("public-education")) {
-        setActiveView("public-education");
-      } else if (hash.includes("statistic")) {
-        setActiveView("statistics");
-      } else if (hash.includes("reach")) {
-        setActiveView("reach");
-      } else if (hash.includes("eservice") || hash.includes("form")) {
-        setActiveView("eservicesandforms");
-      } else if (hash.includes("reside") || hash.includes("citizenship") || hash.includes("permanent-residen") || hash.includes("ltvp") || hash.includes("study")) {
-        setActiveView("reside");
-      } else if (hash.includes("enter") || hash.includes("transit") || hash.includes("depart")) {
-        setActiveView("enter-transit-depart");
-      } else if (hash.includes("document") || hash.includes("identity") || hash.includes("passport")) {
-        setActiveView("documents");
-      } else if (hash.includes("contact")) {
-        setActiveView("contactus");
-      } else if (hash.includes("join-us") || hash.includes("career") || hash.includes("careers")) {
-        setActiveView("join-us");
-      } else if (hash.includes("people") || hash.includes("our-people")) {
-        setActiveView("our-people");
-      } else if (hash.includes("vision") || hash.includes("mission") || hash.includes("values")) {
-        setActiveView("vision-mission-values");
-      } else if (hash.includes("commitment") || hash.includes("service-commitment")) {
-        setActiveView("our-service-commitment");
-      } else if (hash.includes("agencies") || hash.includes("all-agencies")) {
-        setActiveView("agencies");
-      } else if (hash.includes("askgov") || hash.includes("faqs") || hash.includes("help") || hash.includes("faq")) {
-        setActiveView("askgov");
-      } else if (hash.includes("feedback")) {
-        setActiveView("feedback");
-      } else if (hash.includes("awards") || hash.includes("accolades")) {
-        setActiveView("awards-accolades");
-      } else if (hash.includes("who-we-are") || hash.includes("our-checkpoints") || hash === "#checkpoints") {
-        setActiveView("checkpoints");
-      } else if (hash.includes("status") || hash.includes("ipsave") || hash.includes("appointment")) {
-        setActiveView("checkstatus");
-      } else if (hash === "" || hash === "#" || hash === "#home") {
-        setActiveView("home");
-      }
+      const resolved = mapUrlOrTextToSection(hash, "");
+      setActiveView(resolved || "home");
     };
 
     window.addEventListener("hashchange", handleHash);
@@ -185,6 +447,14 @@ export default function App() {
       document.title = "ICA Admin Dashboard | Client Visa Document Portal";
     } else if (activeView === "askgov") {
       document.title = "ICA | AskGov Knowledge Base & FAQs";
+    } else if (activeView === "user-research") {
+      document.title = "ICA | User Research";
+    } else if (activeView === "terms-of-use") {
+      document.title = "ICA | Terms of Use";
+    } else if (activeView === "sitemap") {
+      document.title = "ICA | Sitemap";
+    } else if (activeView === "privacy-statement") {
+      document.title = "ICA | Privacy Statement";
     } else {
       document.title = "ICA | Our Checkpoints";
     }
@@ -260,6 +530,7 @@ export default function App() {
       "contactus": "#contact-us",
       "feedback": "#feedback",
       "askgov": "#faqs",
+      "agencies": "#agencies",
       "reach": "#reach",
       "documents": "#documents",
       "enter-transit-depart": "#enter-transit-depart",
@@ -273,10 +544,121 @@ export default function App() {
       "scholarships": "#scholarships",
       "meet-our-officers": "#meet-our-officers",
       "career-faqs": "#career-faqs",
+      "user-research": "#user-research",
+      "terms-of-use": "#terms-of-use",
+      "sitemap": "#sitemap",
+      "privacy-statement": "#privacy-statement",
     };
-    window.location.hash = hashMapping[view] || `#${view}`;
+    const targetHash = hashMapping[view] || `#${view}`;
+    if (window.location.hash !== targetHash) {
+      window.location.hash = targetHash;
+    }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  // Global link interception: no link can browse original website;
+  // if a link has its own section, navigate there; if not, navigate to home section.
+  useEffect(() => {
+    const handleGlobalClick = (e) => {
+      const anchor = e.target.closest("a");
+      if (!anchor) return;
+
+      const rawHref = anchor.getAttribute("href") || "";
+      const text = anchor.textContent || "";
+      const lowerHref = rawHref.trim().toLowerCase();
+
+      // Permit browser to handle direct downloads / mail / tel
+      if (
+        lowerHref.endsWith(".pdf") ||
+        lowerHref.startsWith("blob:") ||
+        lowerHref.startsWith("data:") ||
+        lowerHref.startsWith("mailto:") ||
+        lowerHref.startsWith("tel:")
+      ) {
+        return;
+      }
+
+      // Social media links exemption
+      const isSocialLink =
+        lowerHref.includes("facebook.com") ||
+        lowerHref.includes("twitter.com") ||
+        lowerHref.includes("x.com") ||
+        lowerHref.includes("instagram.com") ||
+        lowerHref.includes("youtube.com") ||
+        lowerHref.includes("tiktok.com") ||
+        lowerHref.includes("linkedin.com") ||
+        lowerHref.includes("t.me");
+
+      // Check if this link points to original/external site or relative path
+      const isExternalOrRelative =
+        (rawHref.startsWith("/") && !rawHref.startsWith("//")) ||
+        rawHref.startsWith("./") ||
+        lowerHref.startsWith("http://") ||
+        lowerHref.startsWith("https://") ||
+        lowerHref.startsWith("//");
+
+      // No links can browse original website; route internally or to home
+      if (isExternalOrRelative && !isSocialLink) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const section = mapUrlOrTextToSection(rawHref, text);
+        handleUniversalNavigate(section || "home");
+        return;
+      }
+
+      // Check if it's a hash link
+      if (rawHref.startsWith("#")) {
+        const section = mapUrlOrTextToSection(rawHref, text);
+        if (section) {
+          e.preventDefault();
+          e.stopPropagation();
+          handleUniversalNavigate(section);
+        } else {
+          // Check if target element exists on page for in-page anchors
+          const targetId = lowerHref.slice(1);
+          const targetEl = targetId ? document.getElementById(targetId) : null;
+          if (!targetEl && lowerHref !== "") {
+            e.preventDefault();
+            e.stopPropagation();
+            handleUniversalNavigate("home");
+          }
+        }
+        return;
+      }
+
+      // If it's javascript:void(0) or empty, check if text has a section or default to home
+      if (
+        lowerHref === "javascript:void(0)" ||
+        lowerHref === "javascript:;" ||
+        lowerHref === ""
+      ) {
+        const section = mapUrlOrTextToSection("", text);
+        if (section) {
+          e.preventDefault();
+          e.stopPropagation();
+          handleUniversalNavigate(section);
+        }
+      }
+    };
+
+    // Safeguard window.open to intercept any code trying to browse ica.gov.sg
+    const originalOpen = window.open;
+    window.open = function (url, target, features) {
+      if (typeof url === "string" && /ica\.gov\.sg/i.test(url)) {
+        const section = mapUrlOrTextToSection(url, "") || "home";
+        handleUniversalNavigate(section);
+        return null;
+      }
+      return originalOpen ? originalOpen.call(window, url, target, features) : null;
+    };
+
+    document.addEventListener("click", handleGlobalClick, true);
+    return () => {
+      document.removeEventListener("click", handleGlobalClick, true);
+      window.open = originalOpen;
+    };
+  }, []);
 
   const handleSelectService = (serviceId) => {
     if (serviceId === "identity" || serviceId === "documents") {
@@ -364,10 +746,22 @@ export default function App() {
     onNavigateToScholarships: () => handleUniversalNavigate("scholarships"),
     onNavigateToMeetOurOfficers: () => handleUniversalNavigate("meet-our-officers"),
     onNavigateToCareerFaqs: () => handleUniversalNavigate("career-faqs"),
+    onNavigateToUserResearch: () => handleUniversalNavigate("user-research"),
+    onNavigateUserResearch: () => handleUniversalNavigate("user-research"),
+    onNavigateToTermsOfUse: () => handleUniversalNavigate("terms-of-use"),
+    onNavigateTermsOfUse: () => handleUniversalNavigate("terms-of-use"),
+    onNavigateToSitemap: () => handleUniversalNavigate("sitemap"),
+    onNavigateSitemap: () => handleUniversalNavigate("sitemap"),
+    onNavigateToPrivacyStatement: () => handleUniversalNavigate("privacy-statement"),
+    onNavigatePrivacyStatement: () => handleUniversalNavigate("privacy-statement"),
   };
 
   let mainContent = null;
   if (activeView === "home") mainContent = <HomePage {...universalNavProps} />;
+  else if (activeView === "user-research") mainContent = <UserResearchPage {...universalNavProps} />;
+  else if (activeView === "terms-of-use") mainContent = <TermsOfUsePage {...universalNavProps} />;
+  else if (activeView === "sitemap") mainContent = <SitemapPage {...universalNavProps} />;
+  else if (activeView === "privacy-statement") mainContent = <PrivacyStatementPage {...universalNavProps} />;
   else if (activeView === "career-faqs") mainContent = <CareerFaqsPage {...universalNavProps} />;
   else if (activeView === "meet-our-officers") mainContent = <MeetOurOfficersPage {...universalNavProps} />;
   else if (activeView === "scholarships") mainContent = <ScholarshipsPage {...universalNavProps} />;

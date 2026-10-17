@@ -7,13 +7,62 @@ export default function SiteFooter({
   onNavigateToFeedback,
   onNavigateFeedback,
   onNavigateToFaqs,
-  onNavigateFaqs,
-  onNavigateToReach,
-  onNavigateReach,
+  onNavigateToUserResearch,
+  onNavigateUserResearch,
+  onNavigateToTermsOfUse,
+  onNavigateTermsOfUse,
+  onNavigateToSitemap,
+  onNavigateSitemap,
+  onNavigateToPrivacyStatement,
+  onNavigatePrivacyStatement,
   onNavigateHome,
   onNavigateToCheckpoints,
   onNavigateCheckpoints,
 }) {
+  const handleHomeRedirect = (e) => {
+    e.preventDefault();
+    if (onNavigate) onNavigate("home");
+    else if (onNavigateHome) onNavigateHome();
+    window.location.hash = "#home";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handlePrivacyClick = (e) => {
+    e.preventDefault();
+    if (onNavigate) onNavigate("privacy-statement");
+    else if (onNavigateToPrivacyStatement) onNavigateToPrivacyStatement();
+    else if (onNavigatePrivacyStatement) onNavigatePrivacyStatement();
+    window.location.hash = "#privacy-statement";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleTermsClick = (e) => {
+    e.preventDefault();
+    if (onNavigate) onNavigate("terms-of-use");
+    else if (onNavigateToTermsOfUse) onNavigateToTermsOfUse();
+    else if (onNavigateTermsOfUse) onNavigateTermsOfUse();
+    window.location.hash = "#terms-of-use";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleSitemapClick = (e) => {
+    e.preventDefault();
+    if (onNavigate) onNavigate("sitemap");
+    else if (onNavigateToSitemap) onNavigateToSitemap();
+    else if (onNavigateSitemap) onNavigateSitemap();
+    window.location.hash = "#sitemap";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleUserResearchClick = (e) => {
+    e.preventDefault();
+    if (onNavigate) onNavigate("user-research");
+    else if (onNavigateToUserResearch) onNavigateToUserResearch();
+    else if (onNavigateUserResearch) onNavigateUserResearch();
+    window.location.hash = "#user-research";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const handleContactClick = (e) => {
     e.preventDefault();
     if (onNavigate) onNavigate("contactus");
@@ -38,15 +87,6 @@ export default function SiteFooter({
     else if (onNavigateToFaqs) onNavigateToFaqs();
     else if (onNavigateFaqs) onNavigateFaqs();
     window.location.hash = "#faqs";
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const handleReachClick = (e) => {
-    e.preventDefault();
-    if (onNavigate) onNavigate("reach");
-    else if (onNavigateToReach) onNavigateToReach();
-    else if (onNavigateReach) onNavigateReach();
-    window.location.hash = "#reach";
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -96,6 +136,11 @@ export default function SiteFooter({
             <div className="site-footer__common">
               <ul className="common-links">
                 <li>
+                  <a href="/user-research" onClick={handleUserResearchClick}>
+                    User Research
+                  </a>
+                </li>
+                <li>
                   <a href="/contact-us" onClick={handleContactClick}>
                     Contact Us
                   </a>
@@ -103,23 +148,6 @@ export default function SiteFooter({
                 <li>
                   <a href="/feedbackform" onClick={handleFeedbackClick}>
                     Feedback
-                  </a>
-                </li>
-                <li>
-                  <a href="/faqs" onClick={handleFaqsClick}>
-                    FAQs
-                  </a>
-                </li>
-                <li>
-                  <a href="/reach" onClick={handleReachClick}>
-                    Reach.gov.sg
-                    <span className="icon icon-external-link">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ marginLeft: "4px", verticalAlign: "middle", display: "inline-block" }}>
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                        <polyline points="15 3 21 3 21 9" />
-                        <line x1="10" y1="14" x2="21" y2="3" />
-                      </svg>
-                    </span>
                   </a>
                 </li>
               </ul>
@@ -205,29 +233,22 @@ export default function SiteFooter({
             <nav className="site-footer__panel" aria-label="Footer Panel Navigation">
               <ul>
                 <li>
-                  <a href="https://tech.gov.sg/report_vulnerability" target="_blank" rel="noopener noreferrer">
+                  <a href="#home" onClick={handleHomeRedirect}>
                     Report Vulnerability
-                    <span className="icon icon-external-link">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ marginLeft: "4px", verticalAlign: "middle", display: "inline-block" }}>
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                        <polyline points="15 3 21 3 21 9" />
-                        <line x1="10" y1="14" x2="21" y2="3" />
-                      </svg>
-                    </span>
                   </a>
                 </li>
                 <li>
-                  <a href="https://www.ica.gov.sg/privacy-statement" target="_blank" rel="noopener noreferrer">
+                  <a href="/privacy-statement" onClick={handlePrivacyClick}>
                     Privacy Statement
                   </a>
                 </li>
                 <li>
-                  <a href="https://www.ica.gov.sg/terms-of-use" target="_blank" rel="noopener noreferrer">
+                  <a href="/terms-of-use" onClick={handleTermsClick}>
                     Terms of Use
                   </a>
                 </li>
                 <li>
-                  <a href="https://www.ica.gov.sg/sitemap" target="_blank" rel="noopener noreferrer">
+                  <a href="/sitemap" onClick={handleSitemapClick}>
                     Sitemap
                   </a>
                 </li>

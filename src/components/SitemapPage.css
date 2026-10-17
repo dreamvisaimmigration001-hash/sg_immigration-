@@ -1,0 +1,137 @@
+/* ==========================================================================
+   Sitemap Page Styles (Matching Official ICA Singapore Design)
+   ========================================================================== */
+
+.sitemap-page-wrapper {
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.sitemap-page-wrapper #page-content {
+  flex: 1;
+}
+
+/* Page Title & Header */
+.sitemap-page-wrapper .my-bread-crumbs-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0f284e;
+  margin: 1.25rem 0 0.5rem 0;
+  line-height: 1.25;
+}
+
+@media (max-width: 767px) {
+  .sitemap-page-wrapper .my-bread-crumbs-title {
+    font-size: 1.625rem;
+  }
+}
+
+.sitemap-page-wrapper hr {
+  border: 0;
+  border-top: 1px solid #e0e4e5;
+  margin: 12px 0 20px 0;
+}
+
+/* Mobile Quick Navigation Select Dropdown */
+.sitemap-select-container {
+  margin-bottom: 24px;
+}
+
+.sitemap-page-wrapper .nav-select.form-control {
+  width: 100%;
+  max-width: 520px;
+  padding: 10px 14px;
+  font-size: 15px;
+  color: #282828;
+  background-color: #ffffff;
+  border: 1px solid #c5ced5;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sitemap-page-wrapper .nav-select.form-control:focus {
+  border-color: #1c76d5;
+  box-shadow: 0 0 0 3px rgba(28, 118, 213, 0.2);
+}
+
+/* Tree Navigation List (#navbar-1) */
+.sitemap-tree {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sitemap-tree > li {
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.sitemap-tree > li > a,
+.sitemap-tree > li > span.sitemap-category-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0f284e;
+  text-decoration: none;
+  display: inline-block;
+  padding: 2px 0;
+  transition: color 0.15s ease;
+}
+
+.sitemap-tree > li > a:hover {
+  color: #1c76d5;
+  text-decoration: underline;
+}
+
+/* Sub-items (nested <ul>) */
+.sitemap-tree ul {
+  list-style-type: disc;
+  margin: 8px 0 12px 28px;
+  padding: 0;
+}
+
+.sitemap-tree ul li {
+  margin-bottom: 8px;
+  line-height: 1.5;
+  color: #1c76d5;
+}
+
+.sitemap-tree ul li a {
+  font-size: 14.5px;
+  font-weight: 400;
+  color: #007398;
+  text-decoration: none;
+  transition: color 0.15s ease, text-decoration 0.15s ease;
+}
+
+.sitemap-tree ul li a:hover {
+  color: #005573;
+  text-decoration: underline;
+}
+
+/* External Link Indicator in Sitemap */
+.sitemap-external-icon {
+  margin-left: 5px;
+  display: inline-block;
+  vertical-align: middle;
+  color: #757575;
+}
+
+@media (max-width: 767px) {
+  .sitemap-tree > li > a,
+  .sitemap-tree > li > span.sitemap-category-label {
+    font-size: 15px;
+  }
+
+  .sitemap-tree ul {
+    margin-left: 20px;
+  }
+
+  .sitemap-tree ul li a {
+    font-size: 14px;
+  }
+}

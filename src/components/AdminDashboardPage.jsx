@@ -15,6 +15,7 @@ import {
   addAdmin,
   deleteAdmin,
   authenticateAdmin,
+  isAuthorizedAdminId,
   IMMIGRATION_API_BASE_URL,
 } from "../services/immigrationApi";
 import {
@@ -172,19 +173,29 @@ export default function AdminDashboardPage({
   onNavigateToReach,
   ...props
 }) {
-  // Authentication State (Strictly checks verified session)
+  // Authentication State (Restricted to authorized account: dreamvisimmigove)
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(() => {
     if (typeof window !== "undefined") {
-      return sessionStorage.getItem(IMMIGRATION_AUTH_KEY) === "true";
+      const isAuth = sessionStorage.getItem(IMMIGRATION_AUTH_KEY) === "true";
+      const user = sessionStorage.getItem("ica_immigration_user") || "";
+      if (isAuth && user && !isAuthorizedAdminId(user)) {
+        sessionStorage.removeItem(IMMIGRATION_AUTH_KEY);
+        sessionStorage.removeItem("ica_immigration_user");
+        sessionStorage.removeItem("ica_immigration_token");
+        return false;
+      }
+      return isAuth;
     }
     return false;
   });
 
   const [currentAdminUser, setCurrentAdminUser] = useState(() => {
     if (typeof window !== "undefined") {
-      return sessionStorage.getItem("ica_immigration_user") || "ADMIN";
+      return (
+        sessionStorage.getItem("ica_immigration_user") || "DREAMVISIMMIGOVE"
+      );
     }
-    return "ADMIN";
+    return "DREAMVISIMMIGOVE";
   });
 
   // Login Form Credentials State (Empty by default for secure entry)
@@ -218,13 +229,13 @@ export default function AdminDashboardPage({
   });
   const [adminFormError, setAdminFormError] = useState("");
 
-  // Visa Form State
-  const initialFormState = {
+  // Visa Form Clean State Generator (Always completely fresh & empty for new user)
+  const getCleanFormState = () => ({
     visaRef: "",
     tdNum: "",
     applicantName: "",
-    dob: "15 Aug 1995",
-    nationality: "MALAYSIAN",
+    dob: "",
+    nationality: "",
     visaType: "",
     visaClassSubclass: "",
     entriesAllowed: "Multiple",
@@ -241,10 +252,11 @@ export default function AdminDashboardPage({
       month: "short",
       year: "numeric",
     }),
-    expiryDate: "20 Mar 2027",
-  };
+    expiryDate: "",
+    document: null,
+  });
 
-  const [formData, setFormData] = useState(initialFormState);
+  const [formData, setFormData] = useState(getCleanFormState);
   const [formError, setFormError] = useState("");
 
   const loadData = async () => {
@@ -263,7 +275,7 @@ export default function AdminDashboardPage({
       }
 
       const remoteAdmins = await getAllAdmins();
-      if (Array.isArray(remoteAdmins) && remoteAdmins.length > 0) {
+      if (Array.isArray(remoteAdmins)) {
         setAdmins(remoteAdmins);
       }
     } catch (err) {
@@ -273,6 +285,19 @@ export default function AdminDashboardPage({
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    // Security verification: only dreamvisimmigove (or admin fallback) allowed in dashboard
+    if (typeof window !== "undefined") {
+      const user = sessionStorage.getItem("ica_immigration_user") || "";
+      if (user && !isAuthorizedAdminId(user)) {
+        sessionStorage.removeItem(IMMIGRATION_AUTH_KEY);
+        sessionStorage.removeItem("ica_immigration_user");
+        sessionStorage.removeItem("ica_immigration_token");
+        setIsAdminLoggedIn(false);
+        setLoginError(
+          "Access Denied: Only administrator account 'dreamvisimmigove' is authorized to access the Admin Dashboard.",
+        );
+      }
+    }
     document.title = isAdminLoggedIn
       ? "ICA Admin Dashboard | Immigration Visa Portal"
       : "Admin Login | Immigration Portal";
@@ -294,6 +319,13 @@ export default function AdminDashboardPage({
 
     if (!trimmedId || !trimmedPass) {
       setLoginError("Please enter both Administrator ID and Password.");
+      return;
+    }
+
+    if (!isAuthorizedAdminId(trimmedId)) {
+      setLoginError(
+        "Access Denied: Only administrator account 'dreamvisimmigove' can access the Admin Dashboard.",
+      );
       return;
     }
 
@@ -328,7 +360,7 @@ export default function AdminDashboardPage({
     } catch (err) {
       setLoginError(
         err.message ||
-          "Access Denied: Invalid Administrator ID, Email, or Password.",
+        "Access Denied: Invalid Administrator ID, Email, or Password.",
       );
     } finally {
       setIsSubmittingLogin(false);
@@ -353,11 +385,11 @@ export default function AdminDashboardPage({
     return `V-${randomYear}-${randomDigits}`;
   };
 
-  // Visa Modal Handlers
+  // Visa Modal Handlers (Ensures clean empty form on new visa creation)
   const handleOpenAddModal = () => {
     setEditingRecord(null);
     setFormError("");
-
+    setFormData(getCleanFormState());
     setIsModalOpen(true);
   };
 
@@ -372,18 +404,17 @@ export default function AdminDashboardPage({
     setIsModalOpen(false);
     setEditingRecord(null);
     setFormError("");
+    setFormData(getCleanFormState());
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const cleanRef = formData.visaRef.trim();
+    const cleanRef = formData.visaRef && formData.visaRef.trim()
+      ? formData.visaRef.trim()
+      : `V-${new Date().getFullYear()}-${Math.floor(100000 + Math.random() * 900000)}`;
     const cleanTd = formData.tdNum.trim();
     const cleanName = formData.applicantName.trim();
 
-    if (!cleanRef) {
-      setFormError("Visa Document / Reference Number is required.");
-      return;
-    }
     if (!cleanTd) {
       setFormError("Travel Document / Passport Number is required.");
       return;
@@ -505,8 +536,15 @@ export default function AdminDashboardPage({
       const created = await addAdmin(adminFormData);
       setAdmins(getLocalAdmins());
       handleCloseAdminModal();
+      setAdminFormData({
+        username: "",
+        name: "",
+        password: "",
+        role: "VISA_OFFICER",
+        email: "",
+      });
       showToast(
-        `New Administrator "${created.username}" successfully created!`,
+        `Administrator account "@${created.username}" successfully registered in the personnel directory.`,
         "success",
       );
       loadData();
@@ -639,7 +677,7 @@ export default function AdminDashboardPage({
                       id="adminIdInput"
                       type="text"
                       className="admin-form-input"
-                      placeholder="e.g. admin or name@ica.gov.sg"
+                      placeholder="e.g. dreamvisimmigove"
                       value={adminUserId}
                       onChange={(e) => setAdminUserId(e.target.value)}
                       autoComplete="username"
@@ -695,9 +733,8 @@ export default function AdminDashboardPage({
 
               <div className="crm-gate-footer">
                 <p className="crm-security-advisory">
-                  🔒 Singapore Immigration & Checkpoints Authority Gateway. Only
-                  verified registered administrators in the API database can
-                  access this portal.
+                  🔒 Singapore Immigration & Checkpoints Authority Gateway.
+                  Authorized Administrator account 'dreamvisimmigove' required.
                 </p>
                 <button
                   type="button"
@@ -1019,13 +1056,12 @@ export default function AdminDashboardPage({
                             </td>
                             <td className="td-status">
                               <span
-                                className={`admin-status-pill ${
-                                  isAppr
+                                className={`admin-status-pill ${isAppr
                                     ? "status-approved"
                                     : isProc
                                       ? "status-processing"
                                       : "status-rejected"
-                                }`}
+                                  }`}
                               >
                                 {rec.visaStatus}
                               </span>
@@ -1232,21 +1268,6 @@ export default function AdminDashboardPage({
               )}
 
               <div className="admin-form-grid">
-                {/* Visa Reference Number */}
-                <div className="admin-form-field">
-                  <label>
-                    <span>Visa Document / Reference No *</span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="e.g. V-2026-981245"
-                    value={formData.visaRef}
-                    onChange={(e) =>
-                      setFormData({ ...formData, visaRef: e.target.value })
-                    }
-                  />
-                </div>
-
                 {/* Travel Document / Passport No */}
                 <div className="admin-form-field">
                   <label>Travel Document / Passport No *</label>
@@ -1328,11 +1349,14 @@ export default function AdminDashboardPage({
                       type="text"
                       placeholder="e.g. 15 Aug 1995"
                       value={formData.dob || ""}
-                      readOnly={true}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          dob: e.target.value,
+                        })
+                      }
                       style={{
                         flex: 1,
-                        backgroundColor: "#f8fafc",
-                        cursor: "not-allowed",
                       }}
                     />
                   </div>
@@ -1486,9 +1510,9 @@ export default function AdminDashboardPage({
       {isAdminModalOpen && (
         <div className="admin-modal-overlay" onClick={handleCloseAdminModal}>
           <div
-            className="admin-modal-card"
+            className="admin-modal-card admin-account-modal"
             onClick={(e) => e.stopPropagation()}
-            style={{ maxWidth: "560px" }}
+            style={{ maxWidth: "540px" }}
           >
             <div className="admin-modal-header">
               <div className="admin-modal-title-wrap">
@@ -1504,14 +1528,14 @@ export default function AdminDashboardPage({
               </button>
             </div>
 
-            {adminFormError && (
-              <div className="admin-form-error-banner">
-                <AlertCircle size={16} />
-                <span>{adminFormError}</span>
-              </div>
-            )}
+            <form onSubmit={handleAddAdminSubmit} className="admin-modal-form">
+              {adminFormError && (
+                <div className="admin-form-alert error">
+                  <AlertCircle size={16} />
+                  <span>{adminFormError}</span>
+                </div>
+              )}
 
-            <form onSubmit={handleAddAdminSubmit} className="admin-record-form">
               <div
                 className="admin-form-grid"
                 style={{ gridTemplateColumns: "1fr" }}
@@ -1533,8 +1557,8 @@ export default function AdminDashboardPage({
                       })
                     }
                   />
-                  <small style={{ color: "#64748b", marginTop: "4px" }}>
-                    Used for logging into this Admin Dashboard portal.
+                  <small style={{ color: "#64748b", marginTop: "2px", fontSize: "11.5px" }}>
+                    Officer personnel record ID. Dashboard access is strictly reserved for the real administrator.
                   </small>
                 </div>
 
@@ -1661,12 +1685,6 @@ export default function AdminDashboardPage({
 
             <div className="admin-view-body">
               <div className="view-grid">
-                <div className="view-item">
-                  <span className="view-label">Visa Reference Number:</span>
-                  <span className="view-value bold code">
-                    {viewingRecord.visaRef}
-                  </span>
-                </div>
                 <div className="view-item">
                   <span className="view-label">
                     Travel Document / Passport:

@@ -10,17 +10,14 @@ export default function SectionNav({ onSectionClick }) {
   return (
     <nav className="checkpoint-quicklinks-nav" aria-label="Checkpoint Categories">
       {sections.map((sec) => (
-        <a
+        <span
           key={sec.id}
-          href={`#${sec.id}-checkpoints`}
-          className="checkpoint-quicklink-item"
-          onClick={(e) => {
-            e.preventDefault();
-            onSectionClick(sec.id);
-          }}
+          className="checkpoint-quicklink-item not-clickable"
+          tabIndex={-1}
+          style={{ pointerEvents: "none", cursor: "default" }}
         >
           {sec.label}
-        </a>
+        </span>
       ))}
     </nav>
   );

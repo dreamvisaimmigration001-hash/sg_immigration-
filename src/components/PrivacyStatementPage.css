@@ -1,0 +1,246 @@
+/* ==========================================================================
+   ICA Privacy Statement Page Styles
+   SGDS-compliant, official ICA styling with responsive accordions and quicklinks
+   ========================================================================== */
+
+.privacy-statement-page-wrapper {
+  background-color: #ffffff;
+  min-height: 100vh;
+  color: #282828;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.privacy-statement-page-wrapper .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.privacy-statement-page-wrapper .container--no-padding {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+/* Page Title & Header */
+.privacy-page-header {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.privacy-main-heading {
+  font-size: clamp(2rem, 1.47rem + 2.33vw, 3.25rem);
+  line-height: clamp(2.5rem, 1.97rem + 2.33vw, 3.75rem);
+  font-weight: 700;
+  color: #282828;
+  margin: 0 0 1rem 0;
+  letter-spacing: -0.02em;
+}
+
+.privacy-main-divider {
+  border: 0;
+  border-top: 1px solid #e0e4e5;
+  margin: 0 0 1.5rem 0;
+}
+
+/* Quicklinks Sticky Navigation Bar (Non-clickable per site policy) */
+.privacy-statement-page-wrapper #quicklinks-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  padding: 12px 0 16px 0;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #e0e4e5;
+  background-color: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.privacy-statement-page-wrapper .quicklinks-item {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #4b5563;
+  background: transparent;
+  border: none;
+  padding: 4px 0;
+  margin: 0;
+  pointer-events: none !important;
+  cursor: default !important;
+  text-decoration: none;
+  opacity: 0.85;
+}
+
+/* Intro Text Article */
+.privacy-intro-article {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: #282828;
+  margin-bottom: 2rem;
+}
+
+.privacy-intro-article p {
+  margin-bottom: 1.25rem;
+}
+
+.privacy-intro-article ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.privacy-intro-article ol li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+/* Standard Content & Accordions */
+.privacy-standard-content {
+  margin-bottom: 3.5rem;
+}
+
+.privacy-collapse-wrapper {
+  border-bottom: 1px solid #e0e4e5;
+  margin-bottom: 0;
+  background-color: #ffffff;
+}
+
+.privacy-collapse-wrapper:first-of-type {
+  border-top: 1px solid #e0e4e5;
+}
+
+.privacy-collapse-title {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  background: transparent;
+  border: none;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #282828;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  user-select: none;
+}
+
+.privacy-collapse-title:hover {
+  color: #1c76d5;
+}
+
+.privacy-collapse-title .privacy-chevron-icon {
+  width: 22px;
+  height: 22px;
+  color: #1c76d5;
+  flex-shrink: 0;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.privacy-collapse-title.active .privacy-chevron-icon {
+  transform: rotate(180deg);
+}
+
+.privacy-collapse-content {
+  padding: 0 0 24px 0;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: #282828;
+  animation: privacyFadeIn 0.25s ease-out;
+}
+
+@keyframes privacyFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.privacy-collapse-content p {
+  margin-bottom: 1rem;
+}
+
+.privacy-collapse-content p:last-child {
+  margin-bottom: 0;
+}
+
+.privacy-collapse-content ol,
+.privacy-collapse-content ul {
+  padding-left: 1.5rem;
+  margin: 0.75rem 0 1.25rem 0;
+}
+
+.privacy-collapse-content li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.privacy-collapse-content ol[type="a"] {
+  list-style-type: lower-alpha;
+}
+
+.privacy-collapse-content a {
+  color: #1c76d5;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.privacy-collapse-content a:hover {
+  color: #0b4e94;
+}
+
+/* Floating Scroll to Top button */
+.privacy-scroll-top {
+  position: fixed;
+  bottom: 84px;
+  right: 28px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #1c76d5;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 99;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.privacy-scroll-top:hover {
+  background: #1459a3;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .privacy-main-heading {
+    font-size: 1.75rem;
+    line-height: 2.25rem;
+  }
+  .privacy-statement-page-wrapper #quicklinks-section {
+    gap: 6px 12px;
+  }
+  .privacy-collapse-title {
+    font-size: 1rem;
+    padding: 16px 0;
+  }
+  .privacy-intro-article {
+    font-size: 0.95rem;
+  }
+  .privacy-scroll-top {
+    bottom: 90px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+  }
+}

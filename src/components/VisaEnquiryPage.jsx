@@ -86,7 +86,7 @@ export default function VisaEnquiryPage({
     } catch (err) {
       setApiError(
         err.message ||
-          "Failed to retrieve status from Immigration API. Please try again.",
+        "Failed to retrieve status from Immigration API. Please try again.",
       );
     } finally {
       setIsSubmitting(false);
@@ -112,14 +112,15 @@ export default function VisaEnquiryPage({
             <nav className="navbar bg-white noborder ps-0 pt-0 pe-0 pb-0">
               <div className="top-navigation-logo-wrapper">
                 <a
-                  href="https://www.ica.gov.sg"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="#home"
                   title="ICA"
                   aria-label="ICA"
                   onClick={(e) => {
                     e.preventDefault();
-                    if (onNavigateToCheckpoints) onNavigateToCheckpoints();
+                    if (onNavigate) onNavigate("home");
+                    else if (onNavigateToCheckpoints) onNavigateToCheckpoints();
+                    window.location.hash = "#home";
+                    window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
                 >
                   <div className="sg-ica-logo">
@@ -159,14 +160,13 @@ export default function VisaEnquiryPage({
                   >
                     <div className="sg-myica-icon-wrapper">
                       <a
-                        href="https://www.ica.gov.sg"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href="#home"
                         title="ICA"
                         onClick={(e) => {
                           e.preventDefault();
-                          if (onNavigateToCheckpoints)
-                            onNavigateToCheckpoints();
+                          if (onNavigateHome) onNavigateHome();
+                          else if (onNavigate) onNavigate("home");
+                          else if (onNavigateToCheckpoints) onNavigateToCheckpoints();
                         }}
                       >
                         <img
@@ -307,13 +307,12 @@ export default function VisaEnquiryPage({
           {/* Labels Row */}
           <div className="visa-stepper-titles-row">
             <div
-              className={`visa-stepper-title ${
-                currentStep === 1
-                  ? "active"
-                  : currentStep > 1
-                    ? "visited"
-                    : "inactive"
-              }`}
+              className={`visa-stepper-title ${currentStep === 1
+                ? "active"
+                : currentStep > 1
+                  ? "visited"
+                  : "inactive"
+                }`}
             >
               Application Details
             </div>
@@ -332,13 +331,12 @@ export default function VisaEnquiryPage({
             {/* Left Circle: Step 1 */}
             <div className="visa-stepper-circle-col">
               <div
-                className={`visa-stepper-circle ${
-                  currentStep === 1
-                    ? "active"
-                    : currentStep > 1
-                      ? "visited"
-                      : "inactive"
-                }`}
+                className={`visa-stepper-circle ${currentStep === 1
+                  ? "active"
+                  : currentStep > 1
+                    ? "visited"
+                    : "inactive"
+                  }`}
               >
                 {/* Person avatar icon */}
                 <svg
@@ -382,7 +380,7 @@ export default function VisaEnquiryPage({
             {/* Single Input Field for Reference No or Visa Document No */}
             <div className="visa-single-input-wrapper">
               <label htmlFor="searchQuery" className="visa-field-label">
-                Visa Document Number
+                Enter Passport Number
               </label>
               <input
                 id="searchQuery"
@@ -598,10 +596,14 @@ export default function VisaEnquiryPage({
               <p className="visa-advisory-line">
                 If you encounter any problems with this eService, please{" "}
                 <a
-                  href="https://www.ica.gov.sg/feedbackform"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="#feedback"
                   className="visa-advisory-link"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (onNavigateToFeedback) onNavigateToFeedback();
+                    else if (onNavigateToContact) onNavigateToContact();
+                    else if (onNavigate) onNavigate("feedback");
+                  }}
                 >
                   contact us
                 </a>
@@ -749,17 +751,17 @@ export default function VisaEnquiryPage({
                         style={{
                           backgroundColor:
                             enquiryResult.visaStatus.toUpperCase() ===
-                            "APPROVED"
+                              "APPROVED"
                               ? "#e8f5e9"
                               : "#fff7ed",
                           color:
                             enquiryResult.visaStatus.toUpperCase() ===
-                            "APPROVED"
+                              "APPROVED"
                               ? "#2e7d32"
                               : "#c2410c",
                           borderColor:
                             enquiryResult.visaStatus.toUpperCase() ===
-                            "APPROVED"
+                              "APPROVED"
                               ? "#a5d6a7"
                               : "#ffedd5",
                         }}
@@ -810,19 +812,6 @@ export default function VisaEnquiryPage({
                     <span className="visa-result-label">Period of Stay</span>
                     <span className="visa-result-val">
                       {enquiryResult.periodOfStay}
-                    </span>
-                  </div>
-                )}
-                {enquiryResult.visaRef && (
-                  <div className="visa-result-item">
-                    <span className="visa-result-label">
-                      Visa Reference Number
-                    </span>
-                    <span
-                      className="visa-result-val"
-                      style={{ fontWeight: 700, color: "#00264d" }}
-                    >
-                      {enquiryResult.visaRef}
                     </span>
                   </div>
                 )}

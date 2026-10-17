@@ -12,9 +12,12 @@ export default function VisionMissionValuesSection() {
         <p className="vmv-intro-paragraph">
           ICA also administers immigration and registration services, such as issuing passports and Identity Cards to Singapore citizens, and immigration passes and permits to foreigners. As a security agency, we enforce laws and regulations relating to immigration and registration. We are a member of the{" "}
           <a
-            href="https://www.mha.gov.sg/"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#home"
+            onClick={(e) => {
+              e.preventDefault();
+              window.location.hash = "#home";
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
             className="vmv-link"
           >
             Home Team under the Ministry of Home Affairs

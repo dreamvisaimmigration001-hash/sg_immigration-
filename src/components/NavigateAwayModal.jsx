@@ -5,15 +5,16 @@ export default function NavigateAwayModal({
   isOpen,
   onStay,
   onLeave,
-  targetUrl = "https://eservices.ica.gov.sg/icsbip",
+  targetUrl = "#home",
 }) {
   if (!isOpen) return null;
 
   const handleLeave = () => {
     if (onLeave) {
       onLeave();
-    } else if (targetUrl) {
-      window.open(targetUrl, "_blank", "noopener,noreferrer");
+    } else {
+      window.location.hash = "#home";
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 

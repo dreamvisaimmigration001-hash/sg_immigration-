@@ -34,6 +34,7 @@ export default function HomePage({
 }) {
   const [activeModal, setActiveModal] = useState(null); // 'citizen' | 'pr' | 'ph' | 'visitor' | '1_ph' | '1_visitor' | null
   const [newsSlide, setNewsSlide] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -82,10 +83,10 @@ export default function HomePage({
       <GovMasthead />
 
       <SiteHeader
-        searchQuery=""
-        setSearchQuery={() => {}}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
         totalMatches={0}
-        isSearching={false}
+        isSearching={searchQuery.trim().length > 0}
         activeView="home"
         onNavigate={onNavigate}
       />

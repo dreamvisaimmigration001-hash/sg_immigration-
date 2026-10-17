@@ -78,9 +78,12 @@ export default function CareerFaqsPage({
         <p>
           If you meet our entry requirements, you may submit your application via{" "}
           <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://jobs.careers.gov.sg/?s=ica&a=MHA+-+Immigration+%26+Checkpoints+Authority+(ICA)"
+            href="#join-us"
+            onClick={(e) => {
+              e.preventDefault();
+              window.location.hash = "#join-us";
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
           >
             Careers@Gov
           </a>

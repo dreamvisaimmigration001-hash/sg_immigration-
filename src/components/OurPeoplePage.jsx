@@ -143,28 +143,22 @@ export default function OurPeoplePage({
                 <h1 className="checkpoint-main-heading">Our People</h1>
                 <hr className="checkpoint-main-divider" />
 
-                {/* Clean Text Links Navigation */}
+                {/* Clean Text Links Navigation (Non-clickable) */}
                 <nav className="checkpoint-quicklinks-nav" aria-label="Our People Categories">
-                  <a
-                    href="#organisational-structure"
-                    className="checkpoint-quicklink-item"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      scrollToSection(0);
-                    }}
+                  <span
+                    className="checkpoint-quicklink-item not-clickable"
+                    tabIndex={-1}
+                    style={{ pointerEvents: "none", cursor: "default" }}
                   >
                     Organisational Structure
-                  </a>
-                  <a
-                    href="#get-inspired"
-                    className="checkpoint-quicklink-item"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      scrollToSection(1);
-                    }}
+                  </span>
+                  <span
+                    className="checkpoint-quicklink-item not-clickable"
+                    tabIndex={-1}
+                    style={{ pointerEvents: "none", cursor: "default" }}
                   >
                     Get Inspired by our ICA officers!
-                  </a>
+                  </span>
                 </nav>
               </div>
 

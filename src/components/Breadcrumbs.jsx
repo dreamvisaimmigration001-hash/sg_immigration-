@@ -290,6 +290,22 @@ export default function Breadcrumbs({ activeView, onNavigate }) {
                   <span>Enquire for Application of Visa & Appointment</span>
                 </li>
               </>
+            ) : activeView === "user-research" ? (
+              <li>
+                <span>User Research</span>
+              </li>
+            ) : activeView === "terms-of-use" ? (
+              <li>
+                <span>Terms of Use</span>
+              </li>
+            ) : activeView === "sitemap" ? (
+              <li>
+                <span>Sitemap</span>
+              </li>
+            ) : activeView === "privacy-statement" ? (
+              <li>
+                <span>Privacy Statement</span>
+              </li>
             ) : (
               <li>
                 <span>Our Checkpoints</span>

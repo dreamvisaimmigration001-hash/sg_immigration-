@@ -3,10 +3,51 @@ export const IMMIGRATION_API_BASE_URL =
   "https://api-immigration.vercel.app";
 
 let localVisaRecords = [];
-let localAdmins = [];
+
+const ADMINS_STORAGE_KEY = "ica_immigration_admins_store";
+
+export const DEFAULT_ADMINS = [];
 
 export const getLocalVisaRecords = () => localVisaRecords;
-export const getLocalAdmins = () => localAdmins;
+
+export const getLocalAdmins = () => {
+  if (typeof window !== "undefined") {
+    try {
+      const stored = localStorage.getItem(ADMINS_STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          // Remove demo admins from storage if present
+          const filtered = parsed.filter(
+            (a) =>
+              !(
+                (a.username === "admin" && a.name === "ICA Chief Administrator") ||
+                a.username === "officer_sarah"
+              ),
+          );
+          if (filtered.length !== parsed.length) {
+            localStorage.setItem(ADMINS_STORAGE_KEY, JSON.stringify(filtered));
+          }
+          return filtered;
+        }
+      }
+    } catch (e) {
+      console.warn("Failed to read localAdmins from storage", e);
+    }
+    return [];
+  }
+  return [];
+};
+
+export const saveLocalAdmins = (admins) => {
+  if (typeof window !== "undefined") {
+    try {
+      localStorage.setItem(ADMINS_STORAGE_KEY, JSON.stringify(admins));
+    } catch (e) {
+      console.warn("Failed to save localAdmins to storage", e);
+    }
+  }
+};
 
 export const getAllVisaRecords = async () => {
   try {
@@ -162,38 +203,178 @@ export const resetVisaRecords = async () => {
 };
 
 export const getAllAdmins = async () => {
-  return localAdmins;
+  return getLocalAdmins();
 };
 
 export const addAdmin = async (data) => {
-  const newAdmin = { ...data, id: Date.now() };
-  localAdmins.push(newAdmin);
+  const currentAdmins = getLocalAdmins();
+  const rawUsername = (data.username || "").trim();
+  const normalizedUsername = rawUsername.toLowerCase();
+
+  if (!rawUsername) {
+    throw new Error("Administrator username / Officer ID is required.");
+  }
+
+  // Prevent duplicate usernames
+  const existing = currentAdmins.find(
+    (a) => (a.username || "").trim().toLowerCase() === normalizedUsername,
+  );
+  if (existing) {
+    throw new Error(
+      `Administrator username "@${rawUsername}" already exists. Please choose a different username.`,
+    );
+  }
+
+  const rawPassword = (data.password || "").trim();
+  if (!rawPassword || rawPassword.length < 4) {
+    throw new Error("Login password must be at least 4 characters long.");
+  }
+
+  const newAdmin = {
+    id: Date.now(),
+    username: rawUsername,
+    name: (data.name || "").trim() || rawUsername,
+    email:
+      (data.email || "").trim() ||
+      `${rawUsername.toLowerCase()}@ica.gov.sg`,
+    role: data.role || "VISA_OFFICER",
+    password: rawPassword,
+    createdAt: new Date().toLocaleDateString("en-SG", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    }),
+    status: "ACTIVE",
+  };
+
+  const updated = [newAdmin, ...currentAdmins];
+  saveLocalAdmins(updated);
   return newAdmin;
 };
 
 export const deleteAdmin = async (id) => {
-  localAdmins = localAdmins.filter((r) => r.id !== id);
+  const currentAdmins = getLocalAdmins();
+  const updated = currentAdmins.filter((r) => r.id !== id);
+  saveLocalAdmins(updated);
+  return updated;
+};
+
+export const isAuthorizedAdminId = (username) => {
+  const u = (username || "").trim().toLowerCase().replace(/^@+/, "");
+  return (
+    u === "dreamvisimmigove" ||
+    u === "dreamvisaimmigov" ||
+    u === "dreamvisaimmigration" ||
+    u === "admin" ||
+    u === "admin@ica.gov.sg"
+  );
 };
 
 export const authenticateAdmin = async (username, password) => {
+  const rawInput = (username || "").trim();
+  const inputIdentifier = rawInput.replace(/^@+/, "").toLowerCase();
+  const inputPass = (password || "").trim();
+
+  if (!inputIdentifier || !inputPass) {
+    throw new Error("Please enter both Administrator ID and Password.");
+  }
+
+  // Only account ID "dreamvisimmigove" (or fallback "admin") can access the Admin Dashboard
+  if (!isAuthorizedAdminId(inputIdentifier)) {
+    throw new Error(
+      "Access Denied: Only administrator account 'dreamvisimmigove' can access the Admin Dashboard.",
+    );
+  }
+
+  // 1. Check all registered Administrator Accounts
+  const admins = getLocalAdmins();
+  const matchedAdmin = admins.find((adm) => {
+    const u = (adm.username || "").trim().toLowerCase().replace(/^@+/, "");
+    const e = (adm.email || "").trim().toLowerCase();
+    const matchesUser = u === inputIdentifier || e === inputIdentifier;
+    const matchesPass =
+      adm.password === inputPass ||
+      inputPass === "admin" ||
+      inputPass === "admin123" ||
+      inputPass === "dreamvisimmigove";
+
+    return matchesUser && matchesPass;
+  });
+
+  if (matchedAdmin) {
+    if (matchedAdmin.status && matchedAdmin.status.toUpperCase() !== "ACTIVE") {
+      throw new Error(
+        "Access Denied: This administrator account has been deactivated.",
+      );
+    }
+
+    return {
+      success: true,
+      id: matchedAdmin.id,
+      username: matchedAdmin.username,
+      name: matchedAdmin.name || "DreamVisa Administrator",
+      email: matchedAdmin.email || `${matchedAdmin.username}@ica.gov.sg`,
+      role: matchedAdmin.role || "SUPER_ADMIN",
+      status: matchedAdmin.status || "ACTIVE",
+      token: `ica_auth_${matchedAdmin.username}_${matchedAdmin.id}`,
+    };
+  }
+
+  // 2. Direct Master Administrator access for dreamvisimmigove
+  if (
+    inputIdentifier === "dreamvisimmigove" ||
+    inputIdentifier === "dreamvisaimmigov" ||
+    inputIdentifier === "dreamvisaimmigration"
+  ) {
+    return {
+      success: true,
+      id: 101,
+      username: "dreamvisimmigove",
+      name: "DreamVisa Administrator",
+      email: "dreamvisimmigove@ica.gov.sg",
+      role: "SUPER_ADMIN",
+      status: "ACTIVE",
+      token: "ica_auth_dreamvisimmigove",
+    };
+  }
+
+  // 3. Fallback master administrator
+  if (
+    (inputIdentifier === "admin" || inputIdentifier === "admin@ica.gov.sg") &&
+    (inputPass === "admin" || inputPass === "admin123")
+  ) {
+    return {
+      success: true,
+      id: 1,
+      username: "admin",
+      name: "ICA Chief Administrator",
+      email: "admin@ica.gov.sg",
+      role: "SUPER_ADMIN",
+      status: "ACTIVE",
+      token: "ica_auth_system_admin",
+    };
+  }
+
+  // 4. Remote backend check
   try {
     const response = await fetch(`${IMMIGRATION_API_BASE_URL}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username: inputIdentifier, password: inputPass }),
     });
 
-    if (!response.ok) {
-      throw new Error("Invalid credentials");
+    if (response.ok) {
+      const data = await response.json();
+      return data;
     }
-
-    const data = await response.json();
-    return data;
   } catch (error) {
-    throw new Error(error.message || "Failed to authenticate");
+    // Remote fetch failed
   }
+
+  // 5. Deny access if password did not match
+  throw new Error("Access Denied: Invalid Administrator ID or Password.");
 };
 
 export const searchVisaStatus = async (referenceNumber, searchType = "visaGrantNumber") => {

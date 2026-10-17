@@ -124,8 +124,8 @@ export default function SiteHeader({
       target = "career-faqs";
       hash = "#career-faqs";
     } else if (label.includes("faq") || label.includes("help") || href.includes("faqs") || href.includes("askgov")) {
-      target = "askgov";
-      hash = "#faqs";
+      target = "home";
+      hash = "#home";
     } else if (label.includes("reach") || href.includes("reach")) {
       target = "reach";
       hash = "#reach";
@@ -154,11 +154,13 @@ export default function SiteHeader({
 
     if (target && onNavigate) {
       onNavigate(target);
+    } else if (onNavigate) {
+      onNavigate("home");
     }
     if (hash) {
       window.location.hash = hash;
-    } else if (item.href && item.href.startsWith("#")) {
-      window.location.hash = item.href;
+    } else {
+      window.location.hash = "#home";
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -332,18 +334,34 @@ export default function SiteHeader({
                   >
                     <span className="sr-only">Toggle search bar</span>
                     <svg
-                      className="icon icon-search"
-                      width="20"
-                      height="20"
+                      className="icon-search"
+                      width="19"
+                      height="19"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      strokeWidth="2.2"
+                      strokeWidth="2.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
+                      aria-hidden="true"
                     >
-                      <circle cx="11" cy="11" r="8" />
-                      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                      <circle cx="10.5" cy="10.5" r="7.5" />
+                      <line x1="21" y1="21" x2="16" y2="16" />
+                    </svg>
+                    <svg
+                      className="icon-close"
+                      width="19"
+                      height="19"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <line x1="18" y1="6" x2="6" y2="18" />
+                      <line x1="6" y1="6" x2="18" y2="18" />
                     </svg>
                   </button>
 
@@ -497,6 +515,7 @@ export default function SiteHeader({
             onClose={() => setIsSearchOpen(false)}
             totalMatches={totalMatches}
             isSearching={isSearching}
+            onNavigate={onNavigate}
           />
         )}
       </div>

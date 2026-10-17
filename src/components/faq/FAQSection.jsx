@@ -646,7 +646,8 @@ export default function FAQSection({
                       if (onNavigateHome) {
                         onNavigateHome();
                       } else {
-                        window.open("https://www.ica.gov.sg", "_blank", "noopener,noreferrer");
+                        window.location.hash = "#home";
+                        window.scrollTo({ top: 0, behavior: "smooth" });
                       }
                     }}
                   >

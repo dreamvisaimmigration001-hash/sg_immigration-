@@ -262,15 +262,15 @@ export default function PublicationsPage({
               <h1 className="publications-main-heading">Publications</h1>
               <hr className="publications-top-divider" />
 
-              {/* Quicklinks Nav text */}
+              {/* Quicklinks Nav text (Non-clickable) */}
               <div className="publications-quicklinks-row">
-                <a
-                  href="#publications"
-                  className="publications-quicklink"
-                  onClick={scrollToPublications}
+                <span
+                  className="publications-quicklink not-clickable"
+                  tabIndex={-1}
+                  style={{ pointerEvents: "none", cursor: "default" }}
                 >
                   Publications
-                </a>
+                </span>
               </div>
 
               {/* Intro text */}

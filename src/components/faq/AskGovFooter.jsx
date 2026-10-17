@@ -67,31 +67,39 @@ export default function AskGovFooter({ onNavigateHome, onNavigateFeedback }) {
             </a>
 
             <a
-              href="https://www.ica.gov.sg/privacy-statement"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#privacy-statement"
+              onClick={(e) => {
+                e.preventDefault();
+                window.location.hash = "#privacy-statement";
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
               className="askgov-footer-nav-item"
             >
               <span>Privacy</span>
             </a>
 
             <a
-              href="https://www.ica.gov.sg/terms-of-use"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#terms-of-use"
+              onClick={(e) => {
+                e.preventDefault();
+                window.location.hash = "#terms-of-use";
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
               className="askgov-footer-nav-item"
             >
               <span>Terms of Use</span>
             </a>
 
             <a
-              href="https://www.tech.gov.sg/report_vulnerability"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#home"
+              onClick={(e) => {
+                e.preventDefault();
+                window.location.hash = "#home";
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
               className="askgov-footer-nav-item"
             >
               <span>Report Vulnerability</span>
-              <ExternalIcon />
             </a>
           </nav>
         </div>

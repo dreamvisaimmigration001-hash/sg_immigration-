@@ -105,23 +105,25 @@ export const quickLinksData = [
   },
 ];
 
-export default function QuickLinks({ onSelectCategory }) {
+export default function QuickLinks() {
   return (
     <div className="faq-quicklinks-wrap">
       <h3 className="faq-section-subtitle">Quick links</h3>
       <div className="faq-quicklinks-grid">
         {quickLinksData.map((item) => (
-          <button
+          <div
             key={item.id}
-            type="button"
-            className="faq-ql-card"
-            onClick={() => onSelectCategory(item.category)}
+            className="faq-ql-card not-clickable"
+            role="presentation"
+            aria-disabled="true"
+            tabIndex={-1}
+            style={{ cursor: "default", pointerEvents: "none" }}
           >
             <span className="faq-ql-title">{item.title}</span>
             <span className="faq-ql-icon" aria-hidden="true">
               {item.icon}
             </span>
-          </button>
+          </div>
         ))}
       </div>
     </div>

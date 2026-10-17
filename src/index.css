@@ -656,28 +656,103 @@ button {
 .site-header__controls {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
   flex-shrink: 0;
   margin-left: 0;
 }
 
+/* MyICA Pill Button */
+.btn-myica-login {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background-color: #8b004b;
+  color: #ffffff;
+  padding: 0 14px;
+  height: 38px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 700;
+  transition: background-color 0.15s ease;
+  line-height: 1;
+}
+
+.btn-myica-login:hover {
+  background-color: #72003d;
+  color: #ffffff;
+}
+
+.myica-lock-icon {
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.myica-label {
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
 /* Toggle Buttons */
 .btn-toggle-search {
-  padding: 8px;
-  color: var(--ica-navy);
+  position: relative;
+  width: 40px;
+  height: 38px;
+  color: #111111;
   border: none;
-  background: transparent;
+  background-color: #ededed;
   cursor: pointer;
   border-radius: 4px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s ease, transform 0.12s ease;
+  padding: 0;
+  overflow: hidden;
 }
 
 .btn-toggle-search:hover,
 .btn-toggle-search.expanded {
-  background-color: #f0f4f8;
+  background-color: #e2e2e2;
+  color: #000000;
+}
+
+.btn-toggle-search:active {
+  transform: scale(0.93);
+}
+
+.btn-toggle-search svg {
+  position: absolute;
+  width: 19px;
+  height: 19px;
+  display: block;
+  transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.22s ease;
+}
+
+.btn-toggle-search .icon-search {
+  transform: rotate(0deg) scale(1);
+  opacity: 1;
+}
+
+.btn-toggle-search.expanded .icon-search {
+  transform: rotate(90deg) scale(0.35);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.btn-toggle-search .icon-close {
+  transform: rotate(-90deg) scale(0.35);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.btn-toggle-search.expanded .icon-close {
+  transform: rotate(0deg) scale(1);
+  opacity: 1;
 }
 
 .btn-toggle-menu {
@@ -893,25 +968,45 @@ button {
    ========================================================================== */
 .site-searchsg-wrapper {
   background-color: #ffffff;
-  border-top: 1px solid #dee2e6;
-  border-bottom: 1px solid #dee2e6;
-  padding: 14px 0;
-  animation: fadeIn 0.18s ease;
+  border-top: none;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(-8px);
+  transition: max-height 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.26s ease,
+              padding 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: max-height, opacity, transform;
+}
+
+.site-searchsg-wrapper.anim-open {
+  max-height: 380px;
+  opacity: 1;
+  padding: 24px 0 28px 0;
+  transform: translateY(0);
+}
+
+.site-searchsg-wrapper.anim-settled {
+  overflow: visible;
 }
 
 .searchsg-form {
   width: 100%;
-  margin: 0;
+  margin: 6px 0 10px 0;
+  position: relative;
 }
 
 .search-bar-inner {
   display: flex;
   align-items: stretch;
-  border: 1px solid #d0d3d9;
-  border-radius: 4px;
-  overflow: hidden;
-  height: 46px;
-  background: #ffffff;
+  height: 56px;
+  width: 100%;
+  background: transparent;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+  border-radius: 6px;
 }
 
 .search-input-wrapper {
@@ -920,34 +1015,48 @@ button {
   display: flex;
   align-items: center;
   min-width: 0;
+  border: 1.5px solid #757575;
+  border-right: none;
+  border-radius: 6px 0 0 6px;
+  background: #ffffff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.search-input-wrapper.focused,
+.search-input-wrapper:focus-within {
+  border-color: #2b5a8f;
+  box-shadow: 0 0 0 1px #ffffff, 0 0 0 3px #2b5a8f;
+  z-index: 2;
 }
 
 .search-input-wrapper input {
   width: 100%;
   height: 100%;
-  padding: 0 38px 0 14px;
-  font-size: 0.9375rem;
+  padding: 0 44px 0 20px;
+  font-size: 18px;
   border: none;
   outline: none;
-  color: #333333;
+  color: #212529;
   background: transparent;
   font-family: inherit;
-  line-height: 1;
+  line-height: normal;
 }
 
 .search-input-wrapper input::placeholder {
-  color: #9aa0a6;
-  font-size: 0.9375rem;
+  color: #61666d;
+  font-size: 18px;
+  font-weight: 400;
+  opacity: 1;
 }
 
 .clear-search-btn {
   position: absolute;
-  right: 8px;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: #9aa0a6;
-  font-size: 1rem;
-  padding: 2px 6px;
+  color: #757575;
+  font-size: 1.35rem;
+  padding: 4px 8px;
   cursor: pointer;
   background: none;
   border: none;
@@ -957,31 +1066,165 @@ button {
 }
 
 .clear-search-btn:hover {
-  color: #333333;
+  color: #212529;
 }
 
 .search-submit-btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 0 24px;
-  background-color: #345480;
+  gap: 10px;
+  padding: 0 36px;
+  background-color: #2b5a8f;
   color: #ffffff;
   font-weight: 600;
-  font-size: 0.9375rem;
+  font-size: 18px;
   font-family: inherit;
-  border: none;
-  border-left: none;
+  border: 1.5px solid #2b5a8f;
+  border-radius: 0 6px 6px 0;
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: background-color 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  line-height: 1;
   letter-spacing: 0.01em;
+  z-index: 1;
 }
 
 .search-submit-btn:hover {
-  background-color: #26406a;
+  background-color: #214772;
+  border-color: #214772;
+}
+
+.search-submit-btn:focus-visible {
+  outline: 2px solid #ffbf47;
+  outline-offset: 1px;
+}
+
+.search-btn-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.search-btn-text {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+@media (max-width: 767px) {
+  .site-searchsg-wrapper.anim-open {
+    padding: 16px 0 20px 0;
+  }
+
+  .search-bar-inner {
+    height: 48px;
+  }
+
+  .search-input-wrapper input {
+    font-size: 16px;
+    padding: 0 38px 0 16px;
+  }
+
+  .search-input-wrapper input::placeholder {
+    font-size: 16px;
+  }
+
+  .search-submit-btn {
+    padding: 0 22px;
+    font-size: 16px;
+    gap: 8px;
+  }
+
+  .search-btn-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .search-btn-text {
+    font-size: 16px;
+  }
+}
+
+/* ==========================================================================
+   SearchSG Quick Links Dropdown
+   ========================================================================== */
+.searchsg-dropdown {
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid #d4dae0;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04);
+  z-index: 1050;
+  max-height: 480px;
+  overflow-y: auto;
+  animation: fadeInDropdown 0.14s ease-out;
+}
+
+@keyframes fadeInDropdown {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.searchsg-dropdown-header {
+  padding: 14px 20px 8px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #5f6368;
+  letter-spacing: 0.01em;
+  user-select: none;
+}
+
+.searchsg-dropdown-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 6px 0;
+}
+
+.searchsg-dropdown-item-wrap {
+  border-bottom: 1px solid #edf1f5;
+}
+
+.searchsg-dropdown-item-wrap:last-child {
+  border-bottom: none;
+}
+
+.searchsg-dropdown-link {
+  display: block;
+  width: 100%;
+  padding: 11px 20px;
+  color: #1d5287;
+  font-size: 15px;
+  text-decoration: none;
+  font-weight: 400;
+  cursor: pointer;
+  background-color: transparent;
+  transition: background-color 0.12s ease;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.searchsg-dropdown-link:hover,
+.searchsg-dropdown-link:focus {
+  background-color: #edf4fa;
+  text-decoration: underline;
+  color: #174573;
+}
+
+.searchsg-link-content {
+  display: inline-block;
 }
 
 .search-results-indicator {
@@ -3232,4 +3475,40 @@ button {
     max-width: 270px;
     margin: 0 auto;
   }
+}
+
+/* ==========================================================================
+   GLOBAL QUICK LINKS POLICY:
+   Only Search Bar quick links are clickable and active.
+   All other in-page quick links across the website are non-clickable.
+   ========================================================================== */
+#quicklinks-section,
+#quicklinks-section *,
+.quicklinks-item,
+.checkpoint-quicklinks-nav,
+.checkpoint-quicklinks-nav *,
+.checkpoint-quicklink-item,
+.commitment-quicklinks,
+.commitment-quicklinks *,
+.commitment-quicklink-btn,
+.feedback-quicklinks-nav,
+.feedback-quicklinks-nav *,
+.feedback-quicklink-btn,
+.publications-quicklinks-row,
+.publications-quicklinks-row *,
+.publications-quicklink,
+.faq-quicklinks-wrap .faq-ql-card {
+  pointer-events: none !important;
+  cursor: default !important;
+  user-select: none;
+}
+
+/* Explicitly preserve SearchSG / Search Bar quick links functionality */
+.site-searchsg .searchsg-dropdown,
+.site-searchsg .searchsg-dropdown *,
+.searchsg-dropdown-link,
+.searchsg-dropdown-item-wrap,
+.searchsg-dropdown-item-wrap a {
+  pointer-events: auto !important;
+  cursor: pointer !important;
 }

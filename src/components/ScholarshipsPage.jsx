@@ -173,9 +173,8 @@ export default function ScholarshipsPage({
                     <div className="center apply-btn-container">
                       <a
                         className="button button__apply-now"
-                        href="https://www.mha.gov.sg/careers/mha-scholarships/mha-uniformed-scholarship"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href="#home"
+                        onClick={(e) => handleNavClick(e, 'home')}
                       >
                         <p>Apply Now</p>
                       </a>
@@ -211,9 +210,8 @@ export default function ScholarshipsPage({
                             <li>
                               Current undergraduate students (not in final year of studies) may also apply.{' '}
                               <a
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                href="https://www.mha.gov.sg/careers/mha-scholarships/mha-uniformed-scholarship/#d3cc2be40fc6ed5eb89baa51678b4865"
+                                href="#home"
+                                onClick={(e) => handleNavClick(e, 'home')}
                                 className="external-link-inline"
                               >
                                 Click here
@@ -275,9 +273,8 @@ export default function ScholarshipsPage({
                     <div className="center apply-btn-container">
                       <a
                         className="button button__apply-now"
-                        href="https://www.mha.gov.sg/careers/sponsorships/home-team-diploma-sponsorship"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href="#home"
+                        onClick={(e) => handleNavClick(e, 'home')}
                       >
                         <p>Apply for Sponsorship</p>
                       </a>
@@ -509,7 +506,7 @@ export default function ScholarshipsPage({
                       <a
                         className="explore-more__item"
                         href="/careers/meet-our-officers"
-                        onClick={(e) => handleNavClick(e, 'our-people')}
+                        onClick={(e) => handleNavClick(e, 'meet-our-officers')}
                       >
                         <div className="explore-more__media">
                           <div className="explore-more__overlay">

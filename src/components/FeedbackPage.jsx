@@ -361,14 +361,16 @@ export default function FeedbackPage({
 
           <hr className="feedback-divider" />
 
-          {/* Quicklinks Navigation (matching screenshot text links) */}
+          {/* Quicklinks Navigation (matching screenshot text links, non-clickable) */}
           <nav className="feedback-quicklinks-nav" aria-label="Feedback Categories">
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 type="button"
-                className="feedback-quicklink-btn"
-                onClick={() => handleScrollToSection(cat.id)}
+                className="feedback-quicklink-btn not-clickable"
+                disabled
+                tabIndex={-1}
+                style={{ pointerEvents: "none", cursor: "default" }}
               >
                 {cat.title}
               </button>

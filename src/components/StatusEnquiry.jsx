@@ -150,9 +150,8 @@ export default function StatusEnquiry({ onBackToCheckpoints }) {
                       </label>
                       <div className="ipsave-search-type-options">
                         <label
-                          className={`ipsave-search-type-option ${
-                            searchType === "visaGrantNumber" ? "selected" : ""
-                          }`}
+                          className={`ipsave-search-type-option ${searchType === "visaGrantNumber" ? "selected" : ""
+                            }`}
                         >
                           <input
                             type="radio"
@@ -169,9 +168,8 @@ export default function StatusEnquiry({ onBackToCheckpoints }) {
                           <span className="ipsave-radio-label">Visa Reference Number</span>
                         </label>
                         <label
-                          className={`ipsave-search-type-option ${
-                            searchType === "passport" ? "selected" : ""
-                          }`}
+                          className={`ipsave-search-type-option ${searchType === "passport" ? "selected" : ""
+                            }`}
                         >
                           <input
                             type="radio"
@@ -379,10 +377,6 @@ export default function StatusEnquiry({ onBackToCheckpoints }) {
                           <table className="table table-bordered particulars-table">
                             <tbody>
                               <tr>
-                                <th scope="row">Visa Reference Number</th>
-                                <td className="font-mono font-bold text-navy">{enquiryResult.visaRef}</td>
-                              </tr>
-                              <tr>
                                 <th scope="row">Travel Document Number</th>
                                 <td className="font-mono font-bold">{enquiryResult.tdNum}</td>
                               </tr>
@@ -549,10 +543,12 @@ export default function StatusEnquiry({ onBackToCheckpoints }) {
                 <p className="eservice-help-notice">
                   If you encounter any problems with this eService, please{" "}
                   <a
-                    href="https://www.ica.gov.sg/feedback-sub"
-                    target="_blank"
-                    rel="noreferrer"
+                    href="#feedback"
                     className="contact-us-link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      window.location.hash = "#feedback";
+                    }}
                   >
                     contact us
                   </a>.
