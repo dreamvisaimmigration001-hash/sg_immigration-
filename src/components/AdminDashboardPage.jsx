@@ -178,6 +178,13 @@ export default function AdminDashboardPage({
     if (typeof window !== "undefined") {
       const isAuth = sessionStorage.getItem(IMMIGRATION_AUTH_KEY) === "true";
       const user = sessionStorage.getItem("ica_immigration_user") || "";
+      const token = sessionStorage.getItem("ica_immigration_token") || "";
+      if (token && token.startsWith("ica_auth_")) {
+        sessionStorage.removeItem(IMMIGRATION_AUTH_KEY);
+        sessionStorage.removeItem("ica_immigration_user");
+        sessionStorage.removeItem("ica_immigration_token");
+        return false;
+      }
       if (isAuth && user && !isAuthorizedAdminId(user)) {
         sessionStorage.removeItem(IMMIGRATION_AUTH_KEY);
         sessionStorage.removeItem("ica_immigration_user");
@@ -229,7 +236,13 @@ export default function AdminDashboardPage({
   });
   const [adminFormError, setAdminFormError] = useState("");
 
-  // Visa Form Clean State Generator (Always completely fresh & empty for new user)
+  const generateRandomVisaRef = () => {
+    const randomYear = 2026;
+    const randomDigits = Math.floor(100000 + Math.random() * 900000);
+    return `V-${randomYear}-${randomDigits}`;
+  };
+
+  // Visa Form Clean State Generator (Starts completely empty with clear placeholders)
   const getCleanFormState = () => ({
     visaRef: "",
     tdNum: "",
@@ -240,7 +253,7 @@ export default function AdminDashboardPage({
     visaClassSubclass: "",
     entriesAllowed: "Multiple",
     mustNotArriveAfter: "",
-    periodOfStay: "30 Days",
+    periodOfStay: "",
     visaStatus: "APPROVED",
     applicationDate: new Date().toLocaleDateString("en-SG", {
       day: "2-digit",
@@ -268,9 +281,9 @@ export default function AdminDashboardPage({
       const localAdmins = getLocalAdmins();
       if (Array.isArray(localAdmins)) setAdmins(localAdmins);
 
-      // 2. Fetch remote update if available
+      // 2. Fetch remote update / merged records
       const remoteVisas = await getAllVisaRecords();
-      if (Array.isArray(remoteVisas) && remoteVisas.length > 0) {
+      if (Array.isArray(remoteVisas)) {
         setRecords(remoteVisas);
       }
 
@@ -379,12 +392,6 @@ export default function AdminDashboardPage({
     showToast("Signed out from Administrator session.", "info");
   };
 
-  const generateRandomVisaRef = () => {
-    const randomYear = 2026;
-    const randomDigits = Math.floor(100000 + Math.random() * 900000);
-    return `V-${randomYear}-${randomDigits}`;
-  };
-
   // Visa Modal Handlers (Ensures clean empty form on new visa creation)
   const handleOpenAddModal = () => {
     setEditingRecord(null);
@@ -396,7 +403,23 @@ export default function AdminDashboardPage({
   const handleOpenEditModal = (rec) => {
     setEditingRecord(rec);
     setFormError("");
-    setFormData({ ...rec });
+    setFormData({
+      ...rec,
+      visaRef: rec.visaRef || rec.visaGrantNumber || "",
+      tdNum: rec.tdNum || rec.documentNumber || "",
+      applicantName: rec.applicantName || rec.fullName || "",
+      dob: rec.dob || rec.dateOfBirth || "",
+      nationality: rec.nationality || "",
+      visaClassSubclass: rec.visaClassSubclass || "FA / 600",
+      visaType: rec.visaType || "Visitor",
+      entriesAllowed: rec.entriesAllowed || "Multiple",
+      mustNotArriveAfter: rec.mustNotArriveAfter || "",
+      periodOfStay: rec.periodOfStay || "30 Days",
+      visaStatus: rec.visaStatus || rec.status || "APPROVED",
+      issueDate: rec.issueDate || rec.visaGrantDate || "",
+      expiryDate: rec.expiryDate || rec.visaExpiryDate || "",
+      applicationDate: rec.applicationDate || "",
+    });
     setIsModalOpen(true);
   };
 
@@ -409,11 +432,12 @@ export default function AdminDashboardPage({
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const cleanRef = formData.visaRef && formData.visaRef.trim()
-      ? formData.visaRef.trim()
-      : `V-${new Date().getFullYear()}-${Math.floor(100000 + Math.random() * 900000)}`;
-    const cleanTd = formData.tdNum.trim();
-    const cleanName = formData.applicantName.trim();
+    const cleanRef =
+      formData.visaRef && formData.visaRef.trim()
+        ? formData.visaRef.trim()
+        : generateRandomVisaRef();
+    const cleanTd = (formData.tdNum || "").trim();
+    const cleanName = (formData.applicantName || "").trim();
 
     if (!cleanTd) {
       setFormError("Travel Document / Passport Number is required.");
@@ -431,17 +455,26 @@ export default function AdminDashboardPage({
       payload.append("fullName", cleanName);
       payload.append("dateOfBirth", formData.dob || "");
       payload.append("nationality", formData.nationality || "");
-      payload.append("visaClassSubclass", formData.visaClassSubclass || "");
-      payload.append("visaType", formData.visaType || "");
-      payload.append("entriesAllowed", formData.entriesAllowed || "");
+      payload.append("visaClassSubclass", formData.visaClassSubclass || "FA / 600");
+      payload.append("visaType", formData.visaType || "Visitor");
+      payload.append("entriesAllowed", formData.entriesAllowed || "Multiple");
       payload.append("mustNotArriveAfter", formData.mustNotArriveAfter || "");
-      payload.append("periodOfStay", formData.periodOfStay || "");
-      payload.append("visaStatus", formData.visaStatus || "");
-      payload.append("status", formData.visaStatus || "");
+      payload.append("periodOfStay", formData.periodOfStay || "30 Days");
+      payload.append("visaStatus", formData.visaStatus || "APPROVED");
+      payload.append("status", formData.visaStatus || "APPROVED");
       payload.append("visaGrantDate", formData.issueDate || "");
       payload.append("visaExpiryDate", formData.expiryDate || "");
+      payload.append("applicationDate", formData.applicationDate || "");
       payload.append("applicationType", "visa");
       payload.append("origin", "sg");
+
+      // Also append camelCase fields for universal frontend alignment
+      payload.append("visaRef", cleanRef);
+      payload.append("tdNum", cleanTd);
+      payload.append("applicantName", cleanName);
+      payload.append("dob", formData.dob || "");
+      payload.append("issueDate", formData.issueDate || "");
+      payload.append("expiryDate", formData.expiryDate || "");
 
       if (formData.document) {
         payload.append("document", formData.document);
@@ -449,7 +482,7 @@ export default function AdminDashboardPage({
       }
 
       if (editingRecord) {
-        await updateVisaRecord(editingRecord.id, payload);
+        await updateVisaRecord(editingRecord.id || editingRecord._id, payload);
         showToast(`Record "${cleanRef}" updated successfully!`);
       } else {
         await addVisaRecord(payload);
@@ -461,7 +494,7 @@ export default function AdminDashboardPage({
       handleCloseModal();
 
       // 2. Refresh background sync
-      loadData();
+      await loadData();
     } catch (err) {
       setFormError(err.message || "Failed to save visa record.");
     }
@@ -588,22 +621,41 @@ export default function AdminDashboardPage({
   };
 
   // Filtered list computation
-  const safeRecords = Array.isArray(records) ? records : [];
+  const safeRecords = useMemo(() => {
+    return (Array.isArray(records) ? records : []).filter(
+      (r) =>
+        r &&
+        (r.applicantName ||
+          r.fullName ||
+          r.visaRef ||
+          r.visaGrantNumber ||
+          r.tdNum ||
+          r.documentNumber),
+    );
+  }, [records]);
+
   const safeAdmins = Array.isArray(admins) ? admins : [];
 
   const filteredRecords = useMemo(() => {
     const q = searchQuery.toLowerCase().trim();
     return safeRecords.filter((r) => {
+      const applicant = (r.applicantName || r.fullName || "").toLowerCase();
+      const visaRef = (r.visaRef || r.visaGrantNumber || "").toLowerCase();
+      const tdNum = (r.tdNum || r.documentNumber || "").toLowerCase();
+      const nationality = (r.nationality || "").toLowerCase();
+      const passType = (r.passType || r.visaType || "").toLowerCase();
+      const queueNo = (r.queueNo || "").toLowerCase();
+
       const matchQuery =
         !q ||
-        (r.applicantName || "").toLowerCase().includes(q) ||
-        (r.visaRef || "").toLowerCase().includes(q) ||
-        (r.tdNum || "").toLowerCase().includes(q) ||
-        (r.nationality || "").toLowerCase().includes(q) ||
-        (r.passType || "").toLowerCase().includes(q) ||
-        (r.queueNo || "").toLowerCase().includes(q);
+        applicant.includes(q) ||
+        visaRef.includes(q) ||
+        tdNum.includes(q) ||
+        nationality.includes(q) ||
+        passType.includes(q) ||
+        queueNo.includes(q);
 
-      const status = (r.visaStatus || "").toUpperCase();
+      const status = (r.visaStatus || r.status || "").toUpperCase();
       const matchStatus =
         statusFilter === "ALL" ||
         (statusFilter === "APPROVED" && status === "APPROVED") ||
@@ -618,14 +670,14 @@ export default function AdminDashboardPage({
 
   // Statistics
   const totalCount = safeRecords.length;
-  const approvedCount = safeRecords.filter(
-    (r) => (r.visaStatus || "").toUpperCase() === "APPROVED",
-  ).length;
-  const processingCount = safeRecords.filter(
-    (r) =>
-      (r.visaStatus || "").toUpperCase().includes("PROCESS") ||
-      (r.visaStatus || "").toUpperCase().includes("PEND"),
-  ).length;
+  const approvedCount = safeRecords.filter((r) => {
+    const status = (r.visaStatus || r.status || "").toUpperCase();
+    return status === "APPROVED";
+  }).length;
+  const processingCount = safeRecords.filter((r) => {
+    const status = (r.visaStatus || r.status || "").toUpperCase();
+    return status.includes("PROCESS") || status.includes("PEND");
+  }).length;
   const confirmedAppointments = safeRecords.filter((r) =>
     (r.appointmentStatus || "").toUpperCase().includes("CONFIRM"),
   ).length;
@@ -677,7 +729,7 @@ export default function AdminDashboardPage({
                       id="adminIdInput"
                       type="text"
                       className="admin-form-input"
-                      placeholder="e.g. dreamvisimmigove"
+                      placeholder="e.g. Enter id"
                       value={adminUserId}
                       onChange={(e) => setAdminUserId(e.target.value)}
                       autoComplete="username"
@@ -999,7 +1051,7 @@ export default function AdminDashboardPage({
                   <tbody>
                     {filteredRecords.length === 0 ? (
                       <tr>
-                        <td colSpan={7} className="admin-empty-state">
+                        <td colSpan={6} className="admin-empty-state">
                           <AlertCircle size={32} color="#94a3b8" />
                           <p>No matching client visa records found.</p>
                           <button
@@ -1013,57 +1065,61 @@ export default function AdminDashboardPage({
                       </tr>
                     ) : (
                       filteredRecords.map((rec) => {
-                        const isAppr =
-                          (rec.visaStatus || "").toUpperCase() === "APPROVED";
+                        const statusVal =
+                          rec.visaStatus || rec.status || "APPROVED";
+                        const isAppr = statusVal.toUpperCase() === "APPROVED";
                         const isProc =
-                          (rec.visaStatus || "")
-                            .toUpperCase()
-                            .includes("PROCESS") ||
-                          (rec.visaStatus || "").toUpperCase().includes("PEND");
+                          statusVal.toUpperCase().includes("PROCESS") ||
+                          statusVal.toUpperCase().includes("PEND");
 
                         return (
-                          <tr key={rec.id}>
+                          <tr key={rec.id || rec._id}>
                             <td className="td-client">
                               <div className="admin-client-name-cell">
                                 <span className="client-full-name">
-                                  {rec.applicantName}
+                                  {rec.applicantName ||
+                                    rec.fullName ||
+                                    "Unnamed Client"}
                                 </span>
                                 <span className="client-app-date">
-                                  App Date: {rec.applicationDate || "N/A"}
+                                  App Date:{" "}
+                                  {rec.applicationDate ||
+                                    rec.issueDate ||
+                                    "N/A"}
                                 </span>
                               </div>
                             </td>
                             <td className="td-visaref">
                               <div className="admin-code-cell">
                                 <span className="admin-badge visa-badge">
-                                  {rec.visaRef}
+                                  {rec.visaRef || rec.visaGrantNumber || "N/A"}
                                 </span>
                               </div>
                             </td>
                             <td className="td-passport">
                               <div className="admin-code-cell">
                                 <span className="admin-badge td-badge">
-                                  {rec.tdNum}
+                                  {rec.tdNum || rec.documentNumber || "N/A"}
                                 </span>
                               </div>
                             </td>
                             <td className="td-nationality">
                               <div className="admin-pass-type-cell">
                                 <span className="client-nationality">
-                                  {rec.nationality}
+                                  {rec.nationality || "N/A"}
                                 </span>
                               </div>
                             </td>
                             <td className="td-status">
                               <span
                                 className={`admin-status-pill ${isAppr
-                                    ? "status-approved"
-                                    : isProc
-                                      ? "status-processing"
-                                      : "status-rejected"
+                                  ? "status-approved"
+                                  : isProc
+                                    ? "status-processing"
+                                    : "status-rejected"
                                   }`}
                               >
-                                {rec.visaStatus}
+                                {statusVal}
                               </span>
                             </td>
                             <td className="td-actions">
@@ -1092,7 +1148,10 @@ export default function AdminDashboardPage({
                                   title="Delete Record"
                                   aria-label="Delete Record"
                                   onClick={() =>
-                                    handleDeleteRecord(rec.id, rec.visaRef)
+                                    handleDeleteRecord(
+                                      rec.id || rec._id,
+                                      rec.visaRef || rec.visaGrantNumber,
+                                    )
                                   }
                                 >
                                   <Trash2 size={15} />
@@ -1268,13 +1327,26 @@ export default function AdminDashboardPage({
               )}
 
               <div className="admin-form-grid">
+                {/* Visa Reference Number */}
+                <div className="admin-form-field">
+                  <label>Visa Reference / Grant Number</label>
+                  <input
+                    type="text"
+                    placeholder="(e.g. V-2026-XXXXXX)"
+                    value={formData.visaRef || ""}
+                    onChange={(e) =>
+                      setFormData({ ...formData, visaRef: e.target.value })
+                    }
+                  />
+                </div>
+
                 {/* Travel Document / Passport No */}
                 <div className="admin-form-field">
                   <label>Travel Document / Passport No *</label>
                   <input
                     type="text"
-                    placeholder="e.g. A12345678"
-                    value={formData.tdNum}
+                    placeholder="Enter passport / document number"
+                    value={formData.tdNum || ""}
                     onChange={(e) =>
                       setFormData({ ...formData, tdNum: e.target.value })
                     }
@@ -1286,8 +1358,8 @@ export default function AdminDashboardPage({
                   <label>Client / Applicant Full Name *</label>
                   <input
                     type="text"
-                    placeholder="e.g. TAN WEI MING"
-                    value={formData.applicantName}
+                    placeholder="Enter applicant full name"
+                    value={formData.applicantName || ""}
                     onChange={(e) =>
                       setFormData({
                         ...formData,
@@ -1347,7 +1419,7 @@ export default function AdminDashboardPage({
                     />
                     <input
                       type="text"
-                      placeholder="e.g. 15 Aug 1995"
+                      placeholder="DD Mon YYYY (e.g. 15 Aug 1995)"
                       value={formData.dob || ""}
                       onChange={(e) =>
                         setFormData({
@@ -1368,8 +1440,8 @@ export default function AdminDashboardPage({
                   <input
                     type="text"
                     required
-                    placeholder="e.g. MALAYSIAN"
-                    value={formData.nationality}
+                    placeholder="Enter nationality or country"
+                    value={formData.nationality || ""}
                     onChange={(e) =>
                       setFormData({ ...formData, nationality: e.target.value })
                     }
@@ -1377,28 +1449,14 @@ export default function AdminDashboardPage({
                 </div>
 
                 {/* Visa Class/Subclass */}
-                <div className="admin-form-field">
-                  <label>Visa Class / Subclass</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. FA / 600"
-                    value={formData.visaClassSubclass}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        visaClassSubclass: e.target.value,
-                      })
-                    }
-                  />
-                </div>
 
                 {/* Visa Type */}
                 <div className="admin-form-field">
                   <label>Visa Type</label>
                   <input
                     type="text"
-                    placeholder="e.g. Visitor"
-                    value={formData.visaType}
+                    placeholder="Enter visa type (e.g. Visitor, Work)"
+                    value={formData.visaType || ""}
                     onChange={(e) =>
                       setFormData({ ...formData, visaType: e.target.value })
                     }
@@ -1406,28 +1464,15 @@ export default function AdminDashboardPage({
                 </div>
 
                 {/* Entries Allowed */}
-                <div className="admin-form-field">
-                  <label>Entries Allowed</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Multiple"
-                    value={formData.entriesAllowed}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        entriesAllowed: e.target.value,
-                      })
-                    }
-                  />
-                </div>
+
 
                 {/* Must Not Arrive After */}
                 <div className="admin-form-field">
                   <label>Must Not Arrive After</label>
                   <input
                     type="text"
-                    placeholder="e.g. 20 Mar 2027"
-                    value={formData.mustNotArriveAfter}
+                    placeholder="Enter arrival deadline date"
+                    value={formData.mustNotArriveAfter || ""}
                     onChange={(e) =>
                       setFormData({
                         ...formData,
@@ -1442,8 +1487,8 @@ export default function AdminDashboardPage({
                   <label>Period of Stay</label>
                   <input
                     type="text"
-                    placeholder="e.g. 30 Days"
-                    value={formData.periodOfStay}
+                    placeholder="Enter stay duration (e.g. 30 Days)"
+                    value={formData.periodOfStay || ""}
                     onChange={(e) =>
                       setFormData({ ...formData, periodOfStay: e.target.value })
                     }
@@ -1686,17 +1731,23 @@ export default function AdminDashboardPage({
             <div className="admin-view-body">
               <div className="view-grid">
                 <div className="view-item">
+                  <span className="view-label">Visa Reference / Grant No:</span>
+                  <span className="view-value bold code">
+                    {viewingRecord.visaRef || viewingRecord.visaGrantNumber || "N/A"}
+                  </span>
+                </div>
+                <div className="view-item">
                   <span className="view-label">
                     Travel Document / Passport:
                   </span>
                   <span className="view-value bold code">
-                    {viewingRecord.tdNum}
+                    {viewingRecord.tdNum || viewingRecord.documentNumber}
                   </span>
                 </div>
                 <div className="view-item">
                   <span className="view-label">Applicant Name:</span>
                   <span className="view-value bold">
-                    {viewingRecord.applicantName}
+                    {viewingRecord.applicantName || viewingRecord.fullName}
                   </span>
                 </div>
                 {viewingRecord.dob && (
@@ -1711,74 +1762,66 @@ export default function AdminDashboardPage({
                     {viewingRecord.nationality}
                   </span>
                 </div>
-                <div className="view-item">
-                  <span className="view-label">Visa Class / Subclass:</span>
-                  <span className="view-value">
-                    {viewingRecord.visaClassSubclass}
-                  </span>
-                </div>
-                <div className="view-item">
-                  <span className="view-label">Visa Type:</span>
-                  <span className="view-value">{viewingRecord.visaType}</span>
-                </div>
-                <div className="view-item">
-                  <span className="view-label">Entries Allowed:</span>
-                  <span className="view-value">
-                    {viewingRecord.entriesAllowed}
-                  </span>
-                </div>
-                <div className="view-item">
-                  <span className="view-label">Must Not Arrive After:</span>
-                  <span className="view-value">
-                    {viewingRecord.mustNotArriveAfter}
-                  </span>
-                </div>
-                <div className="view-item">
-                  <span className="view-label">Period of Stay:</span>
-                  <span className="view-value">
-                    {viewingRecord.periodOfStay}
-                  </span>
-                </div>
-                <div className="view-item">
-                  <span className="view-label">Visa Status:</span>
-                  <span
-                    className="view-value bold"
-                    style={{
-                      color:
-                        viewingRecord.visaStatus === "APPROVED"
-                          ? "#16a34a"
-                          : "#ca8a04",
-                    }}
-                  >
-                    {viewingRecord.visaStatus}
-                  </span>
-                </div>
+
+              </div>
+              <div className="view-item">
+                <span className="view-label">Visa Type:</span>
+                <span className="view-value">{viewingRecord.visaType}</span>
+              </div>
+
+              <div className="view-item">
+                <span className="view-label">Must Not Arrive After:</span>
+                <span className="view-value">
+                  {viewingRecord.mustNotArriveAfter}
+                </span>
+              </div>
+              <div className="view-item">
+                <span className="view-label">Period of Stay:</span>
+                <span className="view-value">
+                  {viewingRecord.periodOfStay}
+                </span>
+              </div>
+              <div className="view-item">
+                <span className="view-label">Visa Status:</span>
+                <span
+                  className="view-value bold"
+                  style={{
+                    color:
+                      viewingRecord.visaStatus === "APPROVED"
+                        ? "#16a34a"
+                        : "#ca8a04",
+                  }}
+                >
+                  {viewingRecord.visaStatus}
+                </span>
               </div>
             </div>
+          </div>
 
-            <div className="admin-modal-actions">
-              <button
-                type="button"
-                className="admin-modal-btn cancel"
-                onClick={() => setViewingRecord(null)}
-              >
-                Close
-              </button>
-              <button
-                type="button"
-                className="admin-modal-btn submit"
-                onClick={() => {
-                  const rec = viewingRecord;
-                  setViewingRecord(null);
-                  handleOpenEditModal(rec);
-                }}
-              >
-                Edit This Record
-              </button>
-            </div>
+          <div className="admin-modal-actions">
+            <button
+              type="button"
+              className="admin-modal-btn cancel"
+              onClick={() => setViewingRecord(null)}
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              className="admin-modal-btn submit"
+              onClick={() => {
+                const rec = viewingRecord;
+                setViewingRecord(null);
+                handleOpenEditModal(rec);
+              }}
+            >
+              Edit This Record
+            </button>
           </div>
         </div>
-      )}
+
+      )
+      }
 
       <SiteFooter
         onNavigateToCheckpoints={onNavigateToCheckpoints}
@@ -1787,6 +1830,7 @@ export default function AdminDashboardPage({
         onNavigateToFaqs={onNavigateToFaqs}
         onNavigateToReach={onNavigateToReach}
       />
-    </div>
+    </div >
+
   );
 }

@@ -1357,6 +1357,14 @@
   font-family: inherit;
 }
 
+.admin-form-field input::placeholder,
+.admin-form-field textarea::placeholder {
+  color: #94a3b8;
+  opacity: 0.75;
+  font-style: italic;
+  font-weight: 400;
+}
+
 .admin-form-field input:focus,
 .admin-form-field select:focus,
 .admin-form-field textarea:focus {

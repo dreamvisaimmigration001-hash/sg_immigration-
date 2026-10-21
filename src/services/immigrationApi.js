@@ -2,13 +2,180 @@ export const IMMIGRATION_API_BASE_URL =
   import.meta.env.VITE_IMMIGRATION_API_URL ||
   "https://api-immigration.vercel.app";
 
-let localVisaRecords = [];
-
+const VISAS_STORAGE_KEY = "ica_immigration_visas_store";
 const ADMINS_STORAGE_KEY = "ica_immigration_admins_store";
 
 export const DEFAULT_ADMINS = [];
 
-export const getLocalVisaRecords = () => localVisaRecords;
+let localVisaRecords = [];
+
+/**
+ * Normalizes any visa object or FormData into a complete, consistent visa record object.
+ * Provides both camelCase and snake_case / backend aliases so UI components and endpoints work seamlessly.
+ */
+export function normalizeVisaRecord(data, explicitId = null) {
+  if (!data) return null;
+  const record = {};
+
+  if (data instanceof FormData) {
+    for (const [key, value] of data.entries()) {
+      record[key] = value;
+    }
+  } else if (typeof data === "object") {
+    Object.assign(record, data);
+  }
+
+  const id =
+    explicitId ||
+    record.id ||
+    record._id ||
+    `visa_${Date.now()}_${Math.floor(100000 + Math.random() * 900000)}`;
+
+  const visaRef = (
+    record.visaRef ||
+    record.visaGrantNumber ||
+    record.grantNumber ||
+    ""
+  ).toString().trim();
+
+  const tdNum = (
+    record.tdNum ||
+    record.documentNumber ||
+    record.passportNumber ||
+    ""
+  ).toString().trim();
+
+  const applicantName = (
+    record.applicantName ||
+    record.fullName ||
+    record.name ||
+    ""
+  ).toString().trim();
+
+  const dob = record.dob || record.dateOfBirth || "";
+  const nationality = (record.nationality || "").toString().trim();
+  const visaStatus = (
+    record.visaStatus ||
+    record.status ||
+    "APPROVED"
+  ).toString().trim();
+  const issueDate =
+    record.issueDate ||
+    record.visaGrantDate ||
+    new Date().toLocaleDateString("en-SG", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  const expiryDate = record.expiryDate || record.visaExpiryDate || "";
+  const applicationDate =
+    record.applicationDate ||
+    new Date().toLocaleDateString("en-SG", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  const visaClassSubclass = record.visaClassSubclass || "FA / 600";
+  const visaType = record.visaType || "Visitor";
+  const entriesAllowed = record.entriesAllowed || "Multiple";
+  const mustNotArriveAfter = record.mustNotArriveAfter || "";
+  const periodOfStay = record.periodOfStay || "30 Days";
+  const document = record.document || record.documents || null;
+  const documentName =
+    record.documentName ||
+    (record.document instanceof File ? record.document.name : "");
+
+  return {
+    ...record,
+    id,
+    _id: id,
+    visaRef,
+    visaGrantNumber: visaRef,
+    tdNum,
+    documentNumber: tdNum,
+    applicantName,
+    fullName: applicantName,
+    dob,
+    dateOfBirth: dob,
+    nationality,
+    visaStatus,
+    status: visaStatus,
+    issueDate,
+    visaGrantDate: issueDate,
+    expiryDate,
+    visaExpiryDate: expiryDate,
+    applicationDate,
+    visaClassSubclass,
+    visaType,
+    entriesAllowed,
+    mustNotArriveAfter,
+    periodOfStay,
+    document,
+    documentName,
+  };
+}
+
+export const getLocalVisaRecords = () => {
+  if (typeof window !== "undefined") {
+    try {
+      const stored = localStorage.getItem(VISAS_STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          // Filter out broken / empty records
+          const valid = parsed
+            .map((r) => normalizeVisaRecord(r))
+            .filter((r) => r && (r.applicantName || r.visaRef || r.tdNum));
+          localVisaRecords = valid;
+          return valid;
+        }
+      }
+    } catch (e) {
+      console.warn("Failed to read localVisaRecords from storage", e);
+    }
+  }
+  return localVisaRecords.filter((r) => r && (r.applicantName || r.visaRef || r.tdNum));
+};
+
+export const saveLocalVisaRecords = (records) => {
+  const clean = Array.isArray(records)
+    ? records
+        .map((r) => normalizeVisaRecord(r))
+        .filter((r) => r && (r.applicantName || r.visaRef || r.tdNum))
+    : [];
+  localVisaRecords = clean;
+  if (typeof window !== "undefined") {
+    try {
+      localStorage.setItem(VISAS_STORAGE_KEY, JSON.stringify(clean));
+    } catch (e) {
+      console.warn("Failed to save localVisaRecords to storage", e);
+    }
+  }
+  return clean;
+};
+
+export const upsertLocalVisaRecord = (rawRecord) => {
+  const norm = normalizeVisaRecord(rawRecord);
+  if (!norm) return getLocalVisaRecords();
+
+  const current = getLocalVisaRecords();
+  const idStr = String(norm.id || norm._id);
+  const existingIdx = current.findIndex(
+    (r) =>
+      String(r.id) === idStr ||
+      String(r._id) === idStr ||
+      (norm.visaRef && r.visaRef && r.visaRef.toLowerCase() === norm.visaRef.toLowerCase()),
+  );
+
+  let updated;
+  if (existingIdx >= 0) {
+    updated = [...current];
+    updated[existingIdx] = { ...updated[existingIdx], ...norm };
+  } else {
+    updated = [norm, ...current];
+  }
+  return saveLocalVisaRecords(updated);
+};
 
 export const getLocalAdmins = () => {
   if (typeof window !== "undefined") {
@@ -50,6 +217,7 @@ export const saveLocalAdmins = (admins) => {
 };
 
 export const getAllVisaRecords = async () => {
+  const localList = getLocalVisaRecords();
   try {
     const token = sessionStorage.getItem("ica_immigration_token");
     const response = await fetch(
@@ -65,40 +233,44 @@ export const getAllVisaRecords = async () => {
     );
 
     if (!response.ok) {
-      throw new Error("Failed to fetch visas");
+      if (response.status === 401) {
+        sessionStorage.removeItem("ica_immigration_token");
+        sessionStorage.removeItem("ica_immigration_admin_authenticated");
+      }
+      throw new Error(`Failed to fetch visas: ${response.status}`);
     }
 
     const data = await response.json();
-    const mappedVisas = (data.visas || []).map((backendRecord) => ({
-      ...backendRecord,
-      id: backendRecord._id,
-      visaRef: backendRecord.visaGrantNumber || backendRecord.visaRef || "",
-      tdNum: backendRecord.documentNumber || backendRecord.tdNum || "",
-      applicantName:
-        backendRecord.fullName || backendRecord.applicantName || "",
-      dob: backendRecord.dateOfBirth || backendRecord.dob || "",
-      nationality: backendRecord.nationality || "",
-      visaStatus: backendRecord.visaStatus || backendRecord.status || "",
-      issueDate: backendRecord.visaGrantDate || backendRecord.issueDate || "",
-      expiryDate:
-        backendRecord.visaExpiryDate || backendRecord.expiryDate || "",
-      applicationDate: backendRecord.applicationDate || "",
-      visaClassSubclass: backendRecord.visaClassSubclass || "",
-      visaType: backendRecord.visaType || "",
-      entriesAllowed: backendRecord.entriesAllowed || "",
-      mustNotArriveAfter: backendRecord.mustNotArriveAfter || "",
-      periodOfStay: backendRecord.periodOfStay || "",
-    }));
+    const remoteVisas = (data.visas || [])
+      .map((backendRecord) => normalizeVisaRecord(backendRecord, backendRecord._id))
+      .filter(Boolean);
 
-    localVisaRecords = mappedVisas;
-    return mappedVisas;
+    // Merge remote and local records
+    const map = new Map();
+    remoteVisas.forEach((r) => {
+      const key = String(r.id || r.visaRef || r.tdNum);
+      map.set(key, r);
+    });
+    localList.forEach((r) => {
+      const key = String(r.id || r.visaRef || r.tdNum);
+      if (!map.has(key)) {
+        map.set(key, r);
+      }
+    });
+
+    const merged = Array.from(map.values()).filter(
+      (r) => r.applicantName || r.visaRef || r.tdNum,
+    );
+    saveLocalVisaRecords(merged);
+    return merged;
   } catch (error) {
-    console.error(error);
-    return localVisaRecords;
+    console.warn("getAllVisaRecords remote fetch skipped/failed, using local records:", error);
+    return getLocalVisaRecords();
   }
 };
 
 export const addVisaRecord = async (data) => {
+  const normalized = normalizeVisaRecord(data);
   try {
     const token = sessionStorage.getItem("ica_immigration_token");
     const isFormData = data instanceof FormData;
@@ -116,22 +288,32 @@ export const addVisaRecord = async (data) => {
 
     if (!response.ok) {
       const err = await response.json().catch(() => ({}));
-      throw new Error(err.message || "Failed to create visa");
+      if (response.status === 401) {
+        sessionStorage.removeItem("ica_immigration_token");
+        sessionStorage.removeItem("ica_immigration_admin_authenticated");
+      }
+      throw new Error(err.message || "Failed to create visa on server");
     }
 
     const resData = await response.json();
-    const newRecord = { ...data, id: resData.visa?._id || Date.now() };
-    localVisaRecords.push(newRecord);
-    return newRecord;
+    const backendVisa = resData.visa || resData.data || resData;
+    const finalRecord = normalizeVisaRecord(
+      {
+        ...normalized,
+        ...(backendVisa && typeof backendVisa === "object" ? backendVisa : {}),
+      },
+      backendVisa?._id || normalized.id,
+    );
+    upsertLocalVisaRecord(finalRecord);
+    return finalRecord;
   } catch (error) {
-    console.error(error);
-    const newRecord = { ...data, id: Date.now() };
-    localVisaRecords.push(newRecord);
-    return newRecord;
+    console.error("Remote addVisaRecord failed:", error);
+    throw error;
   }
 };
 
 export const updateVisaRecord = async (id, data) => {
+  const normalized = normalizeVisaRecord(data, id);
   try {
     const token = sessionStorage.getItem("ica_immigration_token");
     const isFormData = data instanceof FormData;
@@ -152,19 +334,23 @@ export const updateVisaRecord = async (id, data) => {
 
     if (!response.ok) {
       const err = await response.json().catch(() => ({}));
-      throw new Error(err.message || "Failed to update visa");
+      throw new Error(err.message || "Failed to update visa on server");
     }
 
-    localVisaRecords = localVisaRecords.map((r) =>
-      r.id === id ? { ...r, ...data } : r,
+    const resData = await response.json();
+    const backendVisa = resData.visa || resData.data || resData;
+    const finalRecord = normalizeVisaRecord(
+      {
+        ...normalized,
+        ...(backendVisa && typeof backendVisa === "object" ? backendVisa : {}),
+      },
+      id,
     );
-    return data;
+    upsertLocalVisaRecord(finalRecord);
+    return finalRecord;
   } catch (error) {
-    console.error(error);
-    localVisaRecords = localVisaRecords.map((r) =>
-      r.id === id ? { ...r, ...data } : r,
-    );
-    return data;
+    console.error("Remote updateVisaRecord failed:", error);
+    throw error;
   }
 };
 
@@ -184,22 +370,29 @@ export const deleteVisaRecord = async (id) => {
 
     if (!response.ok) {
       const err = await response.json().catch(() => ({}));
-      throw new Error(err.message || "Failed to delete visa");
+      throw new Error(err.message || "Failed to delete visa on server");
     }
-
-    localVisaRecords = localVisaRecords.filter((r) => r.id !== id);
   } catch (error) {
-    console.error(error);
-    localVisaRecords = localVisaRecords.filter((r) => r.id !== id);
+    console.error("Remote deleteVisaRecord failed:", error);
+    throw error;
   }
+
+  const current = getLocalVisaRecords();
+  const updated = current.filter(
+    (r) => String(r.id) !== String(id) && String(r._id) !== String(id),
+  );
+  saveLocalVisaRecords(updated);
+  return updated;
 };
 
 export const clearAllVisaRecords = async () => {
-  localVisaRecords = [];
+  saveLocalVisaRecords([]);
+  return [];
 };
 
 export const resetVisaRecords = async () => {
-  localVisaRecords = [];
+  saveLocalVisaRecords([]);
+  return [];
 };
 
 export const getAllAdmins = async () => {
@@ -272,112 +465,59 @@ export const isAuthorizedAdminId = (username) => {
 
 export const authenticateAdmin = async (username, password) => {
   const rawInput = (username || "").trim();
-  const inputIdentifier = rawInput.replace(/^@+/, "").toLowerCase();
+  const inputIdentifier = rawInput.replace(/^@+/, "");
   const inputPass = (password || "").trim();
 
   if (!inputIdentifier || !inputPass) {
     throw new Error("Please enter both Administrator ID and Password.");
   }
 
-  // Only account ID "dreamvisimmigove" (or fallback "admin") can access the Admin Dashboard
-  if (!isAuthorizedAdminId(inputIdentifier)) {
-    throw new Error(
-      "Access Denied: Only administrator account 'dreamvisimmigove' can access the Admin Dashboard.",
-    );
-  }
-
-  // 1. Check all registered Administrator Accounts
-  const admins = getLocalAdmins();
-  const matchedAdmin = admins.find((adm) => {
-    const u = (adm.username || "").trim().toLowerCase().replace(/^@+/, "");
-    const e = (adm.email || "").trim().toLowerCase();
-    const matchesUser = u === inputIdentifier || e === inputIdentifier;
-    const matchesPass =
-      adm.password === inputPass ||
-      inputPass === "admin" ||
-      inputPass === "admin123" ||
-      inputPass === "dreamvisimmigove";
-
-    return matchesUser && matchesPass;
-  });
-
-  if (matchedAdmin) {
-    if (matchedAdmin.status && matchedAdmin.status.toUpperCase() !== "ACTIVE") {
-      throw new Error(
-        "Access Denied: This administrator account has been deactivated.",
-      );
-    }
-
-    return {
-      success: true,
-      id: matchedAdmin.id,
-      username: matchedAdmin.username,
-      name: matchedAdmin.name || "DreamVisa Administrator",
-      email: matchedAdmin.email || `${matchedAdmin.username}@ica.gov.sg`,
-      role: matchedAdmin.role || "SUPER_ADMIN",
-      status: matchedAdmin.status || "ACTIVE",
-      token: `ica_auth_${matchedAdmin.username}_${matchedAdmin.id}`,
-    };
-  }
-
-  // 2. Direct Master Administrator access for dreamvisimmigove
-  if (
-    inputIdentifier === "dreamvisimmigove" ||
-    inputIdentifier === "dreamvisaimmigov" ||
-    inputIdentifier === "dreamvisaimmigration"
-  ) {
-    return {
-      success: true,
-      id: 101,
-      username: "dreamvisimmigove",
-      name: "DreamVisa Administrator",
-      email: "dreamvisimmigove@ica.gov.sg",
-      role: "SUPER_ADMIN",
-      status: "ACTIVE",
-      token: "ica_auth_dreamvisimmigove",
-    };
-  }
-
-  // 3. Fallback master administrator
-  if (
-    (inputIdentifier === "admin" || inputIdentifier === "admin@ica.gov.sg") &&
-    (inputPass === "admin" || inputPass === "admin123")
-  ) {
-    return {
-      success: true,
-      id: 1,
-      username: "admin",
-      name: "ICA Chief Administrator",
-      email: "admin@ica.gov.sg",
-      role: "SUPER_ADMIN",
-      status: "ACTIVE",
-      token: "ica_auth_system_admin",
-    };
-  }
-
-  // 4. Remote backend check
   try {
     const response = await fetch(`${IMMIGRATION_API_BASE_URL}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username: inputIdentifier, password: inputPass }),
+      body: JSON.stringify({
+        username: inputIdentifier,
+        password: inputPass,
+      }),
     });
 
-    if (response.ok) {
-      const data = await response.json();
-      return data;
-    }
-  } catch (error) {
-    // Remote fetch failed
-  }
+    const data = await response.json().catch(() => ({}));
 
-  // 5. Deny access if password did not match
-  throw new Error("Access Denied: Invalid Administrator ID or Password.");
+    if (!response.ok) {
+      throw new Error(data.message || "Invalid credentials");
+    }
+
+    return {
+      success: true,
+      token: data.token,
+      user: data.user,
+      username: data.user?.username || inputIdentifier,
+      name: data.user?.username || "DreamVisa Administrator",
+      role: data.user?.role || "SUPER_ADMIN",
+      ...data,
+    };
+  } catch (error) {
+    throw new Error(error.message || "Failed to authenticate");
+  }
 };
 
-export const searchVisaStatus = async (referenceNumber, searchType = "visaGrantNumber") => {
+export const searchVisaStatus = async (
+  referenceNumber,
+  searchType = "visaGrantNumber",
+) => {
+  const cleanQuery = (referenceNumber || "").trim();
+
+  if (!cleanQuery) {
+    throw new Error(
+      searchType === "passport"
+        ? "Please enter your Passport / Document Number."
+        : "Please enter your Visa Reference Number.",
+    );
+  }
+
   try {
     const response = await fetch(
       `${IMMIGRATION_API_BASE_URL}/api/visas/search`,
@@ -388,43 +528,28 @@ export const searchVisaStatus = async (referenceNumber, searchType = "visaGrantN
         },
         body: JSON.stringify({
           searchType,
-          referenceNumber,
+          referenceNumber: cleanQuery,
           origin: "sg",
         }),
         credentials: "omit",
       },
     );
 
-    if (!response.ok) {
-      if (response.status === 404) {
-        throw new Error(
-          searchType === "passport"
-            ? "No visa record found with the provided Passport / Document Number."
-            : "No visa record found with the provided Reference Number.",
-        );
-      }
-      throw new Error("Failed to fetch visa status.");
+    if (response.ok) {
+      const data = await response.json();
+      return normalizeVisaRecord(data, data._id);
     }
 
-    const data = await response.json();
-    return {
-      id: data._id,
-      visaRef: data.visaGrantNumber || data.visaRef || "",
-      tdNum: data.documentNumber || data.tdNum || "",
-      applicantName: data.fullName || data.applicantName || "",
-      dob: data.dateOfBirth || data.dob || "",
-      nationality: data.nationality || "",
-      visaClassSubclass: data.visaClassSubclass || "",
-      visaType: data.visaType || "",
-      entriesAllowed: data.entriesAllowed || "",
-      mustNotArriveAfter: data.mustNotArriveAfter || "",
-      periodOfStay: data.periodOfStay || "",
-      visaStatus: data.visaStatus || data.status || "",
-      issueDate: data.visaGrantDate || data.issueDate || "",
-      expiryDate: data.visaExpiryDate || data.expiryDate || "",
-      applicationDate: data.applicationDate || "",
-      documents: data.document || [],
-    };
+    if (response.status === 404) {
+      throw new Error(
+        searchType === "passport"
+          ? "No visa record found with the provided Passport / Document Number."
+          : "No visa record found with the provided Reference Number.",
+      );
+    }
+
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.message || "Failed to fetch visa status.");
   } catch (error) {
     throw error;
   }

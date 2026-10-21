@@ -773,9 +773,7 @@ export default function VisaEnquiryPage({
                 )}
                 {enquiryResult.visaClassSubclass && (
                   <div className="visa-result-item">
-                    <span className="visa-result-label">
-                      Visa Class / Subclass
-                    </span>
+
                     <span className="visa-result-val">
                       {enquiryResult.visaClassSubclass}
                     </span>
@@ -789,14 +787,7 @@ export default function VisaEnquiryPage({
                     </span>
                   </div>
                 )}
-                {enquiryResult.entriesAllowed && (
-                  <div className="visa-result-item">
-                    <span className="visa-result-label">Entries Allowed</span>
-                    <span className="visa-result-val">
-                      {enquiryResult.entriesAllowed}
-                    </span>
-                  </div>
-                )}
+
                 {enquiryResult.mustNotArriveAfter && (
                   <div className="visa-result-item">
                     <span className="visa-result-label">
