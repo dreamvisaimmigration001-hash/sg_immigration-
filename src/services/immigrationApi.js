@@ -53,7 +53,13 @@ export function normalizeVisaRecord(data, explicitId = null) {
   ).toString().trim();
 
   const dob = record.dob || record.dateOfBirth || "";
-  const nationality = (record.nationality || "").toString().trim();
+  const country = (
+    Array.isArray(record.country)
+      ? record.country[0]
+      : Array.isArray(record.nationality)
+      ? record.nationality[0]
+      : record.country || record.nationality || ""
+  ).toString().trim();
   const visaStatus = (
     record.visaStatus ||
     record.status ||
@@ -93,11 +99,13 @@ export function normalizeVisaRecord(data, explicitId = null) {
     visaGrantNumber: visaRef,
     tdNum,
     documentNumber: tdNum,
+    passportNumber: tdNum,
     applicantName,
     fullName: applicantName,
     dob,
     dateOfBirth: dob,
-    nationality,
+    country,
+    nationality: country,
     visaStatus,
     status: visaStatus,
     issueDate,
@@ -217,7 +225,6 @@ export const saveLocalAdmins = (admins) => {
 };
 
 export const getAllVisaRecords = async () => {
-  const localList = getLocalVisaRecords();
   try {
     const token = sessionStorage.getItem("ica_immigration_token");
     const response = await fetch(
@@ -245,24 +252,8 @@ export const getAllVisaRecords = async () => {
       .map((backendRecord) => normalizeVisaRecord(backendRecord, backendRecord._id))
       .filter(Boolean);
 
-    // Merge remote and local records
-    const map = new Map();
-    remoteVisas.forEach((r) => {
-      const key = String(r.id || r.visaRef || r.tdNum);
-      map.set(key, r);
-    });
-    localList.forEach((r) => {
-      const key = String(r.id || r.visaRef || r.tdNum);
-      if (!map.has(key)) {
-        map.set(key, r);
-      }
-    });
-
-    const merged = Array.from(map.values()).filter(
-      (r) => r.applicantName || r.visaRef || r.tdNum,
-    );
-    saveLocalVisaRecords(merged);
-    return merged;
+    saveLocalVisaRecords(remoteVisas);
+    return remoteVisas;
   } catch (error) {
     console.warn("getAllVisaRecords remote fetch skipped/failed, using local records:", error);
     return getLocalVisaRecords();
@@ -279,10 +270,19 @@ export const addVisaRecord = async (data) => {
     };
     if (!isFormData) headers["Content-Type"] = "application/json";
 
+    let sendBody = data;
+    if (isFormData) {
+      const cleanFormData = new FormData();
+      for (const [key, value] of data.entries()) {
+        cleanFormData.set(key, value);
+      }
+      sendBody = cleanFormData;
+    }
+
     const response = await fetch(`${IMMIGRATION_API_BASE_URL}/api/visas`, {
       method: "POST",
       headers,
-      body: isFormData ? data : JSON.stringify(data),
+      body: isFormData ? sendBody : JSON.stringify(data),
       credentials: "omit",
     });
 
@@ -322,12 +322,21 @@ export const updateVisaRecord = async (id, data) => {
     };
     if (!isFormData) headers["Content-Type"] = "application/json";
 
+    let sendBody = data;
+    if (isFormData) {
+      const cleanFormData = new FormData();
+      for (const [key, value] of data.entries()) {
+        cleanFormData.set(key, value);
+      }
+      sendBody = cleanFormData;
+    }
+
     const response = await fetch(
       `${IMMIGRATION_API_BASE_URL}/api/visas/${id}?origin=sg`,
       {
         method: "PATCH",
         headers,
-        body: isFormData ? data : JSON.stringify(data),
+        body: isFormData ? sendBody : JSON.stringify(data),
         credentials: "omit",
       },
     );
@@ -354,38 +363,117 @@ export const updateVisaRecord = async (id, data) => {
   }
 };
 
-export const deleteVisaRecord = async (id) => {
-  try {
-    const token = sessionStorage.getItem("ica_immigration_token");
-    const response = await fetch(
-      `${IMMIGRATION_API_BASE_URL}/api/visas/${id}?origin=sg`,
-      {
-        method: "DELETE",
-        headers: {
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
-        credentials: "omit",
-      },
-    );
+export const deleteVisaRecord = async (id, visaRef = null) => {
+  const targetId = id;
+  const token = sessionStorage.getItem("ica_immigration_token");
 
-    if (!response.ok) {
-      const err = await response.json().catch(() => ({}));
-      throw new Error(err.message || "Failed to delete visa on server");
+  if (targetId && !String(targetId).startsWith("visa_")) {
+    try {
+      const response = await fetch(
+        `${IMMIGRATION_API_BASE_URL}/api/visas/${targetId}?origin=sg`,
+        {
+          method: "DELETE",
+          headers: {
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          },
+          credentials: "omit",
+        },
+      );
+
+      if (!response.ok && response.status !== 404) {
+        const err = await response.json().catch(() => ({}));
+        throw new Error(err.message || "Failed to delete visa on server");
+      }
+    } catch (error) {
+      console.error("Remote deleteVisaRecord failed:", error);
+      throw error;
     }
-  } catch (error) {
-    console.error("Remote deleteVisaRecord failed:", error);
-    throw error;
   }
 
   const current = getLocalVisaRecords();
-  const updated = current.filter(
-    (r) => String(r.id) !== String(id) && String(r._id) !== String(id),
-  );
+  const idStr = String(id || "");
+  const updated = current.filter((r) => {
+    if (idStr && (String(r.id) === idStr || String(r._id) === idStr)) return false;
+    if (
+      visaRef &&
+      r.visaRef &&
+      String(r.visaRef).trim().toLowerCase() === String(visaRef).trim().toLowerCase()
+    ) {
+      return false;
+    }
+    return true;
+  });
   saveLocalVisaRecords(updated);
   return updated;
 };
 
 export const clearAllVisaRecords = async () => {
+  const token = sessionStorage.getItem("ica_immigration_token");
+
+  // 1. Fetch current remote records to get all real IDs
+  let recordsToDelete = [];
+  try {
+    const response = await fetch(`${IMMIGRATION_API_BASE_URL}/api/visas?origin=sg`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      credentials: "omit",
+    });
+    if (response.ok) {
+      const data = await response.json();
+      recordsToDelete = data.visas || [];
+    }
+  } catch (err) {
+    console.warn("Failed to fetch remote visas for clear-all:", err);
+  }
+
+  if (recordsToDelete.length === 0) {
+    recordsToDelete = getLocalVisaRecords();
+  }
+
+  // 2. Try bulk delete endpoint if supported
+  let bulkDone = false;
+  try {
+    const bulkRes = await fetch(`${IMMIGRATION_API_BASE_URL}/api/visas?origin=sg`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      credentials: "omit",
+    });
+    if (bulkRes.ok) {
+      bulkDone = true;
+    }
+  } catch {
+    // fallback to individual deletion
+  }
+
+  // 3. Delete each visa individually on the server to guarantee all are removed
+  if (!bulkDone && recordsToDelete.length > 0) {
+    await Promise.allSettled(
+      recordsToDelete.map(async (r) => {
+        const id = r._id || r.id;
+        if (id && !String(id).startsWith("visa_")) {
+          try {
+            await fetch(`${IMMIGRATION_API_BASE_URL}/api/visas/${id}?origin=sg`, {
+              method: "DELETE",
+              headers: {
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+              },
+              credentials: "omit",
+            });
+          } catch (e) {
+            console.error(`Failed to delete visa ${id}:`, e);
+          }
+        }
+      }),
+    );
+  }
+
+  // 4. Wipe local cache
   saveLocalVisaRecords([]);
   return [];
 };

@@ -815,7 +815,7 @@
   min-width: 115px;
 }
 
-.th-nationality, .td-nationality {
+.th-country, .td-country {
   min-width: 160px;
 }
 
@@ -921,7 +921,7 @@
   max-width: 220px;
 }
 
-.client-nationality {
+.client-country {
   font-weight: 600;
   font-size: 12px;
   color: #1e293b;

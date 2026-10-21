@@ -62,7 +62,7 @@ export default function VisaEnquiryPage({
     const cleanQuery = searchQuery.trim();
 
     if (!cleanQuery) {
-      setInputError("Please enter your  Visa Document Number.");
+      setInputError("Please enter your Passport Number.");
       return;
     } else {
       setInputError("");
@@ -80,6 +80,28 @@ export default function VisaEnquiryPage({
 
     try {
       const resultData = await searchVisaStatus(cleanQuery, "passport");
+
+      const cleanTd = (
+        resultData.tdNum ||
+        resultData.documentNumber ||
+        resultData.passportNumber ||
+        ""
+      ).trim();
+      const hasDocument = Boolean(
+        resultData.document ||
+        (Array.isArray(resultData.documents) && resultData.documents.length > 0) ||
+        resultData.documentName ||
+        resultData.documentUrl ||
+        resultData.fileUrl
+      );
+
+      if (!cleanTd || !hasDocument) {
+        setApiError(
+          "Visa cannot be verified: Without both an added visa document and valid passport number, this visa cannot be verified.",
+        );
+        return;
+      }
+
       setEnquiryResult(resultData);
       setCurrentStep(2);
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -771,14 +793,6 @@ export default function VisaEnquiryPage({
                     </span>
                   </div>
                 )}
-                {enquiryResult.visaClassSubclass && (
-                  <div className="visa-result-item">
-
-                    <span className="visa-result-val">
-                      {enquiryResult.visaClassSubclass}
-                    </span>
-                  </div>
-                )}
                 {enquiryResult.visaType && (
                   <div className="visa-result-item">
                     <span className="visa-result-label">Visa Type</span>
@@ -788,24 +802,6 @@ export default function VisaEnquiryPage({
                   </div>
                 )}
 
-                {enquiryResult.mustNotArriveAfter && (
-                  <div className="visa-result-item">
-                    <span className="visa-result-label">
-                      Must Not Arrive After
-                    </span>
-                    <span className="visa-result-val">
-                      {enquiryResult.mustNotArriveAfter}
-                    </span>
-                  </div>
-                )}
-                {enquiryResult.periodOfStay && (
-                  <div className="visa-result-item">
-                    <span className="visa-result-label">Period of Stay</span>
-                    <span className="visa-result-val">
-                      {enquiryResult.periodOfStay}
-                    </span>
-                  </div>
-                )}
                 {enquiryResult.tdNum && (
                   <div className="visa-result-item">
                     <span className="visa-result-label">
@@ -830,11 +826,11 @@ export default function VisaEnquiryPage({
                     </span>
                   </div>
                 )}
-                {enquiryResult.nationality && (
+                {(enquiryResult.country) && (
                   <div className="visa-result-item">
-                    <span className="visa-result-label">Nationality</span>
+                    <span className="visa-result-label">Country</span>
                     <span className="visa-result-val">
-                      {enquiryResult.nationality}
+                      {enquiryResult.country}
                     </span>
                   </div>
                 )}

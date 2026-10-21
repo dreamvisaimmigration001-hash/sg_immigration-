@@ -69,6 +69,28 @@ export default function StatusEnquiry({ onBackToCheckpoints }) {
 
     try {
       const resultData = await searchVisaStatus(cleanQuery, searchType);
+      
+      const cleanTd = (
+        resultData.tdNum ||
+        resultData.documentNumber ||
+        resultData.passportNumber ||
+        ""
+      ).trim();
+      const hasDocument = Boolean(
+        resultData.document ||
+        (Array.isArray(resultData.documents) && resultData.documents.length > 0) ||
+        resultData.documentName ||
+        resultData.documentUrl ||
+        resultData.fileUrl
+      );
+
+      if (!cleanTd || !hasDocument) {
+        setApiError(
+          "Visa cannot be verified: Without both an added visa document and valid passport number, this visa cannot be verified.",
+        );
+        return;
+      }
+
       setEnquiryResult(resultData);
       setCurrentStep(2);
       window.scrollTo({ top: 80, behavior: "smooth" });
@@ -385,8 +407,8 @@ export default function StatusEnquiry({ onBackToCheckpoints }) {
                                 <td>{enquiryResult.applicantName}</td>
                               </tr>
                               <tr>
-                                <th scope="row">Nationality / Citizenship</th>
-                                <td>{enquiryResult.nationality}</td>
+                                <th scope="row">Country</th>
+                                <td>{enquiryResult.country || enquiryResult.nationality}</td>
                               </tr>
                               <tr>
                                 <th scope="row">Type of Pass / Visa</th>
